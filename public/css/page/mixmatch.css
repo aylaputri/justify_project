@@ -1,0 +1,116 @@
+/* Container Utamaa */
+.mixmatch-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+/* Card Panduan */
+.guide-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Grid Pilihan Baju  */
+.items-grid {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 35px;
+    gap: 15px;
+    /* scroll smping */
+    overflow-x: auto; 
+    padding: 15px 5px;
+}
+
+.item-choice {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid transparent; 
+    transition: all 0.3s ease;
+}
+
+/* Efek stroke hitam saat diklik */
+.item-choice.active {
+    border: 2px solid black !important;
+    transform: scale(1.08); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Area hasil menjadi vertikal */
+.result-area {
+    display: none;
+    text-align: center;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.result-title{
+    font-style: italic;
+}
+
+.result-divider{
+    margin-top: 20px;
+    border: 0;
+    border-top: 0.5px solid #eee;
+}
+
+.preview-box {
+    display: flex;
+    justify-content: center;
+    /* Tumpuk gambar */
+    flex-direction: column; 
+    align-items: center;    
+    gap: 10px;              
+}
+
+.preview-box img {
+    width: 200px;           
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Tombol Mix bawah*/
+.btn-mix {
+    background: black;
+    color: white;
+    padding: 12px 50px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    display: block;
+    margin: 30px auto; 
+    transition: 0.2s;
+}
+
+.btn-mix:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+    .item-choice {
+        width: 150px;
+        height: 150px;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+}
