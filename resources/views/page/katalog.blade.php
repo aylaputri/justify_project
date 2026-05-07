@@ -40,9 +40,9 @@
         </div>
     
         <div class="menu-overlay">
-          <a href="../index.html">Home</a>
-          <a href="catalog.html">Catalog</a>
-          <a href="mixmatch.html">Mix & Match</a>
+          <a href="home.blade.php">Home</a>
+          <a href="katalog.blade.php">Catalog</a>
+          <a href="mixmatch.blade.php">Mix & Match</a>
         </div>
       </div>
     </header>
@@ -116,104 +116,211 @@
       </section>
     </main>
 
-    <!-- PRODUCTS DETAILS -->
-    <div class="overlay-details" id="overlay-details">
-      <div class="modal">
-        <div class="modal-header">
-          <p>Product Details</p>
-          <span class="close" id="closeBtn">
-            <img src="../image/icon/close.svg">
-          </span>
+<!-- PRODUCTS DETAILS -->
+<div class="overlay-details" id="overlay-details">
+  <div class="modal">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <p>Product Details</p>
+
+      <span class="close" id="closeBtn">
+        <img src="../image/icon/close.svg">
+      </span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="modal-content">
+
+      <div class="product-detail">
+
+        <!-- LEFT IMAGE -->
+        <div class="product-image">
+          <img src="../image/Foto/Baju-coklat-belakang.jpg">
         </div>
 
-        <div class="modal-content">
-          <div class="product-detail">
-            <div class="product-image">
-              <img src="../image/Foto/Baju-coklat-belakang.jpg">
-            </div>
+        <!-- RIGHT INFO -->
+        <div class="product-info">
 
-            <div class="product-info">
-              <h3>SAVIOR WORLD TALES OF GOD'S AND HEROES</h3>
+          <h3>SAVIOR WORLD TALES OF GOD'S AND HEROES</h3>
 
-              <div class="info">
-                <span>T-Shirt</span>
-                <span>Rp 200.000</span>
-              </div>
+          <div class="info">
+            <span>T-Shirt</span>
+            <span>Rp 200.000</span>
+          </div>
 
-              <p><b>Available Sizes:</b></p>
-              <div class="size-details">
-                <span>S</span><span>M</span><span>L</span><span>XL</span>
-              </div>
+          <!-- SIZE -->
+          <div class="product-section">
+            <p><b>Available Sizes:</b></p>
 
-              <p><b>Available Colors:</b></p>
-              <div class="color-details">
-                <span>White</span><span>Black</span><span>Brown</span>
-              </div>
-
-              <p><b>Size Chart:</b></p>
-
-              <div class="size-chart-table">
-                <div class="chart-title">
-                  Jenis size: Tinggi dan besar, Reguler<br />
-                  Ukuran tubuh
-                </div>
-
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Size</th>
-                      <th>Tinggi (cm)</th>
-                      <th>Lebar bahu (cm)</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>M</td>
-                      <td>68</td>
-                      <td>44</td>
-                    </tr>
-
-                    <tr>
-                      <td>L</td>
-                      <td>72</td>
-                      <td>46</td>
-                    </tr>
-
-                    <tr>
-                      <td>XL</td>
-                      <td>74</td>
-                      <td>48</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <p><b>Description</b></p>
-              <p>
-                <b>Savior “Tales of Gods and Heroes” </b>
-                <br>Material: Australian Breeze Cotton 16s 
-                <br>Cutting: Boxy Oversize Fit 
-                <br>Texture: Soft, breathable, and slightly structured 
-                <br>Neck: Ribbed 
-                <br>Print: High-quality screen print 
-                <br>Finishing: Clean stitching
-              </p>
+            <div class="size-details">
+              <span>S</span>
+              <span>M</span>
+              <span>L</span>
+              <span>XL</span>
             </div>
           </div>
+
+          <!-- COLOR -->
+          <div class="product-section">
+            <p><b>Available Colors:</b></p>
+
+            <div class="color-details">
+              <span>White</span>
+              <span>Black</span>
+              <span>Brown</span>
+            </div>
+          </div>
+
+          <!-- SMART SIZING -->
+          <div class="product-section">
+
+            <p><b>Smart Sizing:</b></p>
+
+            <div class="smart-sizing">
+
+              <p>Silahkan cek ukuran yang pas untuk anda</p>
+
+              <div class="smart-sizing-input">
+
+                <!-- TINGGI -->
+                <div class="smart-sizing-box">
+
+                  <label>Tinggi Badan</label>
+
+                  <div class="input-box">
+                    <input type="number" placeholder="0">
+                    <span>cm</span>
+                  </div>
+
+                </div>
+
+                <!-- BERAT -->
+                <div class="smart-sizing-box">
+
+                  <label>Berat Badan</label>
+
+                  <div class="input-box">
+                    <input type="number" placeholder="0">
+                    <span>kg</span>
+                  </div>
+
+                </div>
+
+                <!-- RESULT -->
+                <div class="result-size">
+
+                  <span>=</span>
+
+                  <div class="result-box">
+                    -
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- SIZE CHART -->
+          <div class="product-section">
+
+            <p><b>Size Chart:</b></p>
+
+            <div class="size-chart-table">
+
+              <div class="chart-title">
+                Jenis size: Tinggi dan besar, Reguler
+                <br>
+                Ukuran tubuh
+              </div>
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Size</th>
+                    <th>Tinggi (cm)</th>
+                    <th>Lebar bahu (cm)</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>M</td>
+                    <td>68</td>
+                    <td>44</td>
+                  </tr>
+
+                  <tr>
+                    <td>L</td>
+                    <td>72</td>
+                    <td>46</td>
+                  </tr>
+
+                  <tr>
+                    <td>XL</td>
+                    <td>74</td>
+                    <td>48</td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="product-section">
+
+            <p><b>Description</b></p>
+
+            <p>
+              <b>Savior “Tales of Gods and Heroes”</b>
+              <br>
+              Material: Australian Breeze Cotton 16s
+              <br>
+              Cutting: Boxy Oversize Fit
+              <br>
+              Texture: Soft, breathable, and slightly structured
+              <br>
+              Neck: Ribbed
+              <br>
+              Print: High-quality screen print
+              <br>
+              Finishing: Clean stitching
+            </p>
+
+          </div>
+
         </div>
 
-        <div class="modal-buy">
-          <a
-            href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world"
-          >
-            <button class="buy-btn">
-              <img src="../image/icon/buy.svg" alt="Shopee"> Buy on Shopee
-            </button>
-          </a>
-        </div>
       </div>
+
     </div>
+
+    <!-- BUY BUTTON -->
+    <div class="modal-buy">
+
+      <a href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world">
+
+        <button class="buy-btn">
+
+          <img src="../image/icon/buy.svg">
+
+          Buy on Shopee
+
+        </button>
+
+      </a>
+
+    </div>
+
+  </div>
+</div>
 
     <!-- FOOTER -->
     <footer>
