@@ -48,51 +48,73 @@
     </header>
 
     <main>
-        <div class="mixmatch-container">
-            <div class="guide-card">
-                <h3>✨ Cara Pakai Mix & Match</h3>
-                <p>Ikuti langkah mudah ini untuk melihat gaya barumu:</p>
-                <ul>
-                    <li>Klik satu gambar di bagian <b>Atasan</b>.</li>
-                    <li>Klik satu gambar di bagian <b>Bawahan</b>.</li>
-                    <li>Klik tombol <b>Mix</b> untuk menggabungkan!</li>
-                </ul>
-            </div>
-
-            <div id="result-display" class="result-area">
-                <h3 class="result_title">Your Style Concept:</h3>
-                <div id="combined-preview" class="preview-box"></div>
-                <hr class="result-divider">
-            </div>
-
-            <section class="selection-section">
-                <h4>ATASAN</h4>
-                <div class="items-grid">
-                    <img src="../image/Foto/img_mixmatch_atasan2.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                    <img src="../image/Foto/img_mixmatch_atasan.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                    <img src="../image/Foto/img_mixmatch_atasan3.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                    <img src="../image/Foto/img_mixmatch_atasan4.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                    <img src="../image/Foto/img_mixmatch_atasan2.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                    <img src="../image/Foto/img_mixmatch_atasan2.jpg" class="item-choice atasan" onclick="pilihItem(this, 'atasan')">
-                </div>
-            </section>
-
-            <section class="selection-section">
-                <h4>BAWAHAN</h4>
-                <div class="items-grid">
-                    <img src="../image/Foto/img_mixmatch_bawahan.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                    <img src="../image/Foto/img_mixmatch_bawahan2.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                    <img src="../image/Foto/img_mixmatch_bawahan3.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                    <img src="../image/Foto/img_mixmatch_bawahan4.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                    <img src="../image/Foto/img_mixmatch_bawahan5.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                    <img src="../image/Foto/img_mixmatch_bawahan.jpg" class="item-choice bawahan" onclick="pilihItem(this, 'bawahan')">
-                </div>
-            </section>
-
-            <div class="action-area">
-                <button class="btn-mix" onclick="gabungkanStyle()">Mix</button>
+<div class="mix-match-wrapper">
+    
+    <div id="guide-box" class="guide-box">
+        <h3>🛠️ Panduan Menggunakan Mix & Match</h3>
+        <div id="guide-text">
+            <p id="step-1"><strong>1. Pilih Karakter Utama</strong><br>Klik salah satu card di bawah untuk memulai.</p>
+            <div id="step-2" class="hidden-content">
+                <p><strong>2. Eksperimen Gaya</strong><br>Pilih atasan di kiri dan bawahan di kanan. Klik item untuk melihat detail produk.</p>
             </div>
         </div>
+    </div>
+
+    <div class="main-content-layout">
+        
+        <div id="col-left" class="side-panel hidden">
+            <h4>Atasan</h4>
+            <div class="scroll-container">
+                <div class="item-card" onclick="selectItem(this, 'Kemeja Black', 'Rp 189k')">
+                    <img src="{{ asset('assets/image/imgMixmatch/mancard.jpeg') }}">
+                </div>
+                <div class="item-card" onclick="selectItem(this, 'White Tee', 'Rp 120k')">
+                    <img src="{{ asset('assets/image/item/top2.png') }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="display-area">
+            
+            <div id="gender-select-row" class="gender-row">
+                <div class="card-option shadow-v3" onclick="startMixMatch('male')">
+                    <img src="{{ asset('assets/image/imgMixmatch/mancard.jpeg') }}">
+                    <h3>Pria</h3>
+                </div>
+                <div class="card-option shadow-v3" onclick="startMixMatch('female')">
+                    <img src="{{ asset('assets/image/imgMixmatch/womancard.jpeg') }}">
+                    <h3>Wanita</h3>
+                </div>
+            </div>
+
+            <div id="active-model-frame" class="hidden">
+                <div class="main-model-card shadow-v3">
+                    <button class="btn-switch" onclick="location.reload()">🔄 Ganti Gender</button>
+                    <img id="model-img" src="">
+                </div>
+            </div>
+        </div>
+
+        <div id="col-right-group" class="side-panel-group hidden">
+            <div class="side-panel">
+                <h4>Bawahan</h4>
+                <div class="scroll-container">
+                    <div class="item-card" onclick="selectItem(this, 'Chino Grey', 'Rp 210k')">
+                        <img src="{{ asset('assets/image/item/bot1.png') }}">
+                    </div>
+                </div>
+            </div>
+
+            <div id="product-info-box" class="info-card-black hidden">
+                <h4 id="p-title">Detail</h4>
+                <p id="p-price">-</p>
+                <hr>
+                <a href="#" class="katalog-link">Ke Katalog →</a>
+            </div>
+        </div>
+
+    </div>
+</div>              
     </main>
 
     <!-- FOOTER -->
