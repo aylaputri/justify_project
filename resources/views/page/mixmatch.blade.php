@@ -66,7 +66,7 @@
             <h4>Atasan</h4>
             <div class="scroll-container">
                 <div class="item-card" onclick="selectItem(this, 'Kemeja Black', 'Rp 189k')">
-                    <img src="{{ asset('assets/image/imgMixmatch/mancard.jpeg') }}">
+                    <img src="{{ asset('assets/image/item/top1.png') }}">
                 </div>
                 <div class="item-card" onclick="selectItem(this, 'White Tee', 'Rp 120k')">
                     <img src="{{ asset('assets/image/item/top2.png') }}">
@@ -77,11 +77,11 @@
         <div class="display-area">
             
             <div id="gender-select-row" class="gender-row">
-                <div class="card-option shadow-v3" onclick="startMixMatch('male')">
+                <div class="card-option" onclick="startMixMatch('male')">
                     <img src="{{ asset('assets/image/imgMixmatch/mancard.jpeg') }}">
                     <h3>Pria</h3>
                 </div>
-                <div class="card-option shadow-v3" onclick="startMixMatch('female')">
+                <div class="card-option" onclick="startMixMatch('female')">
                     <img src="{{ asset('assets/image/imgMixmatch/womancard.jpeg') }}">
                     <h3>Wanita</h3>
                 </div>
@@ -116,7 +116,7 @@
     </div>
 </div>              
     </main>
-
+   
     <!-- FOOTER -->
     <footer>
         <div class="footer-container">
@@ -154,5 +154,5 @@
     @endsection
 
     @push('scripts')
-    <script src="{{asset ('js/page/katalog.js') }}"></script>
+    <script src="{{asset ('js/page/mixmatch.js') }}"></script>
     @endpush
