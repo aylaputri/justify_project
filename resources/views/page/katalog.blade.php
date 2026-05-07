@@ -25,9 +25,9 @@
     
           <!-- MENU DESKTOP -->
           <div class="menu-desktop">
-            <a href="../index.html">Home</a>
-            <a href="catalog.html">Catalog</a>
-            <a href="mixmatch.html">Mix & Match</a>
+            <a href="{{ url('/home') }}">Home</a>
+            <a href="{{ url('/katalog') }}">Catalog</a>
+            <a href="mixmatch.blade.php">Mix & Match</a>
           </div>
         </div>
       </nav>
@@ -40,8 +40,8 @@
         </div>
     
         <div class="menu-overlay">
-          <a href="home.blade.php">Home</a>
-          <a href="katalog.blade.php">Catalog</a>
+          <a href="{{ url('/home') }}">Home</a>
+          <a href="{{ url('/katalog') }}">Catalog</a>
           <a href="mixmatch.blade.php">Mix & Match</a>
         </div>
       </div>
