@@ -35,6 +35,17 @@ body{
     display: block;
 }
 
+.nav-icons{
+    display: none;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icons img{
+    width: 32px;
+    cursor: pointer;
+}
+
 /* HAMBURGER NAVBAR */
 .hamburger img{
     width: 24px;
@@ -79,7 +90,7 @@ body{
 /* OVERLAY MENU MOBILE */
 .overlay{
     position: fixed;
-    top: -50%;
+    top: -100%;
     width: 100%;
     background: black;
     z-index: 999;
@@ -191,9 +202,22 @@ footer{
 
 /* TAMPILAN DESKTOP */
 @media (min-width: 768px) {
+    .navbar{
+        padding: 24px 0;
+    }
+
+    .logo img{
+        height: 60px;
+    }
+        
     .menu-desktop{
         display: flex;
-        align-items: center; 
+        align-items: center;
+        gap: 40px;
+    }
+
+    .nav-icons{
+        display: flex;
     }
 
     .hamburger{

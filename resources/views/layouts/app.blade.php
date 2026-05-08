@@ -14,6 +14,8 @@
 <body>
     @yield('content')
 
+    <script src="{{ asset('js/page/navbar.js') }}"></script>
+
     @stack('scripts')
 </body>
 </html>

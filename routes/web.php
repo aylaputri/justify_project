@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/landing', function () {
-    return view('landing');
+Route::get('/home', function () {
+    return view('page.home');
 });
 
 Route::get('/katalog', function () {
@@ -18,8 +18,12 @@ Route::get('/mixmatch', function () {
     return view('page.mixmatch');
 });
 
-Route::get('/home', function () {
-    return view('page.home');
+Route::get('/cart', function () {
+    return view('page.cart');
 });
-?>
 
+Route::get('/profile', function () {
+    return view('page.profile');
+});
+
+?>

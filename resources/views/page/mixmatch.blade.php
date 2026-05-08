@@ -11,41 +11,7 @@
 
 @section('content')
 
-<header>
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <img src="{{ asset('image/Logo-Putih-Savior-World.png') }}">
-                </div>
-    
-                <!--Tampilan mobile-->
-                <div class="hamburger" onclick="toggleMenu()">
-                    <img id="burger" src="{{ asset('image/icon/icon-burger.svg') }}">
-                </div>
-    
-                <!--Tampilan Dekstop-->
-                <div class="menu-desktop">
-                    <a href="{{ url('/home') }}">Home</a>
-                    <a href="{{ url('/katalog') }}">Catalog</a>
-                    <a href="{{ url('/mixmatch') }}">Mix & Match</a>
-                </div>
-            </div>
-        </nav>
-    
-        <!-- OVERLAY MENU MOBILE -->
-        <div class="backdrop" id="backdrop" onclick="toggleMenu()"></div> <!-- Biar background gelap saat buka overlay -->
-        <div class="overlay" id="overlay">
-            <div class="close" onclick="toggleMenu()">
-                <img src="{{ asset('image/icon/icon-close-putih.svg') }}">
-            </div>
-    
-            <div class="menu-overlay">
-               <a href="{{ url('/home') }}">Home</a>
-               <a href="{{ url('/katalog') }}">Catalog</a>
-               <a href="{{ url('/mixmatch') }}">Mix & Match</a>
-            </div>
-        </div>
-    </header>
+@include('components.navbar')
 
     <main>
         <div class="mixmatch-container">
@@ -104,42 +70,11 @@
 </div>
     </main>
    
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section brand-section">
-                <h3 class="footer-title">BRAND</h3>
-                <img src="../image/Logo-Putih-Savior-World.png" alt="Savior World Logo Putih">
-                <p>Penyelamat Hidupmu!</p>
-            </div>
-    
-            <div class="footer-section social-section">
-                <h3 class="footer-title">FOLLOW US</h3>
-    
-                <div class="social-icons">
-                    <a href="https://www.instagram.com/svr.wrld/">
-                        <img src="../image/icon/icon_instagram.svg" alt="Instagram">
-                    </a>
-                    <a href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world">
-                        <img src="../image/icon/icon_shopee.svg" alt="Shopee">
-                    </a>
-                </div>
-            </div>
-    
-            <div class="footer-section contact-section">
-                <h3 class="footer-title">CONTACT</h3>
-                <p>Email @savior.com</p>
-                <p>Whatsapp +62 858 7162 6545</p>
-            </div>
-        </div>
-    
-        <div class="footer-bottom">
-            <p>Copyright &copy; JustifySvr2026</p>
-        </div>
-    </footer>
+<!-- FOOTER -->
+@include('components.footer')
 
-    @endsection
+@endsection
 
-    @push('scripts')
-    <script src="{{asset ('js/page/mixmatch.js') }}"></script>
-    @endpush
+@push('scripts')
+<script src="{{asset ('js/page/mixmatch.js') }}"></script>
+@endpush
