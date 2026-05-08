@@ -48,73 +48,60 @@
     </header>
 
     <main>
-<div class="mix-match-wrapper">
-    
-    <div id="guide-box" class="guide-box">
-        <h3>🛠️ Panduan Menggunakan Mix & Match</h3>
-        <div id="guide-text">
-            <p id="step-1"><strong>1. Pilih Karakter Utama</strong><br>Klik salah satu card di bawah untuk memulai.</p>
-            <div id="step-2" class="hidden-content">
-                <p><strong>2. Eksperimen Gaya</strong><br>Pilih atasan di kiri dan bawahan di kanan. Klik item untuk melihat detail produk.</p>
+        <div class="mixmatch-container">
+            <div class="guide-card">
+                <h3>✨ Panduan Mix & Match</h3>
+                <p id="instruction-text">Silahkan pilih Karakter Utama untuk memulai petualangan gayamu.</p>
+            </div>
+            <div id="gender-step" class="selection-wrapper">
+            <div class="gender-card" onclick="initApp('male')">
+                <img src="{{ asset('assets/image/imgMixmatch/pria/mancard.jpeg') }}" alt="Male">
+                <p>MALE CHARACTER</p>
+            </div>
+            <div class="gender-card" onclick="initApp('female')">
+                <img src="{{ asset('assets/image/imgMixmatch/wanita/womancard.jpeg') }}" alt="Female">
+                <p>FEMALE CHARACTER</p>
             </div>
         </div>
-    </div>
 
-    <div class="main-content-layout">
+        <div id="workspace" class="workspace-layout" style="display: none;">
         
-        <div id="col-left" class="side-panel hidden">
-            <h4>Atasan</h4>
-            <div class="scroll-container">
-                <div class="item-card" onclick="selectItem(this, 'Kemeja Black', 'Rp 189k')">
-                    <img src="{{ asset('assets/image/item/top1.png') }}">
-                </div>
-                <div class="item-card" onclick="selectItem(this, 'White Tee', 'Rp 120k')">
-                    <img src="{{ asset('assets/image/item/top2.png') }}">
+            <aside class="panel side-panel">
+                <div class="panel-header"><h4>ATASAN</h4></div>
+                <div id="list-atasan" class="item-list"></div>
+            </aside>
+
+        <main class="mannequin-frame">
+            <div class="gender-switcher" onclick="switchGender()" title="Switch Gender">
+                <img id="switch-icon" src="" alt="Alternative Character">
+            </div>
+
+            <div class="drop-area" id="drop-zone" 
+                 ondragover="allowDrop(event)" 
+                 ondragleave="clearHighlight()" 
+                 ondrop="onDrop(event)">
+                
+                <img id="base-model" class="layer-base" src="">
+                <img id="layer-bawahan" class="layer-item z-bawahan" src="" style="display:none;">
+                <img id="layer-atasan" class="layer-item z-atasan" src="" style="display:none;">
+
+                <div id="info-box" class="info-popup">
+                    <strong id="p-name">Product Name</strong>
+                    <hr>
+                    <a href="#" class="btn-link">Lihat Katalog</a>
                 </div>
             </div>
-        </div>
-
-        <div class="display-area">
             
-            <div id="gender-select-row" class="gender-row">
-                <div class="card-option" onclick="startMixMatch('male')">
-                    <img src="{{ asset('assets/image/imgMixmatch/mancard.jpeg') }}">
-                    <h3>Pria</h3>
-                </div>
-                <div class="card-option" onclick="startMixMatch('female')">
-                    <img src="{{ asset('assets/image/imgMixmatch/womancard.jpeg') }}">
-                    <h3>Wanita</h3>
-                </div>
-            </div>
+            <button class="btn-save" onclick="saveCombination()">❤️ Simpan Kombinasi</button>
+        </main>
 
-            <div id="active-model-frame" class="hidden">
-                <div class="main-model-card shadow-v3">
-                    <button class="btn-switch" onclick="location.reload()">🔄 Ganti Gender</button>
-                    <img id="model-img" src="">
-                </div>
-            </div>
-        </div>
+        <aside class="panel side-panel">
+            <div class="panel-header"><h4>BAWAHAN</h4></div>
+            <div id="list-bawahan" class="item-list"></div>
+        </aside>
 
-        <div id="col-right-group" class="side-panel-group hidden">
-            <div class="side-panel">
-                <h4>Bawahan</h4>
-                <div class="scroll-container">
-                    <div class="item-card" onclick="selectItem(this, 'Chino Grey', 'Rp 210k')">
-                        <img src="{{ asset('assets/image/item/bot1.png') }}">
-                    </div>
-                </div>
-            </div>
-
-            <div id="product-info-box" class="info-card-black hidden">
-                <h4 id="p-title">Detail</h4>
-                <p id="p-price">-</p>
-                <hr>
-                <a href="#" class="katalog-link">Ke Katalog →</a>
-            </div>
-        </div>
-
-    </div>
-</div>              
+    </div> 
+</div>
     </main>
    
     <!-- FOOTER -->
