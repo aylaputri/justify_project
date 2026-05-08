@@ -18,16 +18,48 @@
         <b>OUR<br />CATALOG</b>
       </section>
 
-      <!-- FILTER -->
-      <section class="filter">
-        <div class="dropdown">
-          <select name="kategori">
-            <option value="" disabled selection>Pilih Kategori</option>
-            <option value="celana">Celana</option>
-            <option value="tshirt">T-shirt</option>
-            <option value="longsleeve">Longsleeve</option>
-          </select>
-        </div>
+      <!-- FILTER KATEGORI-->
+      <section class="filter-container">
+          <div class="dropdown">
+              <select name="kategori">
+                  <option value="" disabled selected>Kategori</option>
+                  <option value="celana">Celana</option>
+                  <option value="tshirt">T-shirt</option>
+                  <option value="longsleeve">Longsleeve</option>
+              </select>
+              <img src="{{ asset('assets/icon/kategori-filter.svg') }}" alt="filter icon">
+          </div>
+
+          <div class="dropdown">
+              <select name="sorting">
+                  <option value="" disabled selected>Sorting</option>
+                  <option value="hargaTertinggi">Harga Tertinggi</option>
+                  <option value="hargaTerendah">Harga Terendah</option>
+              </select>
+              <img src="{{ asset('assets/icon/icon-sorting.svg') }}" alt="filter icon">
+          </div>
+
+          <div class="dropdown">
+              <select name="size">
+                  <option value="" disabled selected>Size</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+              </select>
+              <img src="{{ asset('assets/icon/ruler-filter.svg') }}" alt="filter icon">
+          </div>
+
+          <div class="dropdown">
+              <select name="colors">
+                  <option value="" disabled selected>Colors</option>
+                  <option value="hitam">Hitam</option>
+                  <option value="coklat">Coklat</option>
+                  <option value="pink">Pink</option>
+              </select>
+              <img src="{{ asset('assets/icon/color-filter.svg') }}" alt="filter icon">
+          </div>
+      </section>
 
         <!-- SIZE -->
         <div class="size">
@@ -37,7 +69,6 @@
             <span>M</span>
             <span>L</span>
             <span>XL</span>
-            <span>XXL</span>
           </div>
         </div>
       </section>
