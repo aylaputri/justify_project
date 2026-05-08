@@ -51,11 +51,14 @@ function renderWorkspace() {
     const folder = (currentGender === 'male') ? 'pria' : 'wanita';
     const altFolder = (currentGender === 'male') ? 'wanita' : 'pria';
 
-    // 1. Ganti Manekin Dasar (Path sesuai screenshot asset kamu)
-    document.getElementById('base-model').src = `/assets/image/imgMixmatch/${folder}/mancard.jpeg`;
+    const currentFileName = (currentGender === 'male') ? 'mancard.jpeg' : 'womancard.jpeg';
+    const altFileName = (currentGender === 'male') ? 'womancard.jpeg' : 'mancard.jpeg';
 
-    // 2. Ganti Ikon Switch ke Karakter Lawan Jenis (Revisi diskusi terakhir)
-    document.getElementById('switch-icon').src = `/assets/image/imgMixmatch/${altFolder}/mancard.jpeg`;
+    // 1. Ganti Manekin Dasar 
+    document.getElementById('base-model').src = `/assets/image/imgMixmatch/${folder}/${currentFileName}`;
+
+    // 2. Ganti Ikon Switch ke Karakter Lawan Jenis 
+    document.getElementById('switch-icon').src = `/assets/image/imgMixmatch/${altFolder}/${altFileName}`;
 
     // 3. Reset Layer Baju & Detail
     document.getElementById('layer-atasan').style.display = 'none';
