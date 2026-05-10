@@ -299,21 +299,16 @@
 
     </div>
 
-    <!-- BUY BUTTON -->
+   <!-- BUY BUTTON -->
     <div class="modal-buy">
 
-      <a href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world">
+        <a class="cart-btn">
+            <img src="{{ asset('assets/icon/cart.svg') }}">
+        </a>
 
-        <button class="buy-btn">
-
-          <img src="../image/icon/buy.svg">
-
-          Buy on Shopee
-
-        </button>
-
-      </a>
-
+        <a href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world" class="checkout-btn">
+          Check Out
+        </a>
     </div>
 
   </div>
