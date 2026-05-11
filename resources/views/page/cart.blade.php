@@ -70,48 +70,6 @@
 
         </div>
 
-        <!-- CARD 2 -->
-        <div class="cart-card" data-price="225000">
-
-            <!-- CHECKBOX -->
-            <input type="checkbox" class="cart-check">
-
-            <!-- IMAGE -->
-            <div class="cart-image">
-                <img src="{{ asset('image/baju2.jpg') }}" alt="Product">
-            </div>
-
-            <!-- INFO -->
-            <div class="cart-info">
-
-                <h3>SAVIOR WORLD PEGASUS</h3>
-
-                <p>Rp 225.000</p>
-
-                <div class="cart-action">
-
-                    <!-- QTY -->
-                    <div class="qty-box">
-
-                        <button class="minus-btn">-</button>
-
-                        <span class="qty">1</span>
-
-                        <button class="plus-btn">+</button>
-
-                    </div>
-
-                    <!-- DELETE -->
-                    <button class="delete-btn">
-                        <img src="{{ asset('assets/icon/trash.svg') }}" alt="Delete">
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </section>
 
     <!-- ORDER SUMMARY -->
