@@ -1,0 +1,333 @@
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#fff;
+}
+
+main{
+    margin-top:90px;
+    padding:0 18px 220px;
+
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+/* HEADER */
+.header-checkout{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:64px;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.back-btn{
+    position:absolute;
+    left:20px;
+    display:flex;
+    align-items:center;
+}
+
+.back-btn img{
+    width:24px;
+    height:24px;
+}
+
+.header-checkout h1{
+    margin:0;
+    color:white;
+    font-size:16px;
+    font-weight:700;
+}
+
+/* SECTION */
+.checkout-section{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.checkout-section h2{
+    margin:0;
+    font-size:15px;
+}
+
+.checkout-box{
+    background:#e6e6e6;
+    border-radius:8px;
+    padding:16px;
+}
+
+/* ADDRESS */
+.address-box,
+.shipping-box,
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.address-box p,
+.shipping-info h3,
+.total-row span
+.payment-box span{
+    margin:0;
+    font-size:13px;
+}
+
+.address-box img{
+    width:12px;
+}
+
+/* PAYMENT */
+.payment-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.payment-box img{
+    width:32px;
+    height: 12px;
+}
+
+/* ORDER */
+.order-card{
+    display:flex;
+    gap:14px;
+}
+
+.order-image img{
+    width:85px;
+    height:100px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.order-info{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.order-info h3{
+    margin:0;
+    font-size:13px;
+}
+
+.order-info p,
+.shipping-info p{
+    margin:0;
+    font-size:11px;
+}
+
+/* ACTION */
+.order-action,
+.qty-box{
+    display:flex;
+    align-items:center;
+}
+
+.order-action{
+    gap:10px;
+}
+
+.qty-box{
+    gap:10px;
+    background:white;
+    border-radius:8px; 
+    padding:5px 12px;
+}
+
+.qty-box button,
+.delete-btn{
+    border:none;
+    background:none;
+    cursor:pointer;
+}
+
+.qty-box button{
+    font-size:14px;
+}
+
+.qty-box span{
+    font-size:12px;
+    font-weight:600;
+}
+
+.delete-btn img{
+    width:16px;
+}
+
+/* SHIPPING */
+.shipping-box{
+    align-items:flex-start;
+    gap:12px;
+}
+
+.shipping-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.shipping-price{
+    font-size:14px;
+    font-weight:600;
+}
+
+/* TOTAL PAYMENY*/
+.total-box{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+/* BOTTOM PAYMENT*/
+.bottom-payment{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    border-top:1px solid #ddd;
+    padding:16px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-sizing:border-box;
+    box-shadow:0 -4px 14px rgba(0,0,0,.08);
+}
+
+.bottom-left{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.bottom-left span{
+    font-size:11px;
+    color:#666;
+}
+
+.bottom-left h2{
+    margin:0;
+    font-size:18px;
+}
+
+.bottom-left p{
+    margin:0;
+    font-size:9px;
+    color:#888;
+    line-height:1.5;
+    max-width:170px;
+}
+
+.pay-btn{
+    border:none;
+    border-radius:10px;
+    background:black;
+    color:white;
+    padding:13px 22px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* DESKTOP */
+@media (min-width:768px){
+
+   main{
+        margin-top:120px;
+        padding:0 50px 260px;
+        gap:30px;
+    }
+
+    /* HEADER */
+    .header-checkout{
+        height:90px;
+    }
+
+    .back-btn{
+        left:35px;
+    }
+
+    .back-btn img{
+        width:28px;
+        height:28px;
+    }
+
+    .header-checkout h1{
+        font-size:24px;
+    }
+
+    .checkout-section h2{
+        font-size:20px;
+    }
+
+    .checkout-box{
+        padding:22px;
+    }
+
+    .address-box p,
+    .payment-box span,
+    .shipping-info h3{
+        font-size:16px;
+    }
+
+    .payment-box img{
+        width:50px;
+    }
+
+    .order-image img{
+        width:115px;
+        height:135px;
+    }
+
+    .order-info h3{
+        font-size:16px;
+    }
+
+    .order-info p,
+    .shipping-info p{
+        font-size:13px;
+    }
+
+    .qty-box button{
+        font-size:16px;
+    }
+
+    .qty-box span{
+        font-size:14px;
+    }
+
+    .shipping-price,
+    .total-row span{
+        font-size:15px;
+    }
+
+    .bottom-payment{
+        padding:18px 50px;
+    }
+
+    .bottom-left h2{
+        font-size:24px;
+    }
+
+    .bottom-left p{
+        font-size:11px;
+        max-width:380px;
+    }
+
+    .pay-btn{
+        padding:14px 34px;
+        font-size:15px;
+    }
+}

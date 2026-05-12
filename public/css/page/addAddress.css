@@ -1,0 +1,301 @@
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#fff;
+}
+
+main{
+    margin-top:90px;
+    padding:0 18px 220px;
+
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+/* HEADER */
+.header-addAddress{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:64px;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.back-btn{
+    position:absolute;
+    left:20px;
+    display:flex;
+    align-items:center;
+}
+
+.back-btn img{
+    width:24px;
+    height:24px;
+}
+
+.header-addAddress h1{
+    margin:0;
+    color:white;
+    font-size:16px;
+    font-weight:700;
+}
+
+/* SECTION */
+.form-section{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.form-section h2{
+    margin:0;
+    font-size:15px;
+}
+
+.required-text,
+.info-text{
+    margin:0;
+    font-size:11px;
+    color:#8f8f8f;
+    line-height:1.5;
+}
+
+/* FORM */
+.checkout-form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+/* INPUT */
+.input-group{
+    background:#e6e6e6;
+    border-radius:8px;
+    padding:16px;
+}
+
+.input-group input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:none;
+    font-size:13px;
+    color:black;
+    font-family:'Poppins',sans-serif;
+}
+
+.input-group input::placeholder,
+.phone-wrapper input::placeholder{
+    color:#9d9d9d;
+}
+
+/* ADDRESS */
+.textarea-group{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.textarea-group small{
+    font-size:11px;
+    color:#9d9d9d;
+}
+
+/* PHONE */
+.phone-wrapper{
+    display:flex;
+    gap:12px;
+}
+
+.country-code{
+    min-width:90px;
+    background:#e6e6e6;
+    border-radius:8px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    padding:16px;
+}
+
+.country-code span{
+    font-size:13px;
+}
+
+.flag-id{
+    width:26px;
+    height:16px;
+    overflow:hidden;
+    border-radius:2px;
+}
+
+.flag-id .red{
+    height:50%;
+    background:red;
+}
+
+.flag-id .white{
+    height:50%;
+    background:white;
+}
+
+.phone-wrapper input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:#e6e6e6;
+    border-radius:8px;
+    padding:16px;
+    font-size:13px;
+    font-family:'Poppins',sans-serif;
+}
+
+/* SHIPPING TITLE */
+.shipping-title{
+    margin-top:18px !important;
+}
+
+/* BOTTOM ACTION */
+.bottom-action{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    border-top:1px solid #ddd;
+    display:flex;
+    gap:14px;
+    padding:16px 18px;
+    box-sizing:border-box;
+    box-shadow:0 -4px 14px rgba(0,0,0,.08);
+}
+
+.bottom-action button{
+    flex:1;
+    border-radius:10px;
+    padding:13px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:white;
+    border:1px solid black;
+    color:black;
+}
+
+.save-btn{
+    border:none;
+    background:#b1b1b1;
+    color:white;
+}
+
+/* DESKTOP */
+@media (min-width:768px){
+
+    main{
+        margin-top:120px;
+        padding:0 50px 260px;
+        gap:30px;
+    }
+
+    /* HEADER */
+    .header-addAddress{
+        height:90px;
+    }
+
+    .back-btn{
+        left:35px;
+    }
+
+    .back-btn img{
+        width:28px;
+        height:28px;
+    }
+
+    .header-addAddress h1{
+        font-size:24px;
+    }
+
+    /* SECTION */
+    .form-section{
+        gap:18px;
+    }
+
+    .form-section h2{
+        font-size:20px;
+    }
+
+    .required-text,
+    .info-text{
+        font-size:13px;
+    }
+
+    .checkout-form{
+        gap:18px;
+    }
+
+    /* INPUT */
+    .input-group{
+        padding:22px;
+        border-radius:10px;
+    }
+
+    .input-group input{
+        font-size:16px;
+    }
+
+    .textarea-group small{
+        font-size:13px;
+    }
+
+    /* PHONE */
+    .phone-wrapper{
+        gap:16px;
+    }
+
+    .country-code{
+        min-width:120px;
+        padding:22px;
+        border-radius:10px;
+    }
+
+    .country-code span{
+        font-size:16px;
+    }
+
+    .flag-id{
+        width:36px;
+        height:22px;
+    }
+
+    .phone-wrapper input{
+        padding:22px;
+        border-radius:10px;
+        font-size:16px;
+    }
+
+    .shipping-title{
+        margin-top:24px !important;
+    }
+
+    /* BOTTOM */
+    .bottom-action{
+        justify-content:center;
+        gap:20px;
+        padding:18px 50px;
+    }
+
+    .bottom-action button{
+        max-width:240px;
+        padding:14px;
+        font-size:15px;
+    }
+}
