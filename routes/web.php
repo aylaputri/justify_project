@@ -35,4 +35,12 @@ Route::get('/profile', function () {
     return view('page.profile');
 });
 
+Route::get('/checkout', function () {
+    return view('page.checkout');
+});
+
+Route::get('/addAddress', function () {
+    return view('page.addAddress');
+});
+
 ?>

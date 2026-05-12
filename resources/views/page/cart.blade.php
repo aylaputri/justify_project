@@ -103,9 +103,11 @@
                 <h3 id="totalAmount">Rp 0</h3>
             </div>
 
-            <button class="checkout-btn">
-                Check Out
-            </button>
+            <a href="{{ url('/checkout') }}">
+                 <button class="checkout-btn">
+                    Check Out
+                </button>
+            </a>
 
         </div>
 

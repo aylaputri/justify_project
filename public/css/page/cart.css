@@ -17,20 +17,16 @@ main{
     left:0;
     width:100%;
     height:64px;
-
     background:black;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     z-index:1000;
 }
 
 .back-btn{
     position:absolute;
     left:20px;
-
     display:flex;
     align-items:center;
 }
@@ -64,7 +60,7 @@ main{
 
 /* CARD */
 .cart-card{
-    background:#f3f3f3;
+    background:white;
     border-radius:8px;
     display:flex;
     align-items:center;
@@ -124,10 +120,8 @@ main{
 /* QTY */
 .qty-box{
     gap:4px;
-
-    background:#dfdfdf;
+    background:#e6e6e6;
     border-radius:6px;
-
     padding:2px 6px;
 }
 
@@ -205,18 +199,13 @@ main{
 /* BUTTON */
 .checkout-btn{
     width:100%;
-
     border:none;
     border-radius:8px;
-
     background:black;
     color:white;
-
     padding:14px;
-
     font-size:14px;
     font-weight:700;
-
     cursor:pointer;
 }
 
@@ -224,27 +213,28 @@ main{
 @media (min-width:768px){
 
     main{
-        margin-top:140px;
+        margin-top:120px;
+        padding:0 50px 260px;
+        gap:30px;
     }
 
     /* HEADER */
     .header-cart{
-        height:110px;
+        height:90px;
     }
 
     .back-btn{
-        left:40px;
+        left:35px;
     }
 
     .back-btn img{
-        width:34px;
-        height:34px;
+        width:28px;
+        height:28px;
     }
 
     .header-cart h1{
-        font-size:26px;
+        font-size:24px;
     }
-
     /* PAGE */
     .cart-page{
         flex-direction:row;
