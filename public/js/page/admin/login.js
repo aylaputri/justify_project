@@ -39,14 +39,14 @@ togglePassword.addEventListener('click', function () {
         passwordField.type = 'text';
 
         // GANTI ICON MATA TERBUKA
-        eyeIcon.src = '';
+        eyeIcon.src = '../../assets/icon/mata-kebuka-putih.svg';
 
     } else {
 
         passwordField.type = 'password';
 
         // GANTI ICON MATA TERTUTUP
-        eyeIcon.src = '';
+        eyeIcon.src = '../../assets/icon/mata-ketutup-putih.svg';
 
     }
 

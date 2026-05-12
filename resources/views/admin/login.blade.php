@@ -92,7 +92,7 @@
 
                                 <!-- GANTI NANTI ICONNYA -->
                                 <img
-                                    src=""
+                                    src="{{ asset('assets/icon/mata-ketutup-putih.svg') }}"
                                     alt="Toggle Password"
                                     class="eye-icon"
                                     id="eyeIcon">
@@ -132,7 +132,7 @@
 
             <!-- GANTI NANTI FOTO LOGIN -->
             <img
-                src="{{ asset('assets/image/login-image.png') }}"
+                src="{{ asset('assets/image/gambar-login.jpeg') }}"
                 alt="Login Image"
                 class="login-image">
 
@@ -144,7 +144,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 
 <script src="{{ asset('js/page/admin/login.js') }}"></script>
 
