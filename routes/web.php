@@ -6,6 +6,15 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+use App\Http\Controllers\Admin\AuthController;
+Route::get('/admin/login', [AuthController::class, 'showLogin']);
+Route::post('/admin/login', [AuthController::class, 'login']);
+Route::get('/admin/logout', [AuthController::class, 'logout']);
+
+Route::get('/admin/dashboard', function () {
+    return 'DASHBOARD ADMIN';
+})->middleware('admin');
+
 Route::get('/home', function () {
     return view('page.home');
 });
