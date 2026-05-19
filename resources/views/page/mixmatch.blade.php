@@ -29,42 +29,42 @@
                 <p>FEMALE CHARACTER</p>
             </div>
         </div>
-
-        <div id="workspace" class="workspace-layout" style="display: none;">    
-            <aside class="side-panel">
-                <div class="panel-header">
-                    <h4>ATASAN</h4>
-                </div>
-                <div id="list-atasan" class="item-list"></div>
-            </aside>
-
-        <section class="mannequin-frame">
-            <div class="gender-switcher" onclick="switchGender()" title="Switch Gender">
-                <img id="switch-icon" src="" alt="Alternative Character">
-            </div>
-            <div class="drop-area" id="drop-zone" 
-                ondragover="allowDrop(event)" 
-                ondragleave="clearHighlight()" 
-                ondrop="onDrop(event)">
-                <img id="base-model" class="layer-base" src="">
-                <img id="layer-bawahan" class="layer-item z-bawahan" src="" style="display:none;">
-                <img id="layer-atasan" class="layer-item z-atasan" src="" style="display:none;">
-                <div id="info-box" class="info-popup">
-                    <strong id="p-name">Product Name</strong>
-                    <hr>
-                    <a href="#" class="btn-link">Lihat Katalog</a>
-                </div>
-            </div>
-            <button class="btn-save" onclick="saveCombination()">❤️ Simpan Kombinasi</button>
-        </section>
     
-        <aside class="side-panel">
-            <div class="panel-header">
-                <h4>BAWAHAN</h4>
+    <div id="workspace" class="workspace-layout" style="display: none;">    
+    <aside class="side-panel">
+        <div class="panel-header">
+            <h4>ATASAN</h4>
+        </div>
+        <div id="list-atasan" class="item-list"></div>
+    </aside>
+
+    <section class="mannequin-frame">
+        <div class="gender-switcher" onclick="switchGender()" title="Switch Gender">
+            <img id="switch-icon" src="" alt="Alternative Character">
+        </div>
+        <div class="drop-area" id="drop-zone" 
+            ondragover="allowDrop(event)" 
+            ondragleave="clearHighlight()" 
+            ondrop="onDrop(event)">
+            <img id="base-model" class="layer-base" src="">
+            <img id="layer-bawahan" class="layer-item z-bawahan" src="" style="display:none;">
+            <img id="layer-atasan" class="layer-item z-atasan" src="" style="display:none;">
+            <div id="info-box" class="info-popup">
+                <strong id="p-name">Product Name</strong>
+                <hr>
+                <a href="#" class="btn-link">Lihat Katalog</a>
             </div>
-            <div id="list-bawahan" class="item-list"></div>
-        </aside>
-        </div> 
+        </div>
+        <button class="btn-save" onclick="saveCombination()">❤️ Simpan Kombinasi</button>
+    </section>
+
+    <aside class="side-panel">
+        <div class="panel-header">
+            <h4>BAWAHAN</h4>
+        </div>
+        <div id="list-bawahan" class="item-list"></div>
+    </aside>
+</div>        
     </div>
 </main>
    
