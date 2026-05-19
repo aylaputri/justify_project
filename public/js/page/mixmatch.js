@@ -116,7 +116,6 @@ function onDrop(e) {
     clearHighlight();
     const imgSrc = e.dataTransfer.getData("imgSrc");
     const type = e.dataTransfer.getData("type");
-    const name = e.dataTransfer.getData("name");
 
     if (type === 'atasan') {
         const layer = document.getElementById('layer-atasan');
