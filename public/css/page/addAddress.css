@@ -4,10 +4,10 @@ body{
     background:#fff;
 }
 
+/* MAIN */
 main{
     margin-top:90px;
-    padding:0 18px 220px;
-
+    padding:0 18px 90px;
     display:flex;
     flex-direction:column;
     gap:24px;
@@ -50,12 +50,13 @@ main{
 .form-section{
     display:flex;
     flex-direction:column;
-    gap:12px;
+    gap:16px;
 }
 
 .form-section h2{
     margin:0;
-    font-size:15px;
+    font-size:16px;
+    font-weight:700;
 }
 
 .required-text,
@@ -63,20 +64,32 @@ main{
     margin:0;
     font-size:11px;
     color:#8f8f8f;
-    line-height:1.5;
+    line-height:1.6;
 }
 
 /* FORM */
 .checkout-form{
     display:flex;
     flex-direction:column;
-    gap:14px;
+    gap:16px;
+}
+
+/* FIELD */
+.field-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.field-group label{
+    font-size:13px;
+    font-weight:600;
 }
 
 /* INPUT */
 .input-group{
     background:#e6e6e6;
-    border-radius:8px;
+    border-radius:10px;
     padding:16px;
 }
 
@@ -86,24 +99,11 @@ main{
     outline:none;
     background:none;
     font-size:13px;
-    color:black;
     font-family:'Poppins',sans-serif;
 }
 
 .input-group input::placeholder,
 .phone-wrapper input::placeholder{
-    color:#9d9d9d;
-}
-
-/* ADDRESS */
-.textarea-group{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.textarea-group small{
-    font-size:11px;
     color:#9d9d9d;
 }
 
@@ -128,21 +128,9 @@ main{
     font-size:13px;
 }
 
-.flag-id{
-    width:26px;
+.flag-id img{
+    width:24px;
     height:16px;
-    overflow:hidden;
-    border-radius:2px;
-}
-
-.flag-id .red{
-    height:50%;
-    background:red;
-}
-
-.flag-id .white{
-    height:50%;
-    background:white;
 }
 
 .phone-wrapper input{
@@ -156,12 +144,12 @@ main{
     font-family:'Poppins',sans-serif;
 }
 
-/* SHIPPING TITLE */
+/* SHIPPING */
 .shipping-title{
-    margin-top:18px !important;
+    margin-top:10px !important;
 }
 
-/* BOTTOM ACTION */
+/* BOTTOM */
 .bottom-action{
     position:fixed;
     bottom:0;
@@ -178,8 +166,8 @@ main{
 
 .bottom-action button{
     flex:1;
-    border-radius:10px;
-    padding:13px;
+    border-radius:8px;
+    padding:14px;
     font-size:13px;
     font-weight:700;
     cursor:pointer;
@@ -202,7 +190,7 @@ main{
 
     main{
         margin-top:120px;
-        padding:0 50px 260px;
+        padding:0 50px 120px;
         gap:30px;
     }
 
@@ -226,34 +214,39 @@ main{
 
     /* SECTION */
     .form-section{
-        gap:18px;
+        gap:20px;
     }
 
     .form-section h2{
-        font-size:20px;
+        font-size:22px;
     }
 
     .required-text,
     .info-text{
-        font-size:13px;
+        font-size:14px;
     }
 
     .checkout-form{
-        gap:18px;
+        gap:20px;
+    }
+
+    /* FIELD */
+    .field-group{
+        gap:10px;
+    }
+
+    .field-group label{
+        font-size:15px;
     }
 
     /* INPUT */
     .input-group{
         padding:22px;
-        border-radius:10px;
+        border-radius:12px;
     }
 
     .input-group input{
         font-size:16px;
-    }
-
-    .textarea-group small{
-        font-size:13px;
     }
 
     /* PHONE */
@@ -264,38 +257,38 @@ main{
     .country-code{
         min-width:120px;
         padding:22px;
-        border-radius:10px;
+        border-radius:12px;
     }
 
     .country-code span{
         font-size:16px;
     }
 
-    .flag-id{
+    .flag-id img{
         width:36px;
         height:22px;
     }
 
     .phone-wrapper input{
         padding:22px;
-        border-radius:10px;
+        border-radius:12px;
         font-size:16px;
     }
 
     .shipping-title{
-        margin-top:24px !important;
+        margin-top:20px !important;
     }
 
     /* BOTTOM */
     .bottom-action{
         justify-content:center;
         gap:20px;
-        padding:18px 50px;
+        padding:18px;
     }
 
     .bottom-action button{
-        max-width:240px;
-        padding:14px;
+        max-width:194px;
+        padding:20px 40px;
         font-size:15px;
     }
 }

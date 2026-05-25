@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -43,4 +44,9 @@ Route::get('/addAddress', function () {
     return view('page.addAddress');
 });
 
+Route::get('/checkout', function () {
+    return view('page.checkout');
+});
+
+Route::post('/checkout/payment', [PaymentController::class, 'payment']);
 ?>

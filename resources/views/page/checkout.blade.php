@@ -42,7 +42,7 @@
     </section>
 
     <!-- PAYMENT -->
-    <section class="checkout-section">
+    <!-- <section class="checkout-section">
 
         <h2>Payment</h2>
 
@@ -54,7 +54,7 @@
 
         </div>
 
-    </section>
+    </section> -->
 
     <!-- ORDER SUMMARY -->
     <section class="checkout-section">
@@ -183,10 +183,18 @@
 
     </div>
 
-    <button class="pay-btn">
+    <button class="pay-btn" id="pay-button">
 
         Pay Now
 
     </button>
 
 </div>
+
+@push('scripts')
+<script src="{{ asset('js/page/checkout.js') }}"></script>
+<script
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}">
+</script>
+@endpush
