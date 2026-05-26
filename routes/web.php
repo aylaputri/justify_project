@@ -12,7 +12,7 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 Route::get('/admin/logout', [AuthController::class, 'logout']);
 
 Route::get('/admin/dashboard', function () {
-    return 'DASHBOARD ADMIN';
+    return view('admin.dashboard');
 })->middleware('admin');
 
 Route::get('/home', function () {

@@ -90,9 +90,8 @@
                                 class="toggle-password"
                                 id="togglePassword">
 
-                                <!-- GANTI NANTI ICONNYA -->
                                 <img
-                                    src="{{ asset('assets/icon/mata-ketutup-putih.svg') }}"
+                                    src="{{ asset('assets/icon/mata-ketutup-hitam.svg') }}"
                                     alt="Toggle Password"
                                     class="eye-icon"
                                     id="eyeIcon">
@@ -118,7 +117,9 @@
                         class="login-button"
                         id="loginButton"
                         disabled>
+
                         Log In
+
                     </button>
 
                 </form>
@@ -130,7 +131,6 @@
         <!-- RIGHT -->
         <div class="login-right">
 
-            <!-- GANTI NANTI FOTO LOGIN -->
             <img
                 src="{{ asset('assets/image/gambar-login.jpeg') }}"
                 alt="Login Image"
