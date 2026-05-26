@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('last_login')->nullable();
+
+            $table->rememberToken();
         });
     }
 

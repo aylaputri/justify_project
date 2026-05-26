@@ -9,7 +9,8 @@ class ImageSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('product_images')->insert([
+
+        $images = [
             [
                 'id_variant' => 1, // Ribbed Ribbon Crop Top
                 'image_url' => 'assets/image/imgMixmatch/wanita/atscewe1.png',
@@ -170,7 +171,25 @@ class ImageSeeder extends Seeder
                 'image_url' => 'assets/image/imgMixmatch/pria/bwhcowo4.png',
                 'is_main' => 1,
             ],
+        ];
 
-        ]);
+        foreach ($images as $image) {
+
+            DB::table('product_images')
+                ->updateOrInsert(
+
+                    [
+                        'id_variant' => $image['id_variant'],
+                        'image_url' => $image['image_url'],
+                    ],
+
+                    [
+                        'is_main' => $image['is_main'],
+                    ]
+
+                );
+        }
+
     }
+
 }

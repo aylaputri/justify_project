@@ -19,7 +19,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
 
-            $table->string('product_name', 150);
+            $table->string('product_name', 150)->unique();
 
             $table->enum('gender', [
                 'Perempuan',

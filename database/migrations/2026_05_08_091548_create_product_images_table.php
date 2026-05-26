@@ -21,6 +21,11 @@ return new class extends Migration
 
             $table->string('image_url', 255);
             $table->boolean('is_main')->default(false);
+
+            $table->unique([
+                'id_variant',
+                'image_url'
+            ]);
         });
     }
 

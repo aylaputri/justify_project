@@ -9,9 +9,84 @@ Route::get('/admin/login', [AuthController::class, 'showLogin']);
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::get('/admin/logout', [AuthController::class, 'logout']);
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware('admin');
+/* ========================================
+   ADMIN DASHBOARD
+======================================== */
+
+Route::middleware('admin')->group(function () {
+
+    // DASHBOARD
+    Route::get(
+        '/admin/dashboard',
+        function () {
+            return view('admin.dashboard');
+        }
+    );
+
+    // PROFILE
+    Route::get(
+        '/admin/profile',
+        function () {
+            return view('admin.profile');
+        }
+    );
+
+    // CUSTOMERS
+    Route::get(
+        '/admin/customers',
+        function () {
+            return view('admin.customers');
+        }
+    );
+
+    // STAFFS
+    Route::get(
+        '/admin/staffs',
+        function () {
+            return view('admin.staffs');
+        }
+    );
+
+    // ORDERS
+    Route::get(
+        '/admin/orders',
+        function () {
+            return view('admin.orders');
+        }
+    );
+
+    // MANAGE HOME
+    Route::get(
+        '/admin/manage-home',
+        function () {
+            return view('admin.manageHome');
+        }
+    );
+
+    // MANAGE CATALOG
+    Route::get(
+        '/admin/manage-catalog',
+        function () {
+            return view('admin.manageCatalog');
+        }
+    );
+
+    // MANAGE MIXMATCH
+    Route::get(
+        '/admin/manage-mixmatch',
+        function () {
+            return view('admin.manageMixmatch');
+        }
+    );
+
+    // REPORTS
+    Route::get(
+        '/admin/reports',
+        function () {
+            return view('admin.reports');
+        }
+    );
+});
 
 Route::get('/home', function () {
     return view('page.home');

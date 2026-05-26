@@ -9,7 +9,8 @@ class VariantSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('product_variants')->insert([
+
+        $variants = [
             // 1. Ribbed Ribbon Crop Top
             [
                 'id_product' => 1,
@@ -18,8 +19,6 @@ class VariantSeeder extends Seeder
                 'price' => 125000,
                 'stock' => 15,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 1,
@@ -28,8 +27,6 @@ class VariantSeeder extends Seeder
                 'price' => 125000,
                 'stock' => 10,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 2. 3D Floral Bustier Dress
@@ -40,8 +37,6 @@ class VariantSeeder extends Seeder
                 'price' => 350000,
                 'stock' => 5,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 2,
@@ -50,8 +45,6 @@ class VariantSeeder extends Seeder
                 'price' => 350000,
                 'stock' => 8,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 3. Off-Shoulder Knit Top
@@ -62,8 +55,6 @@ class VariantSeeder extends Seeder
                 'price' => 145000,
                 'stock' => 12,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 3,
@@ -72,8 +63,6 @@ class VariantSeeder extends Seeder
                 'price' => 145000,
                 'stock' => 14,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 4. Ruched Milkmaid Top
@@ -84,8 +73,6 @@ class VariantSeeder extends Seeder
                 'price' => 135000,
                 'stock' => 20,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 5. Asymmetrical Floral Cami
@@ -96,8 +83,6 @@ class VariantSeeder extends Seeder
                 'price' => 115000,
                 'stock' => 10,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 6. Lilac Floral Corset Top
@@ -108,8 +93,6 @@ class VariantSeeder extends Seeder
                 'price' => 165000,
                 'stock' => 7,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 7. Daisy Pattern A-Line Skirt
@@ -120,8 +103,6 @@ class VariantSeeder extends Seeder
                 'price' => 150000,
                 'stock' => 12,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 7,
@@ -130,8 +111,6 @@ class VariantSeeder extends Seeder
                 'price' => 150000,
                 'stock' => 15,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 8. Plaid Halter Corset Top
@@ -142,8 +121,6 @@ class VariantSeeder extends Seeder
                 'price' => 140000,
                 'stock' => 9,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 9. Lace Trim Ruffle Blouse
@@ -154,8 +131,6 @@ class VariantSeeder extends Seeder
                 'price' => 155000,
                 'stock' => 11,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 10. Plaid Gingham Camisole
@@ -166,8 +141,6 @@ class VariantSeeder extends Seeder
                 'price' => 110000,
                 'stock' => 18,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 11. Yellow Floral Lace-Up Top
@@ -178,8 +151,6 @@ class VariantSeeder extends Seeder
                 'price' => 170000,
                 'stock' => 8,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 12. Polkadot Ribbon Tie Top
@@ -190,8 +161,6 @@ class VariantSeeder extends Seeder
                 'price' => 130000,
                 'stock' => 13,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 13. Gingham Plaid Bustier
@@ -202,8 +171,6 @@ class VariantSeeder extends Seeder
                 'price' => 160000,
                 'stock' => 10,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 14. Cream Wide-Leg Trousers
@@ -214,8 +181,6 @@ class VariantSeeder extends Seeder
                 'price' => 240000,
                 'stock' => 14,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 14,
@@ -224,8 +189,6 @@ class VariantSeeder extends Seeder
                 'price' => 240000,
                 'stock' => 9,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 15. Vintage Floral Maxi Skirt
@@ -236,8 +199,6 @@ class VariantSeeder extends Seeder
                 'price' => 210000,
                 'stock' => 11,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 16. Floral Mini Skort with Ties
@@ -248,8 +209,6 @@ class VariantSeeder extends Seeder
                 'price' => 175000,
                 'stock' => 16,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 17. Denim Pleated Mini Skirt
@@ -260,8 +219,6 @@ class VariantSeeder extends Seeder
                 'price' => 195000,
                 'stock' => 10,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 17,
@@ -270,8 +227,6 @@ class VariantSeeder extends Seeder
                 'price' => 195000,
                 'stock' => 12,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 18. Red Gingham Pleated Skirt
@@ -282,8 +237,6 @@ class VariantSeeder extends Seeder
                 'price' => 165000,
                 'stock' => 20,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 19. Two-Tone Plaid Mini Skirt
@@ -294,8 +247,6 @@ class VariantSeeder extends Seeder
                 'price' => 185000,
                 'stock' => 8,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 20. Y2K Pleated Low-Rise Skirt
@@ -306,8 +257,6 @@ class VariantSeeder extends Seeder
                 'price' => 190000,
                 'stock' => 7,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 21. High-Waist Wide Jeans
@@ -318,8 +267,6 @@ class VariantSeeder extends Seeder
                 'price' => 280000,
                 'stock' => 15,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 21,
@@ -328,8 +275,6 @@ class VariantSeeder extends Seeder
                 'price' => 280000,
                 'stock' => 11,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 22. Dark Blue Denim Shorts
@@ -340,8 +285,6 @@ class VariantSeeder extends Seeder
                 'price' => 150000,
                 'stock' => 25,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 23. Acid Wash Denim Bermuda
@@ -352,8 +295,6 @@ class VariantSeeder extends Seeder
                 'price' => 175000,
                 'stock' => 13,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             
             // 24. Classic Slim-Fit Black Shirt
@@ -364,8 +305,6 @@ class VariantSeeder extends Seeder
                 'price' => 225000,
                 'stock' => 18,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 24,
@@ -374,8 +313,6 @@ class VariantSeeder extends Seeder
                 'price' => 225000,
                 'stock' => 7,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 25. Smart Casual Shirt & Sweater
@@ -386,8 +323,6 @@ class VariantSeeder extends Seeder
                 'price' => 299000,
                 'stock' => 6,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 26. Layered Black Open Shirt
@@ -398,8 +333,6 @@ class VariantSeeder extends Seeder
                 'price' => 245000,
                 'stock' => 12,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 27. Olive Green Cuban Shirt
@@ -410,8 +343,6 @@ class VariantSeeder extends Seeder
                 'price' => 195000,
                 'stock' => 22,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 27,
@@ -420,8 +351,6 @@ class VariantSeeder extends Seeder
                 'price' => 195000,
                 'stock' => 15,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 28. Flannel Plaid Oversized Shirt
@@ -432,8 +361,6 @@ class VariantSeeder extends Seeder
                 'price' => 260000,
                 'stock' => 10,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             
             // 29. Monogram Tailored Shorts
@@ -444,8 +371,6 @@ class VariantSeeder extends Seeder
                 'price' => 210000,
                 'stock' => 8,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 30. Army Green Multi-Pocket Cargo
@@ -456,8 +381,6 @@ class VariantSeeder extends Seeder
                 'price' => 320000,
                 'stock' => 14,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id_product' => 30,
@@ -466,8 +389,6 @@ class VariantSeeder extends Seeder
                 'price' => 320000,
                 'stock' => 9,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 31. Ripped Black Denim Shorts
@@ -478,8 +399,6 @@ class VariantSeeder extends Seeder
                 'price' => 180000,
                 'stock' => 11,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // 32. Classic 3-Stripes Trackpants
@@ -490,9 +409,31 @@ class VariantSeeder extends Seeder
                 'price' => 275000,
                 'stock' => 20,
                 'status' => 'Ready',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
-        ]);
+        ];
+
+        foreach ($variants as $variant) {
+
+            DB::table('product_variants')
+                ->updateOrInsert(
+
+                    [
+                        'id_product' => $variant['id_product'],
+                        'color' => $variant['color'],
+                        'size' => $variant['size'],
+                    ],
+
+                    [
+                        'price' => $variant['price'],
+
+                        'stock' => $variant['stock'],
+
+                        'status' => $variant['status'],
+
+                        'updated_at' => now(),
+                    ]
+
+                );
+        }
     }
 }

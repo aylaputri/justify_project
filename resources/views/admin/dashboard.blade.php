@@ -26,6 +26,10 @@
         <!-- DASHBOARD BODY -->
         <section class="dashboard-body">
 
+            <h1 class="page-title">
+                Dashboard Admin
+            </h1>
+
             <!-- CARDS -->
             <div class="dashboard-cards">
 

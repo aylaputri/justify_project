@@ -1,0 +1,43 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.dashboard-content { /* jangan diubah margin dan paddingnya*/
+    margin-left: 250px;
+
+    padding: 0 40px 20px 40px;
+}
+
+.page-content { /* jangan diubah marginnya, dan gausah ditambah padding*/
+    margin-top: 34px;
+}
+
+.page-title { /* jangan ditambah margin/padding */
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.content-card {
+    width: 100%;
+
+    background-color: white;
+
+    border-radius: 24px;
+}
+
+.content-card p {
+    font-size: 15px;
+
+    color: #666666;
+}

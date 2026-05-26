@@ -27,7 +27,7 @@ body {
    CONTENT
 ========================= */
 
-.dashboard-content {
+.dashboard-content { /* jangan diubah margin dan paddingnya*/
     flex: 1;
 
     margin-left: 250px;
@@ -39,15 +39,18 @@ body {
    BODY
 ========================= */
 
-.dashboard-body {
+.dashboard-body { /* jangan diubah marginnya dan jangan ditambah padding*/
     display: flex;
     flex-direction: column;
 
     gap: 30px;
 
     margin-top: 34px;
-    
-    padding-top: 10px;
+}
+
+.page-title { /* jangan ditambah margin dan padding*/
+    font-size: 32px;
+    font-weight: 700;
 }
 
 /* =========================

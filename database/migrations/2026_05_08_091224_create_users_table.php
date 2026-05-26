@@ -25,6 +25,9 @@ return new class extends Migration
             $table->string('profile_picture', 255)->nullable();
 
             $table->boolean('is_active')->default(true);
+
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

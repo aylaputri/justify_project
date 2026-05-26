@@ -39,6 +39,12 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique([
+                'id_product',
+                'color',
+                'size'
+            ]);
         });
     }
 
