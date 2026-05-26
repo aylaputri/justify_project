@@ -35,6 +35,10 @@ class AuthController extends Controller
             );
         }
 
+        $admin->last_login = now();
+
+        $admin->save();
+
         session([
             'admin' => $admin->id_admin,
             'admin_name' => $admin->name,

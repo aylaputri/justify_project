@@ -1,4 +1,6 @@
-/* RESET */
+/* =========================
+   RESET
+========================= */
 
 * {
     margin: 0;
@@ -9,9 +11,16 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: black;
+    overflow-x: hidden;
 }
 
-/* MOBILE FIRST */
+main {
+    margin-top: 0;
+}
+
+/* =========================
+   DESKTOP FIRST
+========================= */
 
 .login-page {
     width: 100%;
@@ -22,61 +31,117 @@ body {
 .login-container {
     width: 100%;
     min-height: 100vh;
+    display: flex;
 }
 
-/* LEFT */
+/* =========================
+   LEFT SIDE
+========================= */
 
 .login-left {
-    width: 100%;
+    width: 50%;
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 24px;
+
+    padding: 0 56px;
+
+    overflow: hidden;
 }
 
 .login-box {
     width: 100%;
+    max-width: 460px;
 }
+
+/* =========================
+   LOGO
+========================= */
 
 .login-logo {
     width: 72px;
-    margin-bottom: 40px;
+    display: block;
+    margin: 0 auto 36px;
 }
+
+/* =========================
+   TITLE
+========================= */
 
 .login-title {
     color: white;
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 700;
-    margin-bottom: 40px;
+    text-align: center;
+    line-height: 1.2;
+
+    margin-bottom: 42px;
 }
 
+/* =========================
+   INPUT
+========================= */
+
 .input-group {
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .input-label {
     display: block;
+
     color: white;
+
     font-size: 14px;
+    font-weight: 500;
+
     margin-bottom: 10px;
 }
 
 .input-field {
     width: 100%;
     height: 56px;
+
     border-radius: 14px;
-    border: 2px solid #8a8a8a;
-    background-color: #444444;
-    padding: 0 18px;
+    border: 1.5px solid #8d8d8d;
+
+    background-color: #4a4a4a;
+
+    padding: 0 20px;
+
     color: white;
-    font-size: 16px;
+    font-size: 15px;
+
     outline: none;
+
+    transition: 0.2s ease;
 }
 
 .input-field::placeholder {
-    color: #cfcfcf;
+    color: #d4d4d4;
+    font-size: 15px;
 }
+
+.input-field:not(:placeholder-shown) {
+    background-color: white;
+    color: black;
+    border: 1.5px solid white;
+}
+
+.input-field:focus {
+    background-color: white;
+    color: black;
+    border: 1.5px solid white;
+}
+
+.input-field:focus::placeholder {
+    color: #8d8d8d;
+}
+
+/* =========================
+   PASSWORD
+========================= */
 
 .password-wrapper {
     position: relative;
@@ -84,111 +149,241 @@ body {
 
 .toggle-password {
     position: absolute;
-    right: 18px;
+
     top: 50%;
+    right: 20px;
+
     transform: translateY(-50%);
+
     border: none;
     background: none;
+
     cursor: pointer;
 }
 
 .eye-icon {
-    width: 24px;
+    width: 22px;
 }
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
 
 .forgot-password {
     text-align: center;
-    margin-top: 8px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .forgot-password a {
-    color: #4f8cff;
-    font-size: 14px;
     text-decoration: none;
+
+    color: #4f8cff;
+
+    font-size: 13px;
+    font-weight: 500;
 }
+
+/* =========================
+   BUTTON
+========================= */
 
 .login-button {
     width: 100%;
-    height: 58px;
+    height: 56px;
+
     border: none;
     border-radius: 14px;
-    background-color: #b5b5b5;
-    color: black;
-    font-size: 18px;
+
+    background-color: #bdbdbd;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 15px;
     font-weight: 600;
+
     cursor: not-allowed;
+
     transition: 0.3s ease;
 }
 
 .login-button.active {
     background-color: white;
+    color: black;
     cursor: pointer;
 }
 
+/* =========================
+   ERROR
+========================= */
+
 .error-message {
     width: 100%;
-    padding: 14px;
+
+    padding: 10px 14px;
+
     border-radius: 10px;
-    background-color: #ffdddd;
-    color: red;
-    margin-bottom: 24px;
-    font-size: 14px;
+
+    background-color: #ffdede;
+    color: #d8000c;
+
+    margin-bottom: 18px;
+
+    font-size: 12px;
+    font-weight: 500;
 }
 
-/* RIGHT */
+/* =========================
+   RIGHT SIDE
+========================= */
 
 .login-right {
-    display: none;
+    width: 50%;
+    height: 100vh;
+
+    position: fixed;
+
+    top: 0;
+    right: 0;
 }
 
-/* DESKTOP */
+.login-image {
+    width: 100%;
+    height: 100%;
 
-@media screen and (min-width: 768px) {
+    object-fit: cover;
+
+    border-top-left-radius: 38px;
+    border-bottom-left-radius: 38px;
+
+    display: block;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 768px) {
 
     .login-container {
-        display: flex;
-    }
-
-    .login-left {
-        width: 52%;
-        padding: 60px;
-    }
-
-    .login-box {
-        max-width: 520px;
-    }
-
-    .login-logo {
-        width: 90px;
-        margin-bottom: 50px;
-    }
-
-    .login-title {
-        font-size: 56px;
-        margin-bottom: 50px;
-    }
-
-    .input-field {
-        height: 62px;
-        font-size: 18px;
-    }
-
-    .login-button {
-        height: 64px;
-        font-size: 22px;
-    }
-
-    .login-right {
-        width: 48%;
-        height: 100vh;
         display: block;
     }
 
-    .login-image {
+    /* LEFT */
+
+    .login-left {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        min-height: 100vh;
+
+        padding: 80px 24px 40px;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        overflow: hidden;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 320px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* LOGO */
+
+    .login-logo {
+        width: 54px;
+
+        order: 99;
+
+        margin:
+            120px auto 0;
+    }
+
+    /* TITLE */
+
+    .login-title {
+        order: 1;
+
+        font-size: 20px;
+
+        margin-bottom: 26px;
+    }
+
+    /* FORM */
+
+    form {
+        order: 2;
+    }
+
+    /* INPUT */
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+
+    .input-label {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .input-field {
+        height: 42px;
+
+        font-size: 12px;
+
+        padding: 0 14px;
+
+        border-radius: 10px;
+    }
+
+    .input-field::placeholder {
+        font-size: 12px;
+    }
+
+    /* PASSWORD */
+
+    .toggle-password {
+        right: 14px;
+    }
+
+    .eye-icon {
+        width: 18px;
+    }
+
+    /* FORGOT */
+
+    .forgot-password {
+        margin-bottom: 20px;
+    }
+
+    .forgot-password a {
+        font-size: 12px;
+    }
+
+    /* BUTTON */
+
+    .login-button {
+        height: 44px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+    }
+
+    /* ERROR */
+
+    .error-message {
+        font-size: 11px;
+        padding: 9px 12px;
+    }
+
+    /* RIGHT */
+
+    .login-right {
+        display: none;
     }
 
 }

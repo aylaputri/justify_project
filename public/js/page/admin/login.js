@@ -39,7 +39,7 @@ togglePassword.addEventListener('click', function () {
         passwordField.type = 'text';
 
         // GANTI ICON MATA TERBUKA
-        eyeIcon.src = '../../assets/icon/mata-kebuka-putih.svg';
+        eyeIcon.src = '../../assets/icon/mata-kebuka-hitam.svg';
 
     } else {
 
