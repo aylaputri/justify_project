@@ -4,7 +4,7 @@
 
 @push('style')
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{{ asset('css/page/addAddress.css') }}">
 
 @endpush
@@ -14,7 +14,7 @@
 <!-- HEADER -->
 <header class="header-addAddress">
 
-    <a href="{{ url('/cart') }}" class="back-btn">
+    <a href="{{ url('/checkout') }}" class="back-btn">
         <img src="{{ asset('assets/icon/back.svg') }}" alt="Back">
     </a>
 
@@ -22,13 +22,12 @@
 
 </header>
 
+<!-- MAIN -->
+<main>
 
-<main class="addAddress-page">
-
-    <!-- RECIPIENT -->
     <section class="form-section">
 
-        <h2>Recipents Information</h2>
+        <h2>Recipients Information</h2>
 
         <p class="required-text">
             *Required fields.
@@ -37,35 +36,52 @@
         <form class="checkout-form">
 
             <!-- NAME -->
-            <div class="input-group">
-                <input type="text" placeholder="Name*">
+            <div class="field-group">
+
+                <label>Name</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Enter your name"  required>
+                </div>
+
             </div>
 
             <!-- PHONE -->
-            <div class="phone-wrapper">
+            <div class="field-group">
 
-                <div class="country-code">
+                <label>Phone Number</label>
 
-                    <div class="flag-id">
-                        <div class="red"></div>
-                        <div class="white"></div>
+                <div class="phone-wrapper">
+
+                    <div class="country-code">
+
+                        <div class="flag-id">
+                            <img src="{{ asset('assets/icon/indonesia flag.svg') }}" alt="flag">
+                        </div>
+
+                        <span>+62</span>
+
                     </div>
 
-                    <span>+62</span>
+                    <input type="number" placeholder="812xxxxxxxx"  required>
 
                 </div>
-
-                <input type="text" placeholder="Phone Number*">
 
             </div>
 
             <!-- EMAIL -->
-            <div class="input-group">
-                <input type="email" placeholder="Email*">
+            <div class="field-group">
+
+                <label>Email</label>
+
+                <div class="input-group">
+                    <input type="email" placeholder="Enter your email">
+                </div>
+
             </div>
 
             <p class="info-text">
-                This address will be used to send you order and bill details.
+                This address will be used to send your order and billing details.
             </p>
 
             <!-- SHIPPING -->
@@ -73,26 +89,59 @@
                 Shipping Address
             </h2>
 
-            <div class="input-group">
-                <input type="text" placeholder="Address Tittle (Optional)">
+            <!-- ADDRESS TITLE -->
+            <div class="field-group">
+
+                <label>Address Title</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Home / Office">
+                </div>
+
             </div>
 
-            <div class="input-group textarea-group">
+            <!-- ADDRESS -->
+            <div class="field-group">
 
-                <input type="text" placeholder="Address*">
+                <label>Address</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Street, apartment, etc"  required>
+                </div>
 
             </div>
 
-            <div class="input-group">
-                <input type="text" placeholder="City*">
+            <!-- CITY -->
+            <div class="field-group">
+
+                <label>City</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Enter city"  required>
+                </div>
+
             </div>
 
-            <div class="input-group">
-                <input type="text" placeholder="Province*">
+            <!-- PROVINCE -->
+            <div class="field-group">
+
+                <label>Province</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Enter province"  required>
+                </div>
+
             </div>
 
-            <div class="input-group">
-                <input type="text" placeholder="postal code">
+            <!-- POSTAL -->
+            <div class="field-group">
+
+                <label>Postal Code</label>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Enter postal code"  required>
+                </div>
+
             </div>
 
         </form>
@@ -111,7 +160,7 @@
     <button class="save-btn" disabled>
         Save
     </button>
-
+<script src="{{ asset('js/page/addAddress.js') }}"></script>
 </div>
 
 @endsection

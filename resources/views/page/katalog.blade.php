@@ -21,96 +21,177 @@
       <!-- FILTER KATEGORI-->
       <section class="filter-container">
           <div class="dropdown">
-              <select name="kategori">
+              <select name="kategori" id="kategori">
                   <option value="" disabled selected>Kategori</option>
-                  <option value="celana">Celana</option>
-                  <option value="tshirt">T-shirt</option>
-                  <option value="longsleeve">Longsleeve</option>
+                  <option value="Dress"
+                  {{ request('kategori') == 'Dress' ? 'selected' : '' }}>
+                  Dress
+                </option>
+                  <option value="Croptop"
+                  {{ request('kategori') == 'Croptop' ? 'selected' : '' }}>
+                  Crop top
+                  </option>
+                  <option value="OffShoulder"
+                  {{ request('kategori') == 'OffShoulder' ? 'selected' : '' }}>
+                  Off-Shoulder
+                  </option>
+                  <option value="Blouse"
+                  {{ request('kategori') == 'Blouse' ? 'selected' : '' }}>
+                  Blouse
+                  </option>
+                  <option value="Tanktop"
+                  {{ request('kategori') == 'Tanktop' ? 'selected' : '' }}>
+                  Tanktop
+                  </option>
+                  <option value="Corset"
+                  {{ request('kategori') == 'Corset' ? 'selected' : '' }}>
+                  Corset
+                  </option>
+                  <option value="T-Shirt"
+                  {{ request('kategori') == 'T-shirt' ? 'selected' : '' }}>
+                  T-Shirt
+                  </option>
+                  <option value="Shirt"
+                  {{ request('kategori') == 'Shirt' ? 'selected' : '' }}>
+                  Shirt
+                  </option>
+                  <option value="Jeans"
+                  {{ request('kategori') == 'Jeans' ? 'selected' : '' }}>
+                  Jeans
+                  </option>
+                  <option value="Skirt"
+                  {{ request('kategori') == 'Skirt' ? 'selected' : '' }}>
+                  Skirt
+                  </option>
+                  <option value="Skort"
+                  {{ request('kategori') == 'Skort' ? 'selected' : '' }}>
+                  Skort
+                  </option>
+                  <option value="Shorts"
+                  {{ request('kategori') == 'Shorts' ? 'selected' : '' }}>
+                  Shorts
+                  </option>
+                  <option value="Cargo"
+                  {{ request('kategori') == 'Cargo' ? 'selected' : '' }}>
+                  Cargo
+                  </option>
+                  <option value="Rippedjeans"
+                  {{ request('kategori') == 'Rippedjeans' ? 'selected' : '' }}>
+                  Ripped jeans
+                  </option>
               </select>
               <img src="{{ asset('assets/icon/kategori-filter.svg') }}" alt="filter icon">
           </div>
 
           <div class="dropdown">
-              <select name="sorting">
-                  <option value="" disabled selected>Sorting</option>
-                  <option value="hargaTertinggi">Harga Tertinggi</option>
-                  <option value="hargaTerendah">Harga Terendah</option>
+              <select name="sorting" id="sorting">
+                <option value="" disabled selected>Sorting</option>
+                <option value="hargaTertinggi"
+                {{ request('sorting') == 'hargaTertinggi' ? 'selected' : '' }}>
+                Harga Tertinggi
+                </option>
+
+                <option value="hargaTerendah"
+                {{ request('sorting') == 'hargaTerendah' ? 'selected' : '' }}>
+                Harga Terendah
+                </option>
               </select>
               <img src="{{ asset('assets/icon/icon-sorting.svg') }}" alt="filter icon">
           </div>
 
           <div class="dropdown">
-              <select name="size">
+              <select name="size" id="size">
                   <option value="" disabled selected>Size</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
+                  <option value="S"
+                  {{ request('size') == 'S' ? 'selected' : '' }}>
+                  S
+                  </option>
+
+                  <option value="M"
+                  {{ request('size') == 'M' ? 'selected' : '' }}>
+                  M
+                  </option>
+
+                  <option value="L"
+                  {{ request('size') == 'L' ? 'selected' : '' }}>
+                  L
+                  </option>
+
+                  <option value="XL"
+                  {{ request('size') == 'XL' ? 'selected' : '' }}>
+                  XL
+                  </option>
               </select>
               <img src="{{ asset('assets/icon/ruler-filter.svg') }}" alt="filter icon">
           </div>
 
           <div class="dropdown">
-              <select name="colors">
+              <select name="colors" id="colors">
                   <option value="" disabled selected>Colors</option>
-                  <option value="hitam">Hitam</option>
-                  <option value="coklat">Coklat</option>
-                  <option value="pink">Pink</option>
+                  <option value="Hitam"
+                  {{ request('colors') == 'Hitam' ? 'selected' : '' }}>
+                  Hitam
+                  </option>
+
+                  <option value="Coklat"
+                  {{ request('colors') == 'Coklat' ? 'selected' : '' }}>
+                  Coklat
+                  </option>
+
+                  <option value="Pink"
+                  {{ request('colors') == 'Pink' ? 'selected' : '' }}>
+                  Pink
+                  </option>
               </select>
               <img src="{{ asset('assets/icon/color-filter.svg') }}" alt="filter icon">
           </div>
       </section>
 
-        <!-- SIZE -->
-        <div class="size">
-          <p>Size</p>
-          <div class="size-list">
-            <span>S</span>
-            <span>M</span>
-            <span>L</span>
-            <span>XL</span>
-          </div>
-        </div>
-      </section>
+      <div class="filter-actions">
+
+          <a href="/katalog" class="reset-btn">
+              Reset Filter
+          </a>
+
+      </div>
 
       <!-- PRODUCTS CARD -->
-      <section class="products">
-        <div class="card">
-          <img src="../image/Foto/Baju-coklat-belakang.jpg">
-          <h3>SAVIOR WORLD TALES OF GOD'S AND HEROES</h3>
-          <div class="info">
-            <span>T-Shirt</span>
-            <span>Rp 200.000</span>
-          </div>
-        </div>
+<section class="products">
 
-        <div class="card">
-          <img src="../image/Foto/Baju-coklat-depan.jpg">
-          <h3>SAVIOR WORLD TALES OF GOD'S AND HEROES</h3>
-          <div class="info">
-            <span>T-Shirt</span>
-            <span>Rp 200.000</span>
-          </div>
-        </div>
+@foreach($products as $product)
 
-        <div class="card">
-          <img src="../image/Foto/Baju-hitam-belakang.jpg">
-          <h3>SAVIOR WORLD THE PEGASUS</h3>
-          <div class="info">
-            <span>LongSleeve</span>
-            <span>Rp 225.000</span>
-          </div>
-        </div>
+@php
+    $variant = $product->variants->first();
+    $image = $variant?->images->first();
+@endphp
 
-        <div class="card">
-          <img src="../image/Foto/Baju-hitam-depan.jpg">
-          <h3>NSAVIOR WORLD THE PEGASUS</h3>
-          <div class="info">
-            <span class="jenis">LongSleeve</span>
-            <span class="harga">Rp 225.000</span>
-          </div>
-        </div>
-      </section>
+<div class="card product-card"
+    data-name="{{ $product->product_name }}"
+    data-description="{{ $product->description }}"
+    data-price="{{ number_format($variant->price ?? 0, 0, ',', '.') }}"
+    data-category="{{ $product->category->category_name }}"
+    data-image="{{ asset($image->image_url ?? 'assets/default.jpg') }}"
+    data-sizes="{{ $product->variants->pluck('size')->unique()->implode(',') }}"
+    data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}">
+
+    <img src="{{ asset($image->image_url ?? 'assets/default.jpg') }}" alt="product">
+
+
+    <h3>{{ $product->product_name }}</h3>
+
+    <div class="info">
+      <span>{{ $product->category->category_name }}</span>
+
+      <span>
+        Rp {{ number_format($variant->price ?? 0, 0, ',', '.') }}
+      </span>
+    </div>
+
+</div>
+
+@endforeach
+
+</section>
     </main>
 
 <!-- PRODUCTS DETAILS -->
@@ -133,40 +214,31 @@
 
         <!-- LEFT IMAGE -->
         <div class="product-image">
-          <img src="../image/Foto/Baju-coklat-belakang.jpg">
+          <img id="modalImage" src="">
         </div>
 
         <!-- RIGHT INFO -->
         <div class="product-info">
 
-          <h3>SAVIOR WORLD TALES OF GOD'S AND HEROES</h3>
+          <h3 id="modalName"></h3>
 
           <div class="info">
-            <span>T-Shirt</span>
-            <span>Rp 200.000</span>
+            <span id="modalCategory"></span>
+            <span id="modalPrice"></span>
           </div>
 
           <!-- SIZE -->
           <div class="product-section">
             <p><b>Available Sizes:</b></p>
 
-            <div class="size-details">
-              <span>S</span>
-              <span>M</span>
-              <span>L</span>
-              <span>XL</span>
-            </div>
+            <div class="size-details" id="modalSizes"></div>
           </div>
 
           <!-- COLOR -->
           <div class="product-section">
             <p><b>Available Colors:</b></p>
 
-            <div class="color-details">
-              <span>White</span>
-              <span>Black</span>
-              <span>Brown</span>
-            </div>
+            <div class="color-details" id="modalColors"></div>
           </div>
 
           <!-- SMART SIZING -->
@@ -275,21 +347,7 @@
 
             <p><b>Description</b></p>
 
-            <p>
-              <b>Savior “Tales of Gods and Heroes”</b>
-              <br>
-              Material: Australian Breeze Cotton 16s
-              <br>
-              Cutting: Boxy Oversize Fit
-              <br>
-              Texture: Soft, breathable, and slightly structured
-              <br>
-              Neck: Ribbed
-              <br>
-              Print: High-quality screen print
-              <br>
-              Finishing: Clean stitching
-            </p>
+            <p id="modalDescription"></p>
 
           </div>
 
@@ -306,7 +364,7 @@
             <img src="{{ asset('assets/icon/cart.svg') }}">
         </a>
 
-        <a href="https://shopee.co.id/eldinosaurrawr?entryPoint=ShopBySearch&searchKeyword=savior%20world" class="checkout-btn">
+        <a href="/checkout" class="checkout-btn" id="checkoutBtn">
           Check Out
         </a>
     </div>

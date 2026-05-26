@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\KatalogController; 
 
 use App\Http\Controllers\Admin\AuthController;
 Route::get('/admin/login', [AuthController::class, 'showLogin']);
@@ -19,9 +17,8 @@ Route::get('/home', function () {
     return view('page.home');
 });
 
-Route::get('/katalog', function () {
-    return view('page.katalog');
-});
+// ROUTE KATALOG YANG SUDAH DIPERBAIKI (Hanya butuh 1 baris ini saja)
+Route::get('/katalog', [KatalogController::class, 'index']);
 
 Route::get('/mixmatch', function () {
     return view('page.mixmatch');
@@ -35,12 +32,13 @@ Route::get('/profile', function () {
     return view('page.profile');
 });
 
-Route::get('/checkout', function () {
-    return view('page.checkout');
-});
-
 Route::get('/addAddress', function () {
     return view('page.addAddress');
 });
 
+Route::get('/checkout', function () {
+    return view('page.checkout');
+});
+
+Route::post('/checkout/payment', [PaymentController::class, 'payment']);
 ?>
