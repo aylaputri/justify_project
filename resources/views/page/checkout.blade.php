@@ -29,81 +29,24 @@
 
         <h2>Address</h2>
 
-        <a href="{{ url('/addAddress') }}">
-            <div class="checkout-box address-box">
+        <div class="checkout-box address-box" id="addressBox">
 
-                <p>Add Address</p>
+            <p>Add Address</p>
 
-                <img src="{{ asset('assets/icon/arrow-right.svg') }}" alt="Arrow">
-
-            </div>
-        </a>
-
-    </section>
-
-    <!-- PAYMENT -->
-    <!-- <section class="checkout-section">
-
-        <h2>Payment</h2>
-
-        <div class="checkout-box payment-box">
-
-            <img src="{{ asset('assets/icon/qris.svg') }}" alt="Qris">
-
-            <span>Qris</span>
+            <img src="{{ asset('assets/icon/arrow-right.svg') }}" alt="Arrow">
 
         </div>
 
-    </section> -->
+    </section>
 
     <!-- ORDER SUMMARY -->
     <section class="checkout-section">
 
         <h2>Order Summary</h2>
 
-        <div class="checkout-box">
+        <div class="checkout-box" id="checkoutItems">
 
-            <div class="order-card">
-
-                <!-- IMAGE -->
-                <div class="order-image">
-
-                    <img src="{{ asset('image/baju.jpg') }}" alt="Product">
-
-                </div>
-
-                <!-- INFO -->
-                <div class="order-info">
-
-                    <h3>Nama Produk</h3>
-
-                    <p>Size, Warna</p>
-
-                    <div class="order-action">
-
-                        <!-- QTY -->
-                        <div class="qty-box">
-
-                            <button>-</button>
-
-                            <span>1</span>
-
-                            <button>+</button>
-
-                        </div>
-
-                        <!-- DELETE -->
-                        <button class="delete-btn">
-
-                            <img src="{{ asset('assets/icon/trash.svg') }}" alt="Delete">
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <!-- AUTO DARI JS -->
 
         </div>
 
@@ -112,7 +55,7 @@
     <!-- SHIPPING -->
     <section class="checkout-section">
 
-        <h2>Shipping Methode</h2>
+        <h2>Shipping Method</h2>
 
         <div class="checkout-box shipping-box">
 
@@ -124,7 +67,9 @@
 
             </div>
 
-            <span class="shipping-price">Rp 30.000</span>
+            <span class="shipping-price" id="shippingCost">
+                Rp 0
+            </span>
 
         </div>
 
@@ -139,17 +84,11 @@
 
             <div class="total-row">
 
-                <span>Total</span>
-
-                <span>Harga</span>
-
-            </div>
-
-            <div class="total-row">
-
                 <span>Subtotal Product</span>
 
-                <span>Harga</span>
+                <span id="subtotalProduct">
+                    Rp 0
+                </span>
 
             </div>
 
@@ -157,7 +96,19 @@
 
                 <span>Shipping</span>
 
-                <span>Rp 30.000</span>
+                <span id="shippingTotal">
+                    Rp 0
+                </span>
+
+            </div>
+
+            <div class="total-row">
+
+                <strong>Total</strong>
+
+                <strong id="totalProduct">
+                    Rp 0
+                </strong>
 
             </div>
 
@@ -174,7 +125,9 @@
 
         <span>Total</span>
 
-        <h2>Rp</h2>
+        <h2 id="finalTotal">
+            Rp 0
+        </h2>
 
         <p>
             This is the final step, after you touching
@@ -191,10 +144,16 @@
 
 </div>
 
+@endsection
+
+
 @push('scripts')
+
 <script src="{{ asset('js/page/checkout.js') }}"></script>
+
 <script
     src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key="{{ config('midtrans.client_key') }}">
 </script>
+
 @endpush

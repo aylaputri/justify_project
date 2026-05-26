@@ -1,107 +1,231 @@
-const cartCards = document.querySelectorAll('.cart-card');
+const cartItemsContainer = document.getElementById("cartItems");
 
-const selectedItemsEl = document.getElementById('selectedItems');
-const subtotalEl = document.getElementById('subtotal');
-const totalAmountEl = document.getElementById('totalAmount');
+const selectedItemsEl = document.getElementById("selectedItems");
+const subtotalEl = document.getElementById("subtotal");
+const totalAmountEl = document.getElementById("totalAmount");
+
+const checkoutBtn = document.querySelector(".checkout-btn");
 
 const DELIVERY = 15000;
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 // FORMAT RUPIAH
 function formatRupiah(number){
-    return 'Rp ' + number.toLocaleString('id-ID');
+
+    return "Rp " + number.toLocaleString("id-ID");
+
+}
+
+// RENDER CART
+function renderCart(){
+
+    cartItemsContainer.innerHTML = "";
+
+    if(cart.length === 0){
+
+        cartItemsContainer.innerHTML = `
+            <p>Keranjang masih kosong</p>
+        `;
+
+        updateCart();
+
+        return;
+    }
+
+    cart.forEach((item, index) => {
+
+        cartItemsContainer.innerHTML += `
+        
+        <div class="cart-card" data-index="${index}">
+
+            <input type="checkbox" class="cart-check">
+
+            <div class="cart-image">
+                <img src="${item.image}">
+            </div>
+
+            <div class="cart-info">
+
+                <h3>${item.name}</h3>
+
+                <p>${formatRupiah(item.price)}</p>
+
+                <small>
+                    Size: ${item.size} |
+                    Color: ${item.color}
+                </small>
+
+                <div class="cart-action">
+
+                    <div class="qty-box">
+
+                        <button class="minus-btn">-</button>
+
+                        <span class="qty">${item.qty}</span>
+
+                        <button class="plus-btn">+</button>
+
+                    </div>
+
+                    <button class="delete-btn">
+                        <img src="/assets/icon/trash.svg">
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    initEvents();
 }
 
 // UPDATE TOTAL
 function updateCart(){
 
+    const cards = document.querySelectorAll(".cart-card");
+
     let selectedItems = 0;
     let subtotal = 0;
 
-    cartCards.forEach(card => {
+    cards.forEach(card => {
 
-        const checkbox = card.querySelector('.cart-check');
-        const qtyEl = card.querySelector('.qty');
-
-        const qty = parseInt(qtyEl.innerText);
-        const price = parseInt(card.dataset.price);
+        const checkbox = card.querySelector(".cart-check");
 
         if(checkbox.checked){
 
-            selectedItems += qty;
-            subtotal += price * qty;
+            const index = card.dataset.index;
 
+            const item = cart[index];
+
+            selectedItems += item.qty;
+
+            subtotal += item.price * item.qty;
         }
 
     });
 
-    const total = subtotal + DELIVERY;
-
     selectedItemsEl.innerText = selectedItems;
+
     subtotalEl.innerText = formatRupiah(subtotal);
 
     if(subtotal > 0){
-        totalAmountEl.innerText = formatRupiah(total);
-    } else {
-        totalAmountEl.innerText = 'Rp 0';
-    }
 
+        totalAmountEl.innerText =
+            formatRupiah(subtotal + DELIVERY);
+
+    } else {
+
+        totalAmountEl.innerText = "Rp 0";
+
+    }
 }
 
-// LOOP CARD
-cartCards.forEach(card => {
+// EVENTS
+function initEvents(){
 
-    const checkbox = card.querySelector('.cart-check');
+    const cards = document.querySelectorAll(".cart-card");
 
-    const minusBtn = card.querySelector('.minus-btn');
-    const plusBtn = card.querySelector('.plus-btn');
+    cards.forEach(card => {
 
-    const qtyEl = card.querySelector('.qty');
+        const index = card.dataset.index;
 
-    const deleteBtn = card.querySelector('.delete-btn');
+        const checkbox = card.querySelector(".cart-check");
 
-    // CHECKBOX
-    checkbox.addEventListener('change', updateCart);
+        const plusBtn = card.querySelector(".plus-btn");
 
-    // PLUS
-    plusBtn.addEventListener('click', () => {
+        const minusBtn = card.querySelector(".minus-btn");
 
-        let qty = parseInt(qtyEl.innerText);
+        const deleteBtn = card.querySelector(".delete-btn");
 
-        qty++;
+        // CHECKBOX
+        checkbox.addEventListener("change", updateCart);
 
-        qtyEl.innerText = qty;
+        // PLUS
+        plusBtn.addEventListener("click", () => {
 
-        updateCart();
+            cart[index].qty++;
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+            renderCart();
+        });
+
+        // MINUS
+        minusBtn.addEventListener("click", () => {
+
+            if(cart[index].qty > 1){
+
+                cart[index].qty--;
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
+                );
+
+                renderCart();
+            }
+        });
+
+        // DELETE
+        deleteBtn.addEventListener("click", () => {
+
+            cart.splice(index, 1);
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+            renderCart();
+        });
 
     });
 
-    // MINUS
-    minusBtn.addEventListener('click', () => {
+    updateCart();
+}
 
-        let qty = parseInt(qtyEl.innerText);
+// CHECKOUT
+checkoutBtn.addEventListener("click", () => {
 
-        if(qty > 1){
+    const checkedItems = [];
 
-            qty--;
+    const cards = document.querySelectorAll(".cart-card");
 
-            qtyEl.innerText = qty;
+    cards.forEach(card => {
 
-            updateCart();
+        const checkbox = card.querySelector(".cart-check");
 
+        if(checkbox.checked){
+
+            const index = card.dataset.index;
+
+            checkedItems.push(cart[index]);
         }
-
     });
 
-    // DELETE
-    deleteBtn.addEventListener('click', () => {
+    // KALO GA ADA YG DIPILIH
+    if(checkedItems.length === 0){
 
-        card.remove();
+        alert("Pilih produk terlebih dahulu!");
 
-        updateCart();
+        return;
+    }
 
-    });
+    // SIMPAN KE CHECKOUT
+    localStorage.setItem(
+        "checkout",
+        JSON.stringify(checkedItems)
+    );
 
+    // PINDAH HALAMAN
+    window.location.href = "/checkout";
 });
 
-// PERTAMA KALI
-updateCart();
+renderCart();

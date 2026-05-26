@@ -138,12 +138,35 @@ closeBtn.addEventListener("click", () => {
 // VALIDASI CHECKOUT
 checkoutBtn.addEventListener("click", (e) => {
 
+    e.preventDefault();
+
     if (!selectedSize || !selectedColor) {
 
-        e.preventDefault();
-
         alert("Pilih size dan warna terlebih dahulu!");
+
+        return;
     }
+
+    const product = {
+        name: modalName.innerText,
+        price: parseInt(
+            modalPrice.innerText
+                .replace("Rp", "")
+                .replace(/\./g, "")
+                .trim()
+        ),
+        image: modalImage.src,
+        size: selectedSize,
+        color: selectedColor,
+        qty: 1
+    };
+
+    localStorage.setItem(
+        "checkout",
+        JSON.stringify([product])
+    );
+
+    window.location.href = "/checkout";
 });
 
 // VALIDASI CART
@@ -158,9 +181,51 @@ cartBtn.addEventListener("click", (e) => {
         return;
     }
 
-    alert(
-        "Produk berhasil ditambahkan!\n" +
-        "Size: " + selectedSize +
-        "\nWarna: " + selectedColor
+    const product = {
+
+        name: modalName.innerText,
+
+        price: parseInt(
+            modalPrice.innerText
+            .replace("Rp ", "")
+            .replace(/\./g, "")
+        ),
+
+        image: modalImage.src,
+
+        size: selectedSize,
+
+        color: selectedColor,
+
+        qty: 1
+
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProduct = cart.find(item =>
+
+        item.name === product.name &&
+        item.size === product.size &&
+        item.color === product.color
+
     );
+
+    if(existingProduct){
+
+        existingProduct.qty++;
+
+    } else {
+
+        cart.push(product);
+
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    alert("Produk berhasil ditambahkan!");
+
 });

@@ -26,49 +26,9 @@
 <main class="cart-page">
 
     <!-- CART ITEMS -->
-    <section class="cart-items">
+    <section class="cart-items" id="cartItems">
 
-        <!-- CARD 1 -->
-        <div class="cart-card" data-price="200000">
-
-            <!-- CHECKBOX -->
-            <input type="checkbox" class="cart-check">
-
-            <!-- IMAGE -->
-            <div class="cart-image">
-                <img src="{{ asset('image/baju.jpg') }}" alt="Product">
-            </div>
-
-            <!-- INFO -->
-            <div class="cart-info">
-
-                <h3>SAVIOR WORLD TALES OF GOD'S</h3>
-
-                <p>Rp 200.000</p>
-
-                <div class="cart-action">
-
-                    <!-- QTY -->
-                    <div class="qty-box">
-
-                        <button class="minus-btn">-</button>
-
-                        <span class="qty">1</span>
-
-                        <button class="plus-btn">+</button>
-
-                    </div>
-
-                    <!-- DELETE -->
-                    <button class="delete-btn">
-                        <img src="{{ asset('assets/icon/trash.svg') }}" alt="Delete">
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
+        <!-- AUTO DARI JS -->
 
     </section>
 
@@ -80,18 +40,27 @@
         <div class="summary-content">
 
             <div class="summary-row">
+
                 <span>Selected Items</span>
+
                 <span id="selectedItems">0</span>
+
             </div>
 
             <div class="summary-row">
+
                 <span>Subtotal</span>
+
                 <span id="subtotal">Rp 0</span>
+
             </div>
 
             <div class="summary-row">
+
                 <span>Delivery</span>
+
                 <span>Rp 15.000</span>
+
             </div>
 
         </div>
@@ -99,15 +68,18 @@
         <div class="summary-total">
 
             <div class="total-row">
+
                 <h3>Total Amount</h3>
+
                 <h3 id="totalAmount">Rp 0</h3>
+
             </div>
 
-            <a href="{{ url('/checkout') }}">
-                 <button class="checkout-btn">
-                    Check Out
-                </button>
-            </a>
+            <button class="checkout-btn" id="checkoutBtn">
+
+                Check Out
+
+            </button>
 
         </div>
 
