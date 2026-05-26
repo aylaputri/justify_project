@@ -46,7 +46,7 @@ togglePassword.addEventListener('click', function () {
         passwordField.type = 'password';
 
         // GANTI ICON MATA TERTUTUP
-        eyeIcon.src = '../../assets/icon/mata-ketutup-putih.svg';
+        eyeIcon.src = '../../assets/icon/mata-ketutup-hitam.svg';
 
     }
 
