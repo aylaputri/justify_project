@@ -3,6 +3,8 @@ const kategori = document.getElementById("kategori");
 const size = document.getElementById("size");
 const colors = document.getElementById("colors");
 
+const resetFilter = document.getElementById("resetFilter");
+
 const searchInputs = document.querySelectorAll(".search-box input, #search");
 
 const cards = document.querySelectorAll(".product-card");

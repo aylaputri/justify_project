@@ -130,6 +130,11 @@
                     </select>
                     <img src="{{ asset('assets/icon/color-filter.svg') }}">
                 </div>
+
+                <a href="/katalog" class="reset-btn">
+                    <img src="{{ asset('assets/icon/icon-reset.svg') }}" alt="reset">
+                </a>
+
             </div>
 
             <div class="search-wrapper-desktop">
@@ -138,12 +143,6 @@
                     <img src="{{ asset('assets/icon/search.svg') }}" alt="search">
                 </div>
             </div>
-        </section>
-
-        <section class="filter-actions">
-            <a href="/katalog" class="reset-btn">
-                Reset Filter
-            </a>
         </section>
 
         <section class="products">
