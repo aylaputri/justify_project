@@ -11,7 +11,8 @@ class KatalogController extends Controller
     {
         $products = Product::with([
             'category',
-            'variants.images'
+            'variants.images',
+            'sizeCharts'
         ]);
 
         // FILTER KATEGORI

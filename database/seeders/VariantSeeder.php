@@ -172,25 +172,7 @@ class VariantSeeder extends Seeder
                 'stock' => 10,
                 'status' => 'Ready',
             ],
-
-            // 14. Cream Wide-Leg Trousers
-            [
-                'id_product' => 14,
-                'color' => 'Cream',
-                'size' => 'M',
-                'price' => 240000,
-                'stock' => 14,
-                'status' => 'Ready',
-            ],
-            [
-                'id_product' => 14,
-                'color' => 'Cream',
-                'size' => 'L',
-                'price' => 240000,
-                'stock' => 9,
-                'status' => 'Ready',
-            ],
-
+            
             // 15. Vintage Floral Maxi Skirt
             [
                 'id_product' => 15,

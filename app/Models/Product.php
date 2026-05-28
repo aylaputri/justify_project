@@ -42,4 +42,13 @@ class Product extends Model
             'id_category'
         );
     }
+
+    public function sizeCharts()
+    {
+        return $this->hasMany(
+            SizeChart::class,
+            'id_category',
+            'id_category'
+        );
+    }
 }

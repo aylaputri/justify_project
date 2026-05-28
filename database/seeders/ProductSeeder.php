@@ -90,12 +90,6 @@ class ProductSeeder extends Seeder
                 'description' => 'Atasan bustier seksi motif kotak-kotak biru muda (gingham) dengan detail pita.',
             ],
             [
-                'id_category' => 8, // Shirt
-                'product_name' => "Cream Wide-Leg Trousers",
-                'gender' => 'Perempuan',
-                'description' => 'Celana panjang kain berwarna krem dengan potongan lurus dan longgar.',
-            ],
-            [
                 'id_category' => 10, // Skirt
                 'product_name' => "Vintage Floral Maxi Skirt",
                 'gender' => 'Perempuan',

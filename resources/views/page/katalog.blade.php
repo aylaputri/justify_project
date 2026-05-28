@@ -159,7 +159,8 @@
                     data-category="{{ $product->category->category_name }}"
                     data-image="{{ asset($image->image_url ?? 'assets/default.jpg') }}"
                     data-sizes="{{ $product->variants->pluck('size')->unique()->implode(',') }}"
-                    data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}">
+                    data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}"
+                    data-sizecharts='@json($product->sizeCharts)'>
 
                     <img src="{{ asset($image->image_url ?? 'assets/default.jpg') }}" alt="product">
 
@@ -217,7 +218,7 @@
                                     <div class="smart-sizing-box">
                                         <label>Tinggi Badan</label>
                                         <div class="input-box">
-                                            <input type="number" placeholder="0">
+                                            <input type="number" id="userHeight" placeholder="0">
                                             <span>cm</span>
                                         </div>
                                     </div>
@@ -225,14 +226,14 @@
                                     <div class="smart-sizing-box">
                                         <label>Berat Badan</label>
                                         <div class="input-box">
-                                            <input type="number" placeholder="0">
+                                            <input type="number" id="userWeight" placeholder="0">
                                             <span>kg</span>
                                         </div>
                                     </div>
 
                                     <div class="result-size">
                                         <span>=</span>
-                                        <div class="result-box">-</div>
+                                        <div class="result-box" id="recommendedSize">-</div>
                                     </div>
                                 </div>
                             </div>
@@ -250,26 +251,12 @@
                                     <thead>
                                         <tr>
                                             <th>Size</th>
-                                            <th>Tinggi (cm)</th>
-                                            <th>Lebar bahu (cm)</th>
+                                            <th>Panjang (cm)</th>
+                                            <th>Lebar / Waist (cm)</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>M</td>
-                                            <td>68</td>
-                                            <td>44</td>
-                                        </tr>
-                                        <tr>
-                                            <td>L</td>
-                                            <td>72</td>
-                                            <td>46</td>
-                                        </tr>
-                                        <tr>
-                                            <td>XL</td>
-                                            <td>74</td>
-                                            <td>48</td>
-                                        </tr>
+                                    <tbody id="sizeChartBody">
+                                        
                                     </tbody>
                                 </table>
                             </div>

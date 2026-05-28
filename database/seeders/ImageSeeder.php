@@ -77,11 +77,6 @@ class ImageSeeder extends Seeder
                 'is_main' => 1,
             ],
             [
-                'id_variant' => 18, // Cream Wide-Leg Trousers
-                'image_url' => 'assets/image/imgMixmatch/wanita/bwhcewe1.png',
-                'is_main' => 1,
-            ],
-            [
                 'id_variant' => 20, // Vintage Floral Maxi Skirt
                 'image_url' => 'assets/image/imgMixmatch/wanita/bwhcewe2.png',
                 'is_main' => 1,
