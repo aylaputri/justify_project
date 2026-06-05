@@ -160,7 +160,7 @@
                     data-image="{{ asset($image->image_url ?? 'assets/default.jpg') }}"
                     data-sizes="{{ $product->variants->pluck('size')->unique()->implode(',') }}"
                     data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}"
-                    data-sizecharts='@json($product->sizeCharts)'>
+                    data-sizecharts='@json($product->category->sizeCharts ?? [])'>
 
                     <img src="{{ asset($image->image_url ?? 'assets/default.jpg') }}" alt="product">
 

@@ -1,119 +1,70 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\KatalogController; 
+use App\Http\Controllers\KatalogController;
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ManageCatalogController;
+
 Route::get('/admin/login', [AuthController::class, 'showLogin']);
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::get('/admin/logout', [AuthController::class, 'logout']);
 
-/* ========================================
-   ADMIN DASHBOARD
-======================================== */
-
 Route::middleware('admin')->group(function () {
 
-    // DASHBOARD
-    Route::get(
-        '/admin/dashboard',
-        function () {
-            return view('admin.dashboard');
-        }
-    );
+    Route::get('/admin/dashboard', fn() => view('admin.dashboard'));
 
-    // PROFILE
-    Route::get(
-        '/admin/profile',
-        function () {
-            return view('admin.profile');
-        }
-    );
+    Route::get('/admin/profile', fn() => view('admin.profile'));
 
-    // CUSTOMERS
-    Route::get(
-        '/admin/customers',
-        function () {
-            return view('admin.customers');
-        }
-    );
+    Route::get('/admin/customers', fn() => view('admin.customers'));
 
-    // STAFFS
-    Route::get(
-        '/admin/staffs',
-        function () {
-            return view('admin.staffs');
-        }
-    );
+    Route::get('/admin/staffs', fn() => view('admin.staffs'));
 
-    // ORDERS
-    Route::get(
-        '/admin/orders',
-        function () {
-            return view('admin.orders');
-        }
-    );
+    Route::get('/admin/orders', fn() => view('admin.orders'));
 
-    // MANAGE HOME
-    Route::get(
-        '/admin/manage-home',
-        function () {
-            return view('admin.manageHome');
-        }
-    );
+    Route::get('/admin/manage-home', fn() => view('admin.manageHome'));
 
-    // MANAGE CATALOG
     Route::get(
         '/admin/manage-catalog',
-        function () {
-            return view('admin.manageCatalog');
-        }
+        [ManageCatalogController::class, 'index']
     );
 
-    // MANAGE MIXMATCH
-    Route::get(
-        '/admin/manage-mixmatch',
-        function () {
-            return view('admin.manageMixmatch');
-        }
+    Route::post(
+        '/admin/catalog/store',
+        [ManageCatalogController::class, 'store']
     );
 
-    // REPORTS
-    Route::get(
-        '/admin/reports',
-        function () {
-            return view('admin.reports');
-        }
+    Route::put(
+        '/admin/catalog/update/{id}',
+        [ManageCatalogController::class, 'update']
     );
+
+    Route::delete(
+        '/admin/catalog/delete/{id}',
+        [ManageCatalogController::class, 'destroy']
+    );
+
+    Route::get('/admin/manage-mixmatch', fn() => view('admin.manageMixmatch'));
+
+    Route::get('/admin/reports', fn() => view('admin.reports'));
+
+    Route::get('/admin/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart']);
 });
 
-Route::get('/home', function () {
-    return view('page.home');
-});
+Route::get('/home', fn() => view('page.home'));
 
-// ROUTE KATALOG YANG SUDAH DIPERBAIKI (Hanya butuh 1 baris ini saja)
 Route::get('/katalog', [KatalogController::class, 'index']);
 
-Route::get('/mixmatch', function () {
-    return view('page.mixmatch');
-});
+Route::get('/mixmatch', fn() => view('page.mixmatch'));
 
-Route::get('/cart', function () {
-    return view('page.cart');
-});
+Route::get('/cart', fn() => view('page.cart'));
 
-Route::get('/profile', function () {
-    return view('page.profile');
-});
+Route::get('/profile', fn() => view('page.profile'));
 
-Route::get('/addAddress', function () {
-    return view('page.addAddress');
-});
+Route::get('/addAddress', fn() => view('page.addAddress'));
 
-Route::get('/checkout', function () {
-    return view('page.checkout');
-});
+Route::get('/checkout', fn() => view('page.checkout'));
 
 Route::post('/checkout/payment', [PaymentController::class, 'payment']);
-?>

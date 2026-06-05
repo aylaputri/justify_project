@@ -31,16 +31,464 @@ body {
     font-weight: 700;
 }
 
-.content-card {
-    width: 100%;
-
-    background-color: white;
-
-    border-radius: 24px;
+.page-subtitle {
+    color: #777;
+    margin-top: 5px;
 }
 
-.content-card p {
-    font-size: 15px;
+/* =========================
+   HIDDEN UTILITY
+========================= */
+.hidden {
+    display: none;
+}
 
-    color: #666666;
+/* =========================
+   CATALOG TOP
+========================= */
+.catalog-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+}
+.btn-add {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #14d814;
+    color: black;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-add:hover {
+    background: #11c011;
+}
+
+/* =========================
+   TABLE
+========================= */
+.catalog-wrapper {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,.05);
+}
+.catalog-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.catalog-table th {
+    background: #f4f4f4;
+    text-align: left;
+    padding: 18px;
+}
+.catalog-table td {
+    padding: 18px;
+    border-top: 1px solid #eee;
+}
+.catalog-product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.product-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.no-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+.status-badge {
+    padding: 6px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.edit-btn,
+.delete-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.empty-data {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+/* =========================
+   OVERLAY
+========================= */
+.overlay-details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 16px;
+    overflow-y: auto;
+    z-index: 99999;
+}
+.overlay-details.active {
+    display: flex;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    background: white;
+    width: 366px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+    min-height: 50px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.modal-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+.close {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 16px;
+    transition: background .2s;
+}
+.close:hover {
+    background: #f0f0f0;
+}
+.modal-content {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(90vh - 50px);
+}
+
+/* =========================
+   FORM
+========================= */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+.form-input {
+    width: 100%;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+}
+.form-input:focus {
+    border-color: #333;
+}
+select.form-input {
+    cursor: pointer;
+}
+.form-input.textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
+.image-upload-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.upload-box {
+    border: 1.5px dashed #ccc;
+    border-radius: 8px;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color .2s;
+}
+.upload-box:hover {
+    border-color: #333;
+}
+.upload-inside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 13px;
+}
+.image-preview {
+    min-height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #111;
+}
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* =========================
+   CHECKBOX UKURAN
+========================= */
+.checkbox-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color .2s, background .2s;
+}
+.checkbox-group label:hover {
+    border-color: #333;
+    background: #f5f5f5;
+}
+.checkbox-group input[type="checkbox"] {
+    accent-color: #333;
+    width: 14px;
+    height: 14px;
+}
+.checkbox-group input[type="checkbox"]:checked + span {
+    font-weight: 600;
+}
+
+/* =========================
+   TAG INPUT — Warna
+========================= */
+.tag-input-wrapper {
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-height: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    cursor: text;
+    transition: border-color .2s;
+}
+.tag-input-wrapper:focus-within {
+    border-color: #333;
+}
+.tags-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.tag-item {
+    background: #f0f0f0;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Poppins', sans-serif;
+}
+.tag-remove {
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    color: #888;
+}
+.tag-remove:hover {
+    color: #111;
+}
+.tag-input {
+    border: none;
+    outline: none;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    min-width: 160px;
+    flex: 1;
+    color: #555;
+    padding: 2px 0;
+    background: transparent;
+}
+
+/* =========================
+   SIZE CHART
+========================= */
+.size-chart-table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.chart-header {
+    background: #555;
+    color: white;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+.chart-subheader {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 11px;
+}
+.size-chart-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.size-chart-table th {
+    background: #111;
+    color: white;
+    font-size: 12px;
+    padding: 8px 12px;
+    text-align: center;
+}
+.size-chart-table td {
+    border: 1.5px solid #888;
+    text-align: center;
+    padding: 7px 12px;
+    font-size: 12px;
+    background: #c8c8c8;
+}
+
+/* =========================
+   FOOTER ACTIONS
+========================= */
+.modal-footer-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+.btn-action-cancel {
+    height: 44px;
+    border: none;
+    border-radius: 8px;
+    background: #666;
+    color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background .2s;
+}
+.btn-action-cancel:hover {
+    background: #444;
+}
+.btn-action-save {
+    height: 44px;
+    border: none;
+    border-radius: 8px;
+    background: #00d62e;
+    color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background .2s;
+}
+.btn-action-save:hover {
+    background: #00bb28;
+}
+
+/* =========================
+   DELETE MODAL
+========================= */
+.delete-modal {
+    background: white;
+    width: 300px;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin: auto;
+}
+.delete-modal h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.delete-modal p {
+    font-size: 13px;
+    color: #666;
+}
+.delete-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.delete-actions button {
+    flex: 1;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+#cancelDelete {
+    background: #eee;
+}
+#cancelDelete:hover {
+    background: #ddd;
+}
+#confirmDelete {
+    background: #e53935;
+    color: white;
+}
+#confirmDelete:hover {
+    background: #c62828;
+}
+
+.alert-error {
+    background: #fde8e8;
+    color: #c62828;
+    border: 1px solid #f5c6c6;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
 }
