@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartElement =
         document.getElementById('salesChart');
 
-    if (!chartElement || typeof salesData === 'undefined') {
+    if (!chartElement) {
         return;
     }
+
+    const salesData =
+        window.salesData || [0, 0, 0, 0, 0, 0];
 
     new Chart(chartElement, {
 
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
 
             datasets: [{
+
                 label: 'Penjualan',
 
                 data: salesData,
@@ -37,8 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
 
                 borderRadius: 12,
+
                 borderSkipped: false
+
             }]
+
         },
 
         options: {
@@ -51,10 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 legend: {
                     display: false
-                },
-
-                tooltip: {
-                    enabled: true
                 }
 
             },

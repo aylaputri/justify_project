@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Product;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $totalRevenue = 0;
-        $totalProducts = 0;
+
+        $totalProducts = Product::count();
+
         $totalOrders = 0;
-        $totalCustomers = 0;
-        $totalStaff = 0;
+
+        $totalCustomers = User::count();
+
+        $totalStaff = Admin::count();
 
         $salesChart = [0, 0, 0, 0, 0, 0];
 
@@ -21,7 +28,7 @@ class DashboardController extends Controller
         $recentOrders = [];
 
         return view(
-            'page.admin.dashboard',
+            'admin.dashboard',
             compact(
                 'totalRevenue',
                 'totalProducts',

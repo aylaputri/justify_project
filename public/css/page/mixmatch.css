@@ -91,6 +91,7 @@ body {
     border-radius: 25px; 
     padding: 20px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    transition: all 0.4s ease;
 }
 
 .panel-header h4 {
@@ -232,14 +233,43 @@ body {
 /* Info Box Pop-up Produk */
 .info-popup {
     position: absolute;
-    bottom: 20px;
-    background: rgba(255, 255, 255, 0.95);
+    
+    /* Dorong keluar ke arah kiri luar area maneken */
+    left: -140px; 
+    top: 50%;
+    transform: translateY(-50%); /* Sempurna di tengah-tengah secara vertikal */
+    
+    width: 180px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
     padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    z-index: 5;
-    display: none; 
+    border-radius: 18px;
+    box-shadow: -10px 15px 35px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+    z-index: 99;
     text-align: center;
+    box-sizing: border-box;
+}
+
+/* Dekorasi isi pop-up */
+.info-popup strong {
+    font-size: 0.85rem;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.info-popup hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.btn-link {
+    color: #7f56d9; /* Warna ungu aksen atau sesuaikan */
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
 .btn-save { 
