@@ -6,6 +6,7 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
@@ -34,21 +35,21 @@ Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logo
 // =====================
 Route::middleware('admin')->prefix('admin')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/profile',   fn() => view('admin.profile'))->name('admin.profile');
-    Route::get('/reports',   fn() => view('admin.reports'))->name('admin.reports');
+    Route::get('/dashboard',       [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/profile',         fn() => view('admin.profile'))->name('admin.profile');
+    Route::get('/reports',         fn() => view('admin.reports'))->name('admin.reports');
     Route::get('/manage-mixmatch', fn() => view('admin.manageMixmatch'))->name('admin.manage-mixmatch');
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
     // Staffs
-    Route::get('/staffs',          [StaffController::class, 'index'])->name('staffs.index');
-    Route::get('/staffs/create',   [StaffController::class, 'create'])->name('staffs.create');
-    Route::post('/staffs',         [StaffController::class, 'store'])->name('staffs.store');
-    Route::get('/staffs/{id}/edit',[StaffController::class, 'edit'])->name('staffs.edit');
-    Route::put('/staffs/{id}',     [StaffController::class, 'update'])->name('staffs.update');
-    Route::delete('/staffs/{id}',  [StaffController::class, 'destroy'])->name('staffs.destroy');
+    Route::get('/staffs',           [StaffController::class, 'index'])->name('staffs.index');
+    Route::get('/staffs/create',    [StaffController::class, 'create'])->name('staffs.create');
+    Route::post('/staffs',          [StaffController::class, 'store'])->name('staffs.store');
+    Route::get('/staffs/{id}/edit', [StaffController::class, 'edit'])->name('staffs.edit');
+    Route::put('/staffs/{id}',      [StaffController::class, 'update'])->name('staffs.update');
+    Route::delete('/staffs/{id}',   [StaffController::class, 'destroy'])->name('staffs.destroy');
 
     // Orders
     Route::get('/orders',             [OrderController::class, 'index'])->name('admin.orders');
@@ -124,7 +125,8 @@ Route::get('/logout',   [UserAuthController::class, 'logout'])->name('logout');
 // =====================
 // USER PROTECTED
 // =====================
-Route::middleware('user.auth')->group(function () {
+Route::middleware('user')->group(function () {
+
     Route::get('/home', function () {
         $galleryPath  = public_path('image/Foto');
         $galleryFiles = [];
@@ -138,13 +140,30 @@ Route::middleware('user.auth')->group(function () {
         return view('page.home', compact('galleryFiles'));
     })->name('home');
 
-    Route::get('/katalog',    [KatalogController::class, 'index'])->name('katalog');
-    Route::get('/mixmatch',   fn() => view('page.mixmatch'))->name('mixmatch');
-    Route::get('/cart',       fn() => view('page.cart'))->name('cart');
-    Route::get('/profile',    fn() => view('page.profile'))->name('profile');
-    Route::get('/addAddress', fn() => view('page.addAddress'))->name('addAddress');
-    Route::get('/checkout',   fn() => view('page.checkout'))->name('checkout');
+    Route::get('/katalog',  [KatalogController::class, 'index'])->name('katalog');
+    Route::get('/mixmatch', fn() => view('page.mixmatch'))->name('mixmatch');
+    Route::get('/cart',     fn() => view('page.cart'))->name('cart');
 
+    Route::get('/profile', function () {
+        $userId      = session('user_id');
+        $user        = \App\Models\User::find($userId);
+        $statusCount = [
+            'Pending'    => \App\Models\Order::where('id_user', $userId)->where('status', 'Pending')->count(),
+            'Diproses'   => \App\Models\Order::where('id_user', $userId)->where('status', 'Diproses')->count(),
+            'Dikirim'    => \App\Models\Order::where('id_user', $userId)->where('status', 'Dikirim')->count(),
+            'Selesai'    => \App\Models\Order::where('id_user', $userId)->where('status', 'Selesai')->count(),
+            'Dibatalkan' => \App\Models\Order::where('id_user', $userId)->where('status', 'Dibatalkan')->count(),
+            'Refund'     => \App\Models\Order::where('id_user', $userId)->where('status', 'Refund')->count(),
+        ];
+        return view('page.profile', compact('user', 'statusCount'));
+    })->name('profile');
+
+    // Address
+    Route::get('/address',     [AddressController::class, 'index'])->name('address');
+    Route::get('/addAddress',  [AddressController::class, 'create'])->name('addAddress');
+    Route::post('/addAddress', [AddressController::class, 'store'])->name('addAddress.store');
+
+    Route::get('/checkout',   fn() => view('page.checkout'))->name('checkout');
     Route::post('/checkout/payment', [PaymentController::class, 'payment'])->name('payment.process');
     Route::get('/invoice/{id}',      [PaymentController::class, 'invoice'])->name('payment.invoice');
 });

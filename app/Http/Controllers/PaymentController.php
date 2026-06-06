@@ -169,6 +169,6 @@ class PaymentController extends Controller
             ->where('id_order', $id)
             ->firstOrFail();
 
-        return view('invoice', compact('order'));
+        return view('page.invoice', compact('order'));
     }
 }
