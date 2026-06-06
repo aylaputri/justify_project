@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
-
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
 
@@ -76,9 +76,30 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart']);
 });
 
-Route::get('/login', fn() => view('page.login'));
+Route::get(
+    '/login',
+    [UserAuthController::class, 'showLogin']
+);
 
-Route::get('/register', fn() => view('page.register'));
+Route::post(
+    '/login',
+    [UserAuthController::class, 'login']
+);
+
+Route::get(
+    '/register',
+    [UserAuthController::class, 'showRegister']
+);
+
+Route::post(
+    '/register',
+    [UserAuthController::class, 'register']
+);
+
+Route::get(
+    '/logout',
+    [UserAuthController::class, 'logout']
+);
 
 Route::get('/home', fn() => view('page.home'));
 

@@ -459,6 +459,16 @@ main {
         padding: 9px 12px;
     }
 
+    /* SUCCESS */
+    .success-message {
+        background: #dcffe4;
+        color: #007d2c;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        font-size: 13px;
+    }
+
     /* RIGHT */
 
     .auth-right {
