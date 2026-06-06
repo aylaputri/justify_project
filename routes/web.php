@@ -69,6 +69,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart']);
 });
 
+Route::get('/login', fn() => view('page.login'));
+
+Route::get('/register', fn() => view('page.register'));
+
 Route::get('/home', fn() => view('page.home'));
 
 Route::get('/katalog', [KatalogController::class, 'index']);
