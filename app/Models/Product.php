@@ -5,34 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\ProductCategories;
+use App\Models\ProductVariant;
+
 class Product extends Model
 {
     use SoftDeletes;
 
-    protected $primaryKey = 'id_product';
-
     protected $table = 'products';
 
+    protected $primaryKey = 'id_product';
+
     protected $fillable = [
-
         'id_category',
-
         'product_name',
-
         'gender',
-
-        'description',
-
+        'description'
     ];
-
-    public function variants()
-    {
-        return $this->hasMany(
-            ProductVariant::class,
-            'id_product',
-            'id_product'
-        );
-    }
 
     public function category()
     {
@@ -43,12 +32,8 @@ class Product extends Model
         );
     }
 
-    public function sizeCharts()
+    public function variants()
     {
-        return $this->hasMany(
-            SizeChart::class,
-            'id_category',
-            'id_category'
-        );
+        return $this->hasMany(ProductVariant::class, 'id_product', 'id_product');
     }
 }
