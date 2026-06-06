@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+    RESET
 ========================= */
 
 * {
@@ -44,3 +44,321 @@ body {
 
     color: #666666;
 }
+
+
+/* Header Text Styling */
+.staff-header-block {
+    margin-bottom: 30px;
+}
+.staff-header-block .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+}
+.staff-header-block .page-subtitle {
+    font-size: 14px;
+    color: #666666;
+    max-width: 800px;
+    line-height: 1.6;
+}
+
+/* Action Bar: Search & Buttons wrapper */
+.action-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+/* Search Box Input */
+.search-box-container {
+    position: relative;
+    flex: 1;
+    max-width: 550px;
+}
+.search-icon-wrapper {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888888;
+    display: flex;
+    align-items: center;
+}
+.search-input-field {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.search-input-field:focus {
+    box-shadow: 0 0 0 2px #303030;
+}
+
+/* Right Side Actions Group */
+.right-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Button Filters Dropdown */
+.btn-filter-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444444;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-filter-dropdown:hover {
+    background-color: #f7f7f7;
+}
+
+/* Main Action Button Green */
+.btn-add-staff {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background-color: #00ff40;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,255,64,0.2);
+    transition: all 0.2s ease;
+}
+.btn-add-staff:hover {
+    background-color: #00e63a;
+    transform: translateY(-1px);
+}
+.btn-add-staff .plus-sign {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Table Container Card (Menimpa .content-card bawaan agar muat tabel) */
+.table-responsive-wrapper {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01);
+    overflow-x: auto;
+    padding: 0 !important; /* Hapus padding default agar baris tabel menyentuh tepi */
+}
+
+/* Data Table Core Element */
+.staff-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 14px;
+}
+.staff-data-table th {
+    background-color: #cccccc;
+    color: #2d3748;
+    font-weight: 700;
+    padding: 16px;
+    border-bottom: 1px solid #cbd5e1;
+}
+.staff-data-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #4a5568;
+    vertical-align: middle;
+}
+.staff-data-table tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Table Typo Helper */
+.font-bold-name {
+    font-weight: 600;
+    color: #1a202c;
+}
+.role-text {
+    color: #4a5568;
+}
+.permission-code {
+    font-family: monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #718096;
+}
+
+/* Badges for Status Active/Inactive */
+.badge-status {
+    display: inline-block;
+    padding: 4px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.status-active {
+    border: 1px solid #a0aec0;
+    color: #2d3748;
+}
+.status-inactive {
+    border: 1px solid #e2e8f0;
+    color: #cbd5e1;
+}
+
+/* Buttons Action Flex Block */
+.action-buttons-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+.btn-action-edit, .btn-action-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease;
+    text-decoration: none; /* Menghilangkan underline bawaan tag <a> pada edit */
+    display: inline-flex;  /* Menjaga posisi vertikal ikon di tengah */
+    align-items: center;
+}
+.btn-action-edit { color: #4a5568; }
+.btn-action-edit:hover { color: #3182ce; }
+.btn-action-delete { color: #e53e3e; }
+.btn-action-delete:hover { color: #9b2c2c; }
+
+/* Handling Non-Aktif/Disabled Row Visual */
+.row-disabled {
+    background-color: #fcfcfc;
+}
+.text-muted { color: #a0aec0 !important; }
+.text-muted-light { color: #cbd5e1 !important; }
+.disabled-btn {
+    color: #cbd5e1 !important;
+    pointer-events: none;
+}
+
+/* SVG Helpers */
+.icon-svg { width: 20px; height: 20px; }
+.icon-svg-small { width: 16px; height: 16px; }
+.icon-arrow-down { width: 14px; height: 14px; color: #a0aec0; margin-left: 4px; }
+
+
+/* =======================================================
+    TAMBAHAN KODINGAN UNTUK FORM EDIT STAF (PALING BAWAH)
+======================================================= */
+
+/* Modifikasi padding khusus .content-card saat memuat Form Edit */
+.content-card.form-edit-wrapper {
+    padding: 40px;
+    max-width: 650px; /* Batasi lebar form agar fokus di tengah dashboard */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01);
+    border: 1px solid #e2e8f0;
+}
+
+/* Blok pembungkus vertikal per baris komponen input */
+.form-group-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+/* Label penunjuk teks input */
+.form-label-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* Pengaturan Kotak Isian Data Form (Text, Select, Textarea) */
+.form-input-control, 
+.form-input-control-select, 
+.form-input-control-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #333333;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+/* Kunci textarea agar hanya bisa ditarik ke atas/bawah */
+.form-input-control-textarea {
+    resize: vertical;
+}
+
+/* Efek fokus border input berubah aksen hijau neon */
+.form-input-control:focus, 
+.form-input-control-select:focus, 
+.form-input-control-textarea:focus {
+    border-color: #00ff40;
+    box-shadow: 0 0 0 1px #00ff40;
+}
+
+/* Kontainer Tombol di Bagian Bawah Form */
+.form-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+/* Tombol Batalkan Aksi (Kembali ke tabel) */
+.btn-form-cancel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #718096;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+}
+.btn-form-cancel:hover {
+    background-color: #edf2f7;
+    color: #4a5568;
+}
+
+/* Tombol Kirim Form (Hijau Neon) */
+.btn-form-submit {
+    padding: 12px 28px;
+    background-color: #00ff40;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,255,64,0.1);
+    transition: all 0.2s ease;
+}
+.btn-form-submit:hover {
+    background-color: #00e63a;
+    transform: translateY(-1px);
+}
+
+/* Pesan Eror Validasi Form dari Laravel */
+.error-msg {
+    font-size: 12px;
+    color:
