@@ -188,7 +188,7 @@
                             </td>
 
                             <td>
-                                {{ \Carbon\Carbon::parse($order->created_at)->('d-m-Y') }}
+                                {{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}
                             </td>
 
                             <td>
@@ -235,7 +235,12 @@
 
 @push('scripts')
 
+<script>
+    window.salesData = JSON.parse('{{ json_encode($salesChart) }}');
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="{{ asset('js/page/admin/dashboard.js') }}"></script>
 
 @endpush
