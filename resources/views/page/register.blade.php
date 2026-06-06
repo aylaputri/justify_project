@@ -37,22 +37,13 @@
                 </h1>
 
                 <p class="auth-subtitle">
-                    Don't have an account? <a href="/login">Log In</a>
+                    Already have an account? <a href="/login">Log In</a>
                 </p>
-
-                <!-- ERROR -->
-                @if(session('error'))
-
-                <div class="error-message">
-                    {{ session('error') }}
-                </div>
-
-                @endif
 
                 <!-- FORM -->
                 <form
                     method="POST"
-                    action="/login">
+                    action="/register">
 
                     @csrf
 
@@ -65,10 +56,16 @@
 
                         <input
                             type="text"
-                            name="fullName"
+                            name="full_name"
+                            value="{{ old('full_name') }}"
                             placeholder="Enter your full name"
-                            class="input-field"
-                            id="fullName">
+                            class="input-field">
+
+                        @error('full_name')
+                        <p class="field-error">
+                            {{ $message }}
+                        </p>
+                        @enderror
 
                     </div>
 
@@ -82,9 +79,16 @@
                         <input
                             type="email"
                             name="email"
+                            value="{{ old('email') }}"
                             placeholder="Enter your email"
                             class="input-field"
                             id="email">
+
+                        @error('email')
+                        <p class="field-error">
+                            {{ $message }}
+                        </p>
+                        @enderror
 
                     </div>
 
@@ -104,6 +108,12 @@
                                 class="input-field"
                                 id="password">
 
+                            @error('password')
+                            <p class="field-error">
+                                {{ $message }}
+                            </p>
+                            @enderror
+
                             <button
                                 type="button"
                                 class="toggle-password"
@@ -121,15 +131,6 @@
 
                     </div>
 
-                    <!-- FORGOT -->
-                    <div class="forgot-password">
-
-                        <a href="#">
-                            Forgot Password ?
-                        </a>
-
-                    </div>
-
                     <!-- BUTTON -->
                     <button
                         type="submit"
@@ -137,7 +138,7 @@
                         id="submitButton"
                         disabled>
 
-                        Log In
+                        Sign Up
 
                     </button>
 

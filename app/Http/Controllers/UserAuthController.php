@@ -39,21 +39,34 @@ class UserAuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $request->validate(
+            [
+                'full_name' => 'required|max:100',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8'
+            ],
+            [
+                'full_name.required' => 'Nama lengkap wajib diisi',
+                'full_name.max' => 'Nama maksimal 100 karakter',
 
-            'full_name' => 'required|max:100',
+                'email.required' => 'Email wajib diisi',
+                'email.email' => 'Format email tidak valid',
+                'email.unique' => 'Email sudah terdaftar',
 
-            'email' => 'required|email|unique:users,email',
-
-            'password' => 'required|min:8'
-
-        ]);
+                'password.required' => 'Password wajib diisi',
+                'password.min' => 'Password minimal 8 karakter'
+            ]
+        );
 
         User::create([
 
-            'full_name' => $request->full_name,
+            'full_name' => trim(
+                $request->full_name
+            ),
 
-            'email' => $request->email,
+            'email' => trim(
+                $request->email
+            ),
 
             'password' => Hash::make(
                 $request->password
@@ -78,6 +91,18 @@ class UserAuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required'
+            ],
+            [
+                'email.required' => 'Email wajib diisi',
+                'email.email' => 'Format email tidak valid',
+                'password.required' => 'Password wajib diisi'
+            ]
+        );
+        
         $user = User::where(
             'email',
             $request->email
