@@ -26,57 +26,136 @@
         <!-- DASHBOARD BODY -->
         <section class="dashboard-body">
 
-            <h1 class="page-title">
-                Dashboard Admin
+            <h1 class="dashboard-heading">
+                Selamat Datang di Halaman Dashboard Super Admin
             </h1>
 
-            <!-- CARDS -->
-            <div class="dashboard-cards">
+            <!-- SUMMARY -->
+            <div class="summary-cards">
 
-                <div class="dashboard-card purple">
+                <div class="summary-card revenue">
 
-                    <h3>
-                        Total Orders
-                    </h3>
+                    <span>Total Pendapatan</span>
 
-                    <p>
-                        120
-                    </p>
+                    <strong>
+                        Rp {{ number_format($totalRevenue, 0, ',', '.') }}
+                    </strong>
 
                 </div>
 
-                <div class="dashboard-card orange">
+                <div class="summary-card product">
 
-                    <h3>
-                        Total Revenue
-                    </h3>
+                    <span>Produk Terjual</span>
 
-                    <p>
-                        Rp 15M
-                    </p>
+                    <strong>
+                        {{ $totalProducts }}
+                    </strong>
 
                 </div>
 
-                <div class="dashboard-card blue">
+                <div class="summary-card orders">
 
-                    <h3>
-                        Total Users
-                    </h3>
+                    <span>Total Orders</span>
 
-                    <p>
-                        58
-                    </p>
+                    <strong>
+                        {{ $totalOrders }}
+                    </strong>
+
+                </div>
+
+                <div class="summary-card customer">
+
+                    <span>Customers</span>
+
+                    <strong>
+                        {{ $totalCustomers }}
+                    </strong>
+
+                </div>
+
+                <div class="summary-card staff">
+
+                    <span>Staff</span>
+
+                    <strong>
+                        {{ $totalStaff }}
+                    </strong>
 
                 </div>
 
             </div>
 
-            <!-- TABLE -->
+            <!-- CHART + TOP PRODUCT -->
+            <div class="dashboard-grid">
+
+                <div class="sales-card">
+
+                    <h3>
+                        Laporan Penjualan
+                    </h3>
+
+                    <p>
+                        Distribusi pendapatan agregat (6 bulan terakhir)
+                    </p>
+
+                    <canvas id="salesChart"></canvas>
+
+                </div>
+
+                <div class="best-product">
+
+                    <h3>
+                        Paling Laris Savior
+                    </h3>
+
+                    @forelse($topProducts as $product)
+
+                    <div class="best-product-item">
+
+                        <div class="product-image">IMG</div>
+
+                        <div>
+
+                            <p>{{ $product->product_name }}</p>
+
+                            <small>
+                                {{ $product->total_sold }} Terjual
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    @empty
+
+                    <p class="empty-data">
+                        Belum ada data penjualan
+                    </p>
+
+                    @endforelse
+
+                </div>
+
+            </div>
+
+            <!-- RECENT ORDER -->
             <div class="recent-order">
 
-                <h2>
-                    Recent Orders
-                </h2>
+                <div class="recent-order-header">
+
+                    <div>
+
+                        <h3>
+                            Pesanan Terbaru
+                        </h3>
+
+                        <p>
+                            Catatan pesanan terbaru selama satu minggu terakhir
+                        </p>
+
+                    </div>
+
+                </div>
 
                 <table>
 
@@ -84,17 +163,15 @@
 
                         <tr>
 
-                            <th>
-                                Customer
-                            </th>
+                            <th>ID</th>
 
-                            <th>
-                                Product
-                            </th>
+                            <th>Tanggal</th>
 
-                            <th>
-                                Status
-                            </th>
+                            <th>Customer</th>
+
+                            <th>Status</th>
+
+                            <th>Total</th>
 
                         </tr>
 
@@ -102,37 +179,45 @@
 
                     <tbody>
 
-                        <tr>
-
-                            <td>
-                                Rifdah
-                            </td>
-
-                            <td>
-                                Savior Hoodie
-                            </td>
-
-                            <td>
-                                Delivered
-                            </td>
-
-                        </tr>
+                        @forelse($recentOrders as $order)
 
                         <tr>
 
                             <td>
-                                Karina
+                                {{ $order->id }}
                             </td>
 
                             <td>
-                                Savior Pants
+                                {{ \Carbon\Carbon::parse($order->created_at)->('d-m-Y') }}
                             </td>
 
                             <td>
-                                Process
+                                {{ $order->customer }}
+                            </td>
+
+                            <td>
+                                <span class="status-badge status-{{ strtolower($order->status) }}">
+                                    {{ $order->status }}
+                                </span>
+                            </td>
+
+                            <td>
+                                Rp {{ number_format($order->total,0,',','.') }}
                             </td>
 
                         </tr>
+
+                        @empty
+
+                        <tr>
+
+                            <td colspan="5" class="empty-data">
+                                Belum ada data pesanan
+                            </td>
+
+                        </tr>
+
+                        @endforelse
 
                     </tbody>
 
@@ -149,5 +234,8 @@
 @endsection
 
 @push('scripts')
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('js/page/admin/dashboard.js') }}"></script>
 
 @endpush

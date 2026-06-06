@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\KatalogController; 
+use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Admin\AuthController;
 Route::get('/admin/login', [AuthController::class, 'showLogin']);
@@ -18,9 +19,7 @@ Route::middleware('admin')->group(function () {
     // DASHBOARD
     Route::get(
         '/admin/dashboard',
-        function () {
-            return view('admin.dashboard');
-        }
+        [DashboardController::class, 'index']
     );
 
     // PROFILE
