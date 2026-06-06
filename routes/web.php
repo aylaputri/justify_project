@@ -159,9 +159,25 @@ Route::middleware('user')->group(function () {
     })->name('profile');
 
     // Address
-    Route::get('/address',     [AddressController::class, 'index'])->name('address');
-    Route::get('/addAddress',  [AddressController::class, 'create'])->name('addAddress');
-    Route::post('/addAddress', [AddressController::class, 'store'])->name('addAddress.store');
+    Route::get('/address',           [AddressController::class, 'index'])->name('address');
+    Route::get('/addAddress',        [AddressController::class, 'create'])->name('addAddress');
+    Route::post('/addAddress',       [AddressController::class, 'store'])->name('addAddress.store');
+    Route::post('/address/{id}/update',  [AddressController::class, 'update'])->name('address.update');
+    Route::post('/address/{id}/delete',  [AddressController::class, 'destroy'])->name('address.destroy');
+
+    // User Orders
+    Route::get('/orders', function () {
+        $userId       = session('user_id');
+        $activeStatus = request('status', 'Semua');
+        $query        = \App\Models\Order::with(['items.variant.product', 'items.variant.images'])
+                            ->where('id_user', $userId)
+                            ->latest('order_date');
+        if ($activeStatus !== 'Semua') {
+            $query->where('status', $activeStatus);
+        }
+        $orders = $query->get();
+        return view('page.orders', compact('orders'));
+    })->name('user.orders');
 
     Route::get('/checkout',   fn() => view('page.checkout'))->name('checkout');
     Route::post('/checkout/payment', [PaymentController::class, 'payment'])->name('payment.process');

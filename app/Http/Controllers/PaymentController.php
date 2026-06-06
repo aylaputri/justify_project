@@ -23,15 +23,25 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Silahkan login terlebih dahulu'], 401);
         }
 
-        // Simpan alamat
-        $savedAddress = Address::create([
-            'id_user'          => $userId,
-            'address_title'    => $addr['title']   ?? 'Rumah',
-            'complete_address' => $addr['address'],
-            'city'             => $addr['city'],
-            'province'         => $addr['province'],
-            'postal_code'      => $addr['postal'],
-        ]);
+        // Gunakan address yang sudah ada jika id_address dikirim,
+        // supaya tidak terus-menerus membuat address duplikat di DB
+        if (!empty($addr['id_address'])) {
+            $savedAddress = Address::where('id_address', $addr['id_address'])
+                                   ->where('id_user', $userId)
+                                   ->first();
+        }
+
+        // Kalau tidak ada id_address atau address-nya tidak ditemukan, baru buat baru
+        if (empty($savedAddress)) {
+            $savedAddress = Address::create([
+                'id_user'          => $userId,
+                'address_title'    => $addr['title']   ?? 'Rumah',
+                'complete_address' => $addr['address'],
+                'city'             => $addr['city'],
+                'province'         => $addr['province'],
+                'postal_code'      => $addr['postal'],
+            ]);
+        }
 
         // Hitung total
         $subtotal     = collect($cart)->sum(fn($item) => $item['price'] * $item['qty']);

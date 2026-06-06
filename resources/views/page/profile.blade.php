@@ -183,11 +183,11 @@ body { font-family: 'Poppins', sans-serif; background: #f5f5f5; }
     <div class="orders-card">
         <div class="orders-card-header">
             <h3>Pesanan Saya</h3>
-            <span>Geser disini</span>
+            <a href="{{ url('/orders') }}" style="font-size:12px;color:#888;text-decoration:none;">Lihat semua ›</a>
         </div>
         <div class="orders-grid">
             <!-- PROSES -->
-            <div class="order-status-item">
+            <a href="{{ url('/orders?status=Diproses') }}" class="order-status-item" style="text-decoration:none;color:inherit;">
                 <div class="order-status-icon">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -198,9 +198,9 @@ body { font-family: 'Poppins', sans-serif; background: #f5f5f5; }
                     @endif
                 </div>
                 <span class="order-status-label">Proses</span>
-            </div>
+            </a>
             <!-- DIKIRIM -->
-            <div class="order-status-item">
+            <a href="{{ url('/orders?status=Dikirim') }}" class="order-status-item" style="text-decoration:none;color:inherit;">
                 <div class="order-status-icon">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -211,9 +211,9 @@ body { font-family: 'Poppins', sans-serif; background: #f5f5f5; }
                     @endif
                 </div>
                 <span class="order-status-label">Dikirim</span>
-            </div>
+            </a>
             <!-- BATALKAN -->
-            <div class="order-status-item">
+            <a href="{{ url('/orders?status=Dibatalkan') }}" class="order-status-item" style="text-decoration:none;color:inherit;">
                 <div class="order-status-icon">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -223,10 +223,10 @@ body { font-family: 'Poppins', sans-serif; background: #f5f5f5; }
                     <span class="order-badge">{{ $statusCount['Dibatalkan'] }}</span>
                     @endif
                 </div>
-                <span class="order-status-label">Batalkan</span>
-            </div>
+                <span class="order-status-label">Dibatalkan</span>
+            </a>
             <!-- SELESAI -->
-            <div class="order-status-item">
+            <a href="{{ url('/orders?status=Selesai') }}" class="order-status-item" style="text-decoration:none;color:inherit;">
                 <div class="order-status-icon">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -237,7 +237,7 @@ body { font-family: 'Poppins', sans-serif; background: #f5f5f5; }
                     @endif
                 </div>
                 <span class="order-status-label">Selesai</span>
-            </div>
+            </a>
         </div>
     </div>
 
