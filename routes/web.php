@@ -60,28 +60,108 @@ Route::middleware('admin')->prefix('admin')->as('admin.')->group(function () {
 });
 
 /* User Routes */
+Route::get('/', function () {
 
-// User Authentication
-Route::group([], function () {
-    Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [UserAuthController::class, 'login']);
-    Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [UserAuthController::class, 'register']);
-    Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
+    if (session()->has('user_id')) {
+
+        return redirect('/home');
+
+    }
+
+    return redirect('/login');
+
 });
 
-// User Pages
-Route::get('/home', fn() => view('page.home'))->name('home');
-Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
-Route::get('/mixmatch', fn() => view('page.mixmatch'))->name('mixmatch');
-Route::get('/cart', fn() => view('page.cart'))->name('cart');
-Route::get('/profile', fn() => view('page.profile'))->name('profile');
-Route::get('/addAddress', fn() => view('page.addAddress'))->name('addAddress');
-Route::get('/checkout', fn() => view('page.checkout'))->name('checkout');
+// =========================
+// USER AUTHENTICATION
+// =========================
 
-// Checkout & Payments
-Route::post('/checkout/payment', [PaymentController::class, 'payment'])->name('payment.process');
-Route::get('/invoice/{id}', [PaymentController::class, 'invoice'])->name('payment.invoice');
+Route::get(
+    '/login',
+    [UserAuthController::class, 'showLogin']
+)->name('login');
+
+Route::post(
+    '/login',
+    [UserAuthController::class, 'login']
+);
+
+Route::get(
+    '/register',
+    [UserAuthController::class, 'showRegister']
+)->name('register');
+
+Route::post(
+    '/register',
+    [UserAuthController::class, 'register']
+);
+
+// =========================
+// PROTECTED USER PAGES
+// =========================
+
+Route::middleware('user')->group(function () {
+
+    // HOME
+    Route::get(
+        '/home',
+        fn() => view('page.home')
+    )->name('home');
+
+    // KATALOG
+    Route::get(
+        '/katalog',
+        [KatalogController::class, 'index']
+    )->name('katalog');
+
+    // MIXMATCH
+    Route::get(
+        '/mixmatch',
+        fn() => view('page.mixmatch')
+    )->name('mixmatch');
+
+    // CART
+    Route::get(
+        '/cart',
+        fn() => view('page.cart')
+    )->name('cart');
+
+    // PROFILE
+    Route::get(
+        '/profile',
+        fn() => view('page.profile')
+    )->name('profile');
+
+    // ADDRESS
+    Route::get(
+        '/addAddress',
+        fn() => view('page.addAddress')
+    )->name('addAddress');
+
+    // CHECKOUT
+    Route::get(
+        '/checkout',
+        fn() => view('page.checkout')
+    )->name('checkout');
+
+    // PAYMENT
+    Route::post(
+        '/checkout/payment',
+        [PaymentController::class, 'payment']
+    )->name('payment.process');
+
+    // INVOICE
+    Route::get(
+        '/invoice/{id}',
+        [PaymentController::class, 'invoice']
+    )->name('payment.invoice');
+
+    // LOGOUT
+    Route::get(
+        '/logout',
+        [UserAuthController::class, 'logout']
+    )->name('logout');
+});
 
 // Midtrans Notification (Webhook - Skip CSRF)
 Route::post('/checkout/notification', [PaymentController::class, 'notification'])
