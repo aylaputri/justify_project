@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\AddressController;
 
 /* Admin Routes */
 // Admin Authentication

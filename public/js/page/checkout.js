@@ -21,26 +21,27 @@ function renderAddress() {
     if (address) {
         addressBox.innerHTML = `
             <div>
-                <strong>${address.name}</strong>
+                <strong>${address.name || ''}</strong>
                 <p>
-                    ${address.phone}<br>
+                    ${address.phone || ''}<br>
                     ${address.address}<br>
                     ${address.city}, ${address.province}<br>
                     ${address.postal}
                 </p>
             </div>
-            <img src="/assets/icon/arrow-right.svg">
+            <img src="/assets/icon/arrow-right.svg" alt="Arrow">
         `;
     } else {
         addressBox.innerHTML = `
             <p>Add Address</p>
-            <img src="/assets/icon/arrow-right.svg">
+            <img src="/assets/icon/arrow-right.svg" alt="Arrow">
         `;
     }
 }
 
+// Klik address box → ke halaman daftar address (dari DB)
 addressBox.addEventListener("click", () => {
-    window.location.href = "/addAddress";
+    window.location.href = "/address";
 });
 
 // RENDER ITEMS + TOTALS
@@ -71,7 +72,7 @@ function renderCheckout() {
                             <button class="plus-btn" data-index="${index}">+</button>
                         </div>
                         <button class="delete-btn" data-index="${index}">
-                            <img src="/assets/icon/trash.svg">
+                            <img src="/assets/icon/trash.svg" alt="Delete">
                         </button>
                     </div>
                 </div>
@@ -92,7 +93,6 @@ function updateTotals(subtotal) {
     finalTotal.innerText      = formatRupiah(grand);
 }
 
-// BUTTON EVENTS
 function initEvents() {
     document.querySelectorAll(".plus-btn").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -123,10 +123,10 @@ function saveAndRender() {
     renderCheckout();
 }
 
-// PAY
+// PAY NOW
 payButton.addEventListener("click", () => {
     if (!address) {
-        alert("Silahkan isi alamat terlebih dahulu!");
+        alert("Silahkan pilih alamat terlebih dahulu!");
         return;
     }
     if (cart.length === 0) {
@@ -134,8 +134,8 @@ payButton.addEventListener("click", () => {
         return;
     }
 
-    payButton.disabled    = true;
-    payButton.innerText   = "Processing...";
+    payButton.disabled  = true;
+    payButton.innerText = "Processing...";
 
     fetch("/checkout/payment", {
         method: "POST",
@@ -147,16 +147,23 @@ payButton.addEventListener("click", () => {
         },
         body: JSON.stringify({ cart, address }),
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            return res.json().then(err => { throw new Error(err.error || 'Server error'); });
+        }
+        return res.json();
+    })
     .then(data => {
         snap.pay(data.snap_token, {
             onSuccess: function () {
                 localStorage.removeItem("checkout");
                 localStorage.removeItem("cart");
+                localStorage.removeItem("address");
                 window.location.href = `/invoice/${data.order_id}`;
             },
             onPending: function () {
                 localStorage.removeItem("checkout");
+                localStorage.removeItem("address");
                 window.location.href = `/invoice/${data.order_id}`;
             },
             onError: function () {
@@ -171,8 +178,8 @@ payButton.addEventListener("click", () => {
         });
     })
     .catch(err => {
-        console.error(err);
-        alert("Terjadi kesalahan, coba lagi.");
+        console.error("Payment error:", err);
+        alert("Error: " + err.message);
         payButton.disabled  = false;
         payButton.innerText = "Pay Now";
     });
