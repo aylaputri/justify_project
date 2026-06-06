@@ -46,9 +46,7 @@ if (fullNameInput) {
 if (emailInput) {
     emailInput.addEventListener('input', checkInput);
 }
-if (passwordInput) {
-    passwordInput.addEventListener('input', checkInput);
-}
+passwordInput.addEventListener('input', checkInput);
 
 /* SHOW HIDE PASSWORD */
 

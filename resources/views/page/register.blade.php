@@ -60,14 +60,15 @@
                             value="{{ old('full_name') }}"
                             placeholder="Enter your full name"
                             class="input-field">
-
+                            
                         @error('full_name')
                         <p class="field-error">
                             {{ $message }}
                         </p>
                         @enderror
-
                     </div>
+
+                    
 
                     <!-- EMAIL -->
                     <div class="input-group">
@@ -84,13 +85,13 @@
                             class="input-field"
                             id="email">
 
-                        @error('email')
-                        <p class="field-error">
-                            {{ $message }}
-                        </p>
-                        @enderror
-
                     </div>
+
+                    @error('email')
+                    <p class="field-error">
+                        {{ $message }}
+                    </p>
+                    @enderror
 
                     <!-- PASSWORD -->
                     <div class="input-group">
@@ -108,12 +109,6 @@
                                 class="input-field"
                                 id="password">
 
-                            @error('password')
-                            <p class="field-error">
-                                {{ $message }}
-                            </p>
-                            @enderror
-
                             <button
                                 type="button"
                                 class="toggle-password"
@@ -128,6 +123,12 @@
                             </button>
 
                         </div>
+
+                        @error('password')
+                            <p class="field-error">
+                                {{ $message }}
+                            </p>
+                        @enderror
 
                     </div>
 

@@ -163,6 +163,7 @@ main {
 
 .eye-icon {
     width: 22px;
+    display: block;
 }
 
 /* =========================
