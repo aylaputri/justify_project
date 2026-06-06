@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/admin/login', [AuthController::class, 'showLogin']);
 Route::post('/admin/login', [AuthController::class, 'login']);
@@ -27,7 +28,7 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin/staffs', fn() => view('admin.staffs'));
 
-    Route::get('/admin/orders', fn() => view('admin.orders'));
+    Route::get('/admin/orders', [OrderController::class, 'index']);
 
     Route::get('/admin/manage-home', fn() => view('admin.manageHome'));
 
