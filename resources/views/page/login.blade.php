@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Login')
+@section('title', 'Login')
 
 @push('style')
 
@@ -10,31 +10,35 @@
 
 <link
     rel="stylesheet"
-    href="{{ asset('css/page/admin/login.css') }}">
+    href="{{ asset('css/page/auth.css') }}">
 
 @endpush
 
 @section('content')
 
-<main class="login-page">
+<main class="auth-page">
 
-    <section class="login-container">
+    <section class="auth-container">
 
         <!-- LEFT -->
-        <div class="login-left">
+        <div class="auth-left">
 
-            <div class="login-box">
+            <div class="auth-box">
 
                 <!-- LOGO -->
                 <img
-                    src="{{ asset('assets/image/Logo-Putih-Savior-World.png') }}"
+                    src="{{ asset('assets/image/Logo-Hitam-Savior-World.png') }}"
                     alt="Logo Savior World"
-                    class="login-logo">
+                    class="auth-logo">
 
                 <!-- TITLE -->
-                <h1 class="login-title">
-                    Log In Admin
+                <h1 class="auth-title">
+                    Log In
                 </h1>
+
+                <p class="auth-subtitle">
+                    Don't have an account? <a href="/register">Sign Up</a>
+                </p>
 
                 <!-- ERROR -->
                 @if(session('error'))
@@ -45,27 +49,35 @@
 
                 @endif
 
+                <!-- SUCCESS -->
+                @if(session('success'))
+
+                <div class="success-message">
+                    {{ session('success') }}
+                </div>
+
+                @endif
+
                 <!-- FORM -->
                 <form
                     method="POST"
-                    action="/admin/login"
-                    id="loginForm">
+                    action="/login">
 
                     @csrf
 
-                    <!-- USERNAME -->
+                    <!-- EMAIL -->
                     <div class="input-group">
 
                         <label class="input-label">
-                            Username
+                            Email
                         </label>
 
                         <input
-                            type="text"
-                            name="username"
-                            placeholder="Enter your username"
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
                             class="input-field"
-                            id="username">
+                            id="email">
 
                     </div>
 
@@ -102,11 +114,20 @@
 
                     </div>
 
+                    <!-- FORGOT -->
+                    <div class="forgot-password">
+
+                        <a href="#">
+                            Forgot Password ?
+                        </a>
+
+                    </div>
+
                     <!-- BUTTON -->
                     <button
                         type="submit"
-                        class="login-button"
-                        id="loginButton"
+                        class="submit-button"
+                        id="submitButton"
                         disabled>
 
                         Log In
@@ -115,17 +136,28 @@
 
                 </form>
 
+                <!-- DIVIDER -->
+                <div class="divider">
+                    <span>Or</span>
+                </div>
+
+                <!-- GOOGLE -->
+                <a href="#" class="google-button">
+                    <img src="{{ asset('assets/icon/google.svg') }}" alt="Google">
+                    Continue with Google
+                </a>
+
             </div>
 
         </div>
 
         <!-- RIGHT -->
-        <div class="login-right">
+        <div class="auth-right">
 
             <img
                 src="{{ asset('assets/image/gambar-login.jpeg') }}"
                 alt="Login Image"
-                class="login-image">
+                class="auth-image">
 
         </div>
 
@@ -137,6 +169,6 @@
 
 @push('scripts')
 
-<script src="{{ asset('js/page/admin/login.js') }}"></script>
+<script src="{{ asset('js/page/auth.js') }}"></script>
 
 @endpush

@@ -7,6 +7,7 @@ class Order extends Model
 {
     public $timestamps = false;
     protected $primaryKey = 'id_order';
+
     protected $fillable = [
         'id_user',
         'id_address',
@@ -21,7 +22,7 @@ class Order extends Model
         'tracking_number',
     ];
 
-     public function user()
+    public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
