@@ -459,6 +459,14 @@ main {
         padding: 9px 12px;
     }
 
+    .field-error {
+        margin-top: 6px;
+
+        color: red;
+
+        font-size: 11px;
+    }
+
     /* SUCCESS */
     .success-message {
         background: #dcffe4;
@@ -466,7 +474,7 @@ main {
         padding: 12px;
         border-radius: 10px;
         margin-bottom: 16px;
-        font-size: 13px;
+        font-size: 11px;
     }
 
     /* RIGHT */
