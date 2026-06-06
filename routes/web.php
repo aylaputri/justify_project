@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\KatalogController;
@@ -12,107 +11,87 @@ use App\Http\Controllers\Admin\ManageCatalogController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
 
-Route::get('/admin/login', [AuthController::class, 'showLogin']);
-Route::post('/admin/login', [AuthController::class, 'login']);
-Route::get('/admin/logout', [AuthController::class, 'logout']);
-
-Route::middleware('admin')->group(function () {
-
-    // DASHBOARD
-    Route::get(
-        '/admin/dashboard',
-        [DashboardController::class, 'index']
-    );
-
-    Route::get('/admin/profile', fn() => view('admin.profile'));
-
-   Route::get('/admin/customers', [CustomerController::class, 'index'])->name('customers.index');
-
-    Route::get('/admin/staffs', [StaffController::class, 'index'])->name('staffs.index');
-    
-    // 2. Menambahkan rute untuk menampilkan Form Edit Staf (Menuju ke admin.edit)
-    Route::get('/admin/staffs/{id}/edit', [StaffController::class, 'edit'])->name('staffs.edit');
-    
-    // 3. Menambahkan rute untuk memproses Simpan Perubahan Data Staf (Method PUT)
-    Route::put('/admin/staffs/{id}', [StaffController::class, 'update'])->name('staffs.update');
-    
-    // 4. Menambahkan rute untuk memproses Hapus Akun Staf (Method DELETE)
-    Route::delete('/admin/staffs/{id}', [StaffController::class, 'destroy'])->name('staffs.destroy');
-    
-    // 5. RUTE BARU UNTUK TAMBAH STAF
-    Route::get('/admin/staffs/create', [StaffController::class, 'create'])->name('staffs.create');
-    Route::post('/admin/staffs', [StaffController::class, 'store'])->name('staffs.store');
-    
-    // =========================================================================
-
-    Route::get('/admin/orders', [OrderController::class, 'index']);
-
-    Route::get('/admin/manage-home', fn() => view('admin.manageHome'));
-
-    Route::get(
-        '/admin/manage-catalog',
-        [ManageCatalogController::class, 'index']
-    );
-
-    Route::post(
-        '/admin/catalog/store',
-        [ManageCatalogController::class, 'store']
-    );
-
-    Route::put(
-        '/admin/catalog/update/{id}',
-        [ManageCatalogController::class, 'update']
-    );
-
-    Route::delete(
-        '/admin/catalog/delete/{id}',
-        [ManageCatalogController::class, 'destroy']
-    );
-
-    Route::get('/admin/manage-mixmatch', fn() => view('admin.manageMixmatch'));
-
-    Route::get('/admin/reports', fn() => view('admin.reports'));
-
-    Route::get('/admin/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart']);
+/* Admin Routes */
+// Admin Authentication
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 });
 
-Route::get(
-    '/login',
-    [UserAuthController::class, 'showLogin']
-);
+// Admin Dashboard & Management (Protected)
+Route::middleware('admin')->prefix('admin')->as('admin.')->group(function () {
+    
+    // Main Dashboard & Pages
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', fn() => view('admin.profile'))->name('profile');
+    Route::get('/manage-home', fn() => view('admin.manageHome'))->name('manage-home');
+    Route::get('/manage-mixmatch', fn() => view('admin.manageMixmatch'))->name('manage-mixmatch');
+    Route::get('/reports', fn() => view('admin.reports'))->name('reports');
 
-Route::post(
-    '/login',
-    [UserAuthController::class, 'login']
-);
+    // Customers Management
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
-Route::get(
-    '/register',
-    [UserAuthController::class, 'showRegister']
-);
+    // Staffs Management (CRUD)
+    Route::prefix('staffs')->as('staffs.')->group(function () {
+        Route::get('/', [StaffController::class, 'index'])->name('index');
+        Route::get('/create', [StaffController::class, 'create'])->name('create');
+        Route::post('/', [StaffController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [StaffController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [StaffController::class, 'update'])->name('update');
+        Route::delete('/{id}', [StaffController::class, 'destroy'])->name('destroy');
+    });
 
-Route::post(
-    '/register',
-    [UserAuthController::class, 'register']
-);
+    // Orders Management
+    Route::prefix('orders')->as('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::put('/update/{id}', [OrderController::class, 'update'])->name('update');
+    });
 
-Route::get(
-    '/logout',
-    [UserAuthController::class, 'logout']
-);
+    // Catalog Management 
+    // Mengakses URL: http://127.0.0.1:8000/admin/manage-catalog
+    Route::prefix('manage-catalog')->as('catalog.')->group(function () {
+        Route::get('/', [ManageCatalogController::class, 'index'])->name('index');
+        Route::post('/store', [ManageCatalogController::class, 'store'])->name('store'); // Ditambahkan kembali agar bisa create data
+        Route::put('/update/{id}', [ManageCatalogController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [ManageCatalogController::class, 'destroy'])->name('destroy');
+        Route::get('/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart'])->name('size-chart');
+    });
+});
 
-Route::get('/home', fn() => view('page.home'));
+/* User Routes */
 
-Route::get('/katalog', [KatalogController::class, 'index']);
+// User Authentication
+Route::group([], function () {
+    Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [UserAuthController::class, 'login']);
+    Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [UserAuthController::class, 'register']);
+    Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
+});
 
-Route::get('/mixmatch', fn() => view('page.mixmatch'));
+// User Pages
+Route::get('/home', fn() => view('page.home'))->name('home');
+Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
+Route::get('/mixmatch', fn() => view('page.mixmatch'))->name('mixmatch');
+Route::get('/cart', fn() => view('page.cart'))->name('cart');
+Route::get('/profile', fn() => view('page.profile'))->name('profile');
+Route::get('/addAddress', fn() => view('page.addAddress'))->name('addAddress');
+Route::get('/checkout', fn() => view('page.checkout'))->name('checkout');
 
-Route::get('/cart', fn() => view('page.cart'));
+// Checkout & Payments
+Route::post('/checkout/payment', [PaymentController::class, 'payment'])->name('payment.process');
+Route::get('/invoice/{id}', [PaymentController::class, 'invoice'])->name('payment.invoice');
 
-Route::get('/profile', fn() => view('page.profile'));
+// Midtrans Notification (Webhook - Skip CSRF)
+Route::post('/checkout/notification', [PaymentController::class, 'notification'])
+    ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class)
+    ->name('payment.notification');
 
-Route::get('/addAddress', fn() => view('page.addAddress'));
-
-Route::get('/checkout', fn() => view('page.checkout'));
-
-Route::post('/checkout/payment', [PaymentController::class, 'payment']);
+/* Debugging Routes */
+Route::get('/debug-session', function () {
+    return response()->json([
+        'user_id'   => session('user_id'),
+        'user_name' => session('user_name'),
+    ]);
+});

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Order;
@@ -11,14 +12,28 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('user')->get();
-
+        $orders = Order::with('user')->latest('order_date')->get();
         return view('admin.orders', compact('orders'));
     }
-    
+
+    public function update(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+
+        $order->status = $request->status;
+
+        if ($request->tracking_number) {
+            $order->tracking_number = $request->tracking_number;
+        }
+
+        $order->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    // Dipake dulu waktu belum ada Midtrans, sekarang digantikan PaymentController
     public function store(Request $request)
     {
-        // Sementara hardcode id_user = 1
         $userId  = 1;
         $cart    = $request->cart;
         $address = $request->address;
@@ -33,7 +48,7 @@ class OrderController extends Controller
         ]);
 
         $subtotal     = collect($cart)->sum(fn($item) => $item['price'] * $item['qty']);
-        $shippingCost = 15000; // flat
+        $shippingCost = 15000;
         $grandTotal   = $subtotal + $shippingCost;
 
         $order = Order::create([
@@ -46,6 +61,7 @@ class OrderController extends Controller
             'shipping_method'     => 'JNE REG',
             'payment_method'      => 'QRIS',
             'status'              => 'Pending',
+            'order_date'          => now(),
         ]);
 
         foreach ($cart as $item) {
@@ -66,9 +82,6 @@ class OrderController extends Controller
             }
         }
 
-        return response()->json([
-            'order_id' => $order->id_order,
-            'success'  => true,
-        ]);
+        return response()->json(['order_id' => $order->id_order, 'success' => true]);
     }
 }

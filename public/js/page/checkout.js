@@ -1,289 +1,182 @@
-const checkoutItems = document.getElementById("checkoutItems");
-
+const checkoutItems   = document.getElementById("checkoutItems");
 const subtotalProduct = document.getElementById("subtotalProduct");
-const totalProduct = document.getElementById("totalProduct");
-const finalTotal = document.getElementById("finalTotal");
+const totalProduct    = document.getElementById("totalProduct");
+const finalTotal      = document.getElementById("finalTotal");
+const shippingCost    = document.getElementById("shippingCost");
+const shippingTotal   = document.getElementById("shippingTotal");
+const addressBox      = document.getElementById("addressBox");
+const payButton       = document.getElementById("pay-button");
 
-const addressBox = document.getElementById("addressBox");
-
-const payButton = document.getElementById("pay-button");
-
-let cart = JSON.parse(localStorage.getItem("checkout")) || [];
-
+let cart    = JSON.parse(localStorage.getItem("checkout")) || [];
 let address = JSON.parse(localStorage.getItem("address"));
 
-// FORMAT RUPIAH
-function formatRupiah(number){
+const SHIPPING_FEE = 15000;
 
+function formatRupiah(number) {
     return "Rp " + number.toLocaleString("id-ID");
 }
 
-
 // RENDER ADDRESS
-function renderAddress(){
-
-    if(address){
-
+function renderAddress() {
+    if (address) {
         addressBox.innerHTML = `
-        
             <div>
-
                 <strong>${address.name}</strong>
-
                 <p>
-                    ${address.phone}
-                    <br>
-                    ${address.address}
-                    <br>
-                    ${address.city}, ${address.province}
-                    <br>
+                    ${address.phone}<br>
+                    ${address.address}<br>
+                    ${address.city}, ${address.province}<br>
                     ${address.postal}
                 </p>
-
             </div>
-
             <img src="/assets/icon/arrow-right.svg">
         `;
-
     } else {
-
         addressBox.innerHTML = `
             <p>Add Address</p>
-
             <img src="/assets/icon/arrow-right.svg">
         `;
     }
 }
 
-
-// PINDAH KE ADD ADDRESS
 addressBox.addEventListener("click", () => {
-
     window.location.href = "/addAddress";
 });
 
-
-// RENDER CHECKOUT
-function renderCheckout(){
-
+// RENDER ITEMS + TOTALS
+function renderCheckout() {
     checkoutItems.innerHTML = "";
 
-    if(cart.length === 0){
-
-        checkoutItems.innerHTML = `
-            <p>Tidak ada produk checkout</p>
-        `;
-
+    if (cart.length === 0) {
+        checkoutItems.innerHTML = "<p>Tidak ada produk checkout</p>";
+        updateTotals(0);
         return;
     }
 
     let subtotal = 0;
-
     cart.forEach((item, index) => {
-
         subtotal += item.price * item.qty;
-
         checkoutItems.innerHTML += `
-        
-        <div class="order-card">
-
-            <div class="order-image">
-
-                <img src="${item.image}">
-
-            </div>
-
-            <div class="order-info">
-
-                <h3>${item.name}</h3>
-
-                <p>
-                    Size: ${item.size}
-                    <br>
-                    Color: ${item.color}
-                </p>
-
-                <div class="order-action">
-
-                    <div class="qty-box">
-
-                        <button class="minus-btn" data-index="${index}">
-                            -
-                        </button>
-
-                        <span>${item.qty}</span>
-
-                        <button class="plus-btn" data-index="${index}">
-                            +
-                        </button>
-
-                    </div>
-
-                    <button class="delete-btn" data-index="${index}">
-
-                        <img src="/assets/icon/trash.svg">
-
-                    </button>
-
+            <div class="order-card">
+                <div class="order-image">
+                    <img src="${item.image}" alt="${item.name}">
                 </div>
-
+                <div class="order-info">
+                    <h3>${item.name}</h3>
+                    <p>Size: ${item.size}<br>Color: ${item.color}</p>
+                    <div class="order-action">
+                        <div class="qty-box">
+                            <button class="minus-btn" data-index="${index}">-</button>
+                            <span>${item.qty}</span>
+                            <button class="plus-btn" data-index="${index}">+</button>
+                        </div>
+                        <button class="delete-btn" data-index="${index}">
+                            <img src="/assets/icon/trash.svg">
+                        </button>
+                    </div>
+                </div>
             </div>
-
-        </div>
         `;
     });
 
-    subtotalProduct.innerText = formatRupiah(subtotal);
-
-    totalProduct.innerText = formatRupiah(subtotal);
-
-    finalTotal.innerText = formatRupiah(subtotal);
-
+    updateTotals(subtotal);
     initEvents();
 }
 
+function updateTotals(subtotal) {
+    const grand = subtotal + SHIPPING_FEE;
+    subtotalProduct.innerText = formatRupiah(subtotal);
+    shippingCost.innerText    = formatRupiah(SHIPPING_FEE);
+    shippingTotal.innerText   = formatRupiah(SHIPPING_FEE);
+    totalProduct.innerText    = formatRupiah(grand);
+    finalTotal.innerText      = formatRupiah(grand);
+}
 
 // BUTTON EVENTS
-function initEvents(){
-
-    // PLUS
-    document.querySelectorAll(".plus-btn")
-    .forEach(btn => {
-
+function initEvents() {
+    document.querySelectorAll(".plus-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-
-            const index = btn.dataset.index;
-
-            cart[index].qty++;
-
-            localStorage.setItem(
-                "checkout",
-                JSON.stringify(cart)
-            );
-
-            renderCheckout();
+            cart[btn.dataset.index].qty++;
+            saveAndRender();
         });
     });
 
-    // MINUS
-    document.querySelectorAll(".minus-btn")
-    .forEach(btn => {
-
+    document.querySelectorAll(".minus-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-
-            const index = btn.dataset.index;
-
-            if(cart[index].qty > 1){
-
-                cart[index].qty--;
-
-                localStorage.setItem(
-                    "checkout",
-                    JSON.stringify(cart)
-                );
-
-                renderCheckout();
+            if (cart[btn.dataset.index].qty > 1) {
+                cart[btn.dataset.index].qty--;
+                saveAndRender();
             }
         });
     });
 
-    // DELETE
-    document.querySelectorAll(".delete-btn")
-    .forEach(btn => {
-
+    document.querySelectorAll(".delete-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-
-            const index = btn.dataset.index;
-
-            cart.splice(index, 1);
-
-            localStorage.setItem(
-                "checkout",
-                JSON.stringify(cart)
-            );
-
-            renderCheckout();
+            cart.splice(btn.dataset.index, 1);
+            saveAndRender();
         });
     });
 }
 
+function saveAndRender() {
+    localStorage.setItem("checkout", JSON.stringify(cart));
+    renderCheckout();
+}
 
 // PAY
 payButton.addEventListener("click", () => {
-
-    if(!address){
-
+    if (!address) {
         alert("Silahkan isi alamat terlebih dahulu!");
         return;
     }
-
-    if(cart.length === 0){
-
+    if (cart.length === 0) {
         alert("Checkout kosong!");
         return;
     }
 
+    payButton.disabled    = true;
+    payButton.innerText   = "Processing...";
+
     fetch("/checkout/payment", {
-
         method: "POST",
-
         headers: {
-
             "Content-Type": "application/json",
-
             "X-CSRF-TOKEN": document
                 .querySelector('meta[name="csrf-token"]')
-                .getAttribute('content')
+                .getAttribute("content"),
         },
-
-        body: JSON.stringify({
-
-            cart: cart,
-            address: address
-        })
-
+        body: JSON.stringify({ cart, address }),
     })
-
-    .then(response => response.json())
-
+    .then(res => res.json())
     .then(data => {
-
         snap.pay(data.snap_token, {
-
-            onSuccess: function(result){
-
-                alert("Pembayaran berhasil!");
-
-                console.log(result);
-
+            onSuccess: function () {
                 localStorage.removeItem("checkout");
+                localStorage.removeItem("cart");
+                window.location.href = `/invoice/${data.order_id}`;
             },
-
-            onPending: function(result){
-
-                alert("Menunggu pembayaran");
-
-                console.log(result);
+            onPending: function () {
+                localStorage.removeItem("checkout");
+                window.location.href = `/invoice/${data.order_id}`;
             },
-
-            onError: function(result){
-
-                alert("Pembayaran gagal");
-
-                console.log(result);
-            }
+            onError: function () {
+                alert("Pembayaran gagal, silahkan coba lagi.");
+                payButton.disabled  = false;
+                payButton.innerText = "Pay Now";
+            },
+            onClose: function () {
+                payButton.disabled  = false;
+                payButton.innerText = "Pay Now";
+            },
         });
-
     })
-
-    .catch(error => {
-
-        console.log(error);
-
-        alert("Terjadi kesalahan");
+    .catch(err => {
+        console.error(err);
+        alert("Terjadi kesalahan, coba lagi.");
+        payButton.disabled  = false;
+        payButton.innerText = "Pay Now";
     });
 });
 
 renderAddress();
-
 renderCheckout();
