@@ -168,6 +168,34 @@ Route::middleware('user')->group(function () {
     Route::get('/invoice/{id}',      [PaymentController::class, 'invoice'])->name('payment.invoice');
 });
 
+// FORGOT PASSWORD
+
+Route::get(
+    '/forgot-password',
+    [UserAuthController::class,
+    'showForgotPassword']
+)->name('forgot-password');
+
+Route::post(
+    '/forgot-password',
+    [UserAuthController::class,
+    'sendResetLink']
+);
+
+// RESET PASSWORD
+
+Route::get(
+    '/reset-password/{token}',
+    [UserAuthController::class,
+    'showResetPassword']
+)->name('reset-password');
+
+Route::post(
+    '/reset-password/{token}',
+    [UserAuthController::class,
+    'resetPassword']
+);
+
 // =====================
 // MIDTRANS WEBHOOK (skip CSRF)
 // =====================

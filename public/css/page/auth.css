@@ -348,6 +348,23 @@ main {
     display: block;
 }
 
+/* AUTH EXTRA */
+
+.auth-footer-link {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.auth-footer-link a {
+    color: #4a4a4a;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.auth-footer-link a:hover {
+    text-decoration: underline;
+}
+
 /* =========================
    MOBILE
 ========================= */

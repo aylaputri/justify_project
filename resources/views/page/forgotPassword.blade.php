@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Forgot Password')
 
 @push('style')
 
@@ -33,11 +33,11 @@
 
                 <!-- TITLE -->
                 <h1 class="auth-title">
-                    Log In
+                    Forgot Password
                 </h1>
 
                 <p class="auth-subtitle">
-                    Don't have an account? <a href="/register">Sign Up</a>
+                    Enter your email and we'll send you a reset link.
                 </p>
 
                 <!-- ERROR -->
@@ -61,7 +61,7 @@
                 <!-- FORM -->
                 <form
                     method="POST"
-                    action="/login">
+                    action="/forgot-password">
 
                     @csrf
 
@@ -75,51 +75,18 @@
                         <input
                             type="email"
                             name="email"
+                            value="{{ old('email') }}"
                             placeholder="Enter your email"
                             class="input-field"
                             id="email">
 
-                    </div>
+                        @error('email')
 
-                    <!-- PASSWORD -->
-                    <div class="input-group">
+                        <p class="field-error">
+                            {{ $message }}
+                        </p>
 
-                        <label class="input-label">
-                            Password
-                        </label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                class="input-field"
-                                id="password">
-
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                id="togglePassword">
-
-                                <img
-                                    src="{{ asset('assets/icon/mata-ketutup-hitam.svg') }}"
-                                    alt="Toggle Password"
-                                    class="eye-icon"
-                                    id="eyeIcon">
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- FORGOT -->
-                    <div class="forgot-password">
-
-                        <a href="/forgot-password">
-                            Forgot Password ?
-                        </a>
+                        @enderror
 
                     </div>
 
@@ -127,25 +94,21 @@
                     <button
                         type="submit"
                         class="submit-button"
-                        id="submitButton"
-                        disabled>
+                        id="submitButton">
 
-                        Log In
+                        Send Reset Link
 
                     </button>
 
                 </form>
 
-                <!-- DIVIDER -->
-                <div class="divider">
-                    <span>Or</span>
-                </div>
+                <div class="auth-footer-link">
 
-                <!-- GOOGLE -->
-                <a href="#" class="google-button">
-                    <img src="{{ asset('assets/icon/google.svg') }}" alt="Google">
-                    Continue with Google
-                </a>
+                    <a href="/login">
+                        Back to Login
+                    </a>
+
+                </div>
 
             </div>
 
@@ -156,7 +119,7 @@
 
             <img
                 src="{{ asset('assets/image/gambar-login.jpeg') }}"
-                alt="Login Image"
+                alt="Forgot Password Image"
                 class="auth-image">
 
         </div>

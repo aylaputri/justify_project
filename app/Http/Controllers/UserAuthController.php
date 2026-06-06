@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserAuthController extends Controller
 {
     public function showLogin()
     {
         return view('page.login');
+    }
+
+    public function showForgotPassword()
+    {
+        return view(
+            'page.forgotPassword'
+        );
     }
 
     public function showRegister()
@@ -76,6 +86,136 @@ class UserAuthController extends Controller
 
         // Redirect ke home setelah login berhasil
         return redirect('/home');
+    }
+
+    public function sendResetLink(Request $request) 
+    {
+        $request->validate([
+
+            'email' =>
+            'required|email'
+
+        ]);
+
+        $user = User::where(
+            'email',
+            $request->email
+        )->first();
+
+        if (!$user) {
+
+            return back()->with(
+                'error',
+                'Email tidak ditemukan'
+            );
+        }
+
+        $token = Str::random(64);
+
+        DB::table(
+            'password_reset_tokens'
+        )->updateOrInsert(
+
+            [
+                'email' => $user->email
+            ],
+
+            [
+                'token' => $token,
+                'created_at' => now()
+            ]
+
+        );
+
+        $resetLink =
+            url(
+                '/reset-password/' .
+                    $token
+            );
+
+        Mail::raw(
+
+            "Klik link berikut untuk mengganti password:\n\n$resetLink",
+
+            function ($message)
+            use ($user) {
+
+                $message
+                    ->to($user->email)
+                    ->subject(
+                        'Reset Password Savior World'
+                    );
+            }
+        );
+
+        return back()->with(
+            'success',
+            'Link reset password berhasil dikirim'
+        );
+    }
+
+    public function showResetPassword($token)
+    {
+        return view(
+            'page.resetPassword',
+            compact('token')
+        );
+    }
+
+    public function resetPassword(
+        Request $request,
+        $token
+    ) {
+        $request->validate([
+
+            'password' =>
+            'required|min:8|confirmed'
+
+        ]);
+
+        $record = DB::table(
+            'password_reset_tokens'
+        )
+            ->where(
+                'token',
+                $token
+            )
+            ->first();
+
+        if (!$record) {
+
+            return redirect('/login')
+                ->with(
+                    'error',
+                    'Link reset tidak valid'
+                );
+        }
+
+        User::where(
+            'email',
+            $record->email
+        )->update([
+
+            'password' => Hash::make(
+                $request->password
+            )
+
+        ]);
+
+        DB::table(
+            'password_reset_tokens'
+        )
+            ->where(
+                'email',
+                $record->email
+            )
+            ->delete();
+
+        return redirect('/login')
+            ->with(
+                'success',
+                'Password berhasil diubah'
+            );
     }
 
     public function logout()

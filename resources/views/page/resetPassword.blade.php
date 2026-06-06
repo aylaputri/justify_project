@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Reset Password')
 
 @push('style')
 
@@ -33,11 +33,11 @@
 
                 <!-- TITLE -->
                 <h1 class="auth-title">
-                    Log In
+                    Reset Password
                 </h1>
 
                 <p class="auth-subtitle">
-                    Don't have an account? <a href="/register">Sign Up</a>
+                    Create your new password.
                 </p>
 
                 <!-- ERROR -->
@@ -49,43 +49,18 @@
 
                 @endif
 
-                <!-- SUCCESS -->
-                @if(session('success'))
-
-                <div class="success-message">
-                    {{ session('success') }}
-                </div>
-
-                @endif
-
                 <!-- FORM -->
                 <form
                     method="POST"
-                    action="/login">
+                    action="/reset-password/{{ $token }}">
 
                     @csrf
-
-                    <!-- EMAIL -->
-                    <div class="input-group">
-
-                        <label class="input-label">
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            class="input-field"
-                            id="email">
-
-                    </div>
 
                     <!-- PASSWORD -->
                     <div class="input-group">
 
                         <label class="input-label">
-                            Password
+                            New Password
                         </label>
 
                         <div class="password-wrapper">
@@ -93,7 +68,7 @@
                             <input
                                 type="password"
                                 name="password"
-                                placeholder="Enter your password"
+                                placeholder="Enter new password"
                                 class="input-field"
                                 id="password">
 
@@ -112,40 +87,54 @@
 
                         </div>
 
+                        @error('password')
+
+                        <p class="field-error">
+                            {{ $message }}
+                        </p>
+
+                        @enderror
+
                     </div>
 
-                    <!-- FORGOT -->
-                    <div class="forgot-password">
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="input-group">
 
-                        <a href="/forgot-password">
-                            Forgot Password ?
-                        </a>
+                        <label class="input-label">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                name="password_confirmation"
+                                placeholder="Confirm new password"
+                                class="input-field"
+                                id="passwordConfirmation">
+
+                        </div>
 
                     </div>
 
                     <!-- BUTTON -->
                     <button
                         type="submit"
-                        class="submit-button"
-                        id="submitButton"
-                        disabled>
+                        class="submit-button">
 
-                        Log In
+                        Save Password
 
                     </button>
 
                 </form>
 
-                <!-- DIVIDER -->
-                <div class="divider">
-                    <span>Or</span>
-                </div>
+                <div class="auth-footer-link">
 
-                <!-- GOOGLE -->
-                <a href="#" class="google-button">
-                    <img src="{{ asset('assets/icon/google.svg') }}" alt="Google">
-                    Continue with Google
-                </a>
+                    <a href="/login">
+                        Back to Login
+                    </a>
+
+                </div>
 
             </div>
 
@@ -156,7 +145,7 @@
 
             <img
                 src="{{ asset('assets/image/gambar-login.jpeg') }}"
-                alt="Login Image"
+                alt="Reset Password Image"
                 class="auth-image">
 
         </div>
@@ -166,9 +155,3 @@
 </main>
 
 @endsection
-
-@push('scripts')
-
-<script src="{{ asset('js/page/auth.js') }}"></script>
-
-@endpush
