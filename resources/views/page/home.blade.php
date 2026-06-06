@@ -3,10 +3,8 @@
 @section('title', 'home')
 
 @push('style')
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" />
 <link rel="stylesheet" href="{{ asset('css/page/home.css') }}" >
-
 @endpush
 
 @section('content')
@@ -17,14 +15,14 @@
         <main>
             <!-- HERO -->
             <section class="hero">
-                <img src="image/Foto/Gambar-kolase-cewe.jpg" alt="Hero Image">
+                <img src="{{ asset('image/Foto/Gambar-kolase-cewe.jpg') }}?v={{ time() }}" alt="Hero Image">
 
                 <div class="hero-text">
-                    <h1>MIX YOUR STYLE <br> YOUR WAY</h1>
+                    <h1>{!! nl2br(e(session('hero_headline', "MIX YOUR STYLE \n YOUR WAY"))) !!}</h1>
                 </div>
 
                 <button class="hero-button">
-                    <a href="html/mixmatch.html">Start Mix & Match ></a>
+                    <a href="{{ session('hero_button_link', '/mixmatch') }}">Start Mix & Match ></a>
                 </button>
             </section>
 
@@ -35,20 +33,32 @@
                 <div class="card">
                     <h3>VISI</h3>
                     <ul>
-                        <li>Drop fit yang relate sama lifestyle Gen Z</li>
-                        <li>Bikin styling jadi fun lewat mix & match</li>
-                        <li>Stay ahead tapi gak kehilangan identitas</li>
-                        <li>Support self-expression tanpa batas</li>
+                        @php
+                            $visiDefault = "Drop fit yang relate sama lifestyle Gen Z\nBikin styling jadi fun lewat mix & match\nStay ahead tapi gak kehilangan identitas\nSupport self-expression tanpa batas";
+                            $visiArray = explode("\n", session('visi_points', $visiDefault));
+                        @endphp
+            
+                        @foreach($visiArray as $item)
+                            @if(trim($item) !== "")
+                                <li>{{ trim($item) }}</li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
 
                 <div class="card">
                     <h3>MISI</h3>
                     <ul>
-                        <li>Drop fit yang relate sama lifestyle Gen Z</li>
-                        <li>Bikin styling jadi fun lewat mix & match</li>
-                        <li>Stay ahead tapi gak kehilangan identitas</li>
-                        <li>Support self-expression tanpa batas</li>
+                        @php
+                           $misiDefault = "Drop fit yang relate sama lifestyle Gen Z\nBikin styling jadi fun lewat mix & match\nStay ahead tapi gak kehilangan identitas\nSupport self-expression tanpa batas";
+                            $misiArray = explode("\n", session('misi_points', $misiDefault));
+                        @endphp
+            
+                        @foreach($misiArray as $item)
+                            @if(trim($item) !== "")
+                                <li>{{ trim($item) }}</li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
             </section>  
@@ -59,9 +69,11 @@
                 <p>Swipe here</p>
                 
                 <div class="gallery-container">
-                    <img src="image/Foto/Gambar-cewe-depan-bajucoklat.jpg" alt="Gallery gambar bagian depan">
-                    <img src="image/Foto/Gambar-cewe-belakang-bajucoklat.jpg" alt="Gallery gambar bagian belakang">
-                    <img src="image/Foto/Gambar-cewe-samping-bajucoklat.jpg" alt="Gallery gambar bagian samping">
+                    @forelse ($galleryFiles as $fileName)
+                        <img src="{{ asset('image/Foto/' . $fileName) }}" alt="Gallery Savior World">
+                    @empty
+                        <p style="color: #666; font-size: 14px; grid-column: 1/-1; text-align: center;"">Belum ada foto galeri.</p>
+                    @endforelse
                 </div>
             </section>
         </main>

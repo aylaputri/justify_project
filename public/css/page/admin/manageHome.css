@@ -1,7 +1,6 @@
 /* =========================
-   RESET
+    RESET & UTILITY ASLI (JANGAN DIUBAH)
 ========================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -14,33 +13,195 @@ body {
 }
 
 .dashboard-content {
-    /* jangan diubah margin dan paddingnya*/
     margin-left: 250px;
-
     padding: 0 40px 20px 40px;
 }
 
 .page-content {
-    /* jangan diubah marginnya, dan gausah ditambah padding*/
     margin-top: 34px;
 }
 
 .page-title {
-    /* jangan ditambah margin/padding */
     font-size: 32px;
     font-weight: 700;
 }
 
 .content-card {
     width: 100%;
-
     background-color: white;
-
     border-radius: 24px;
 }
 
 .content-card p {
     font-size: 15px;
-
     color: #666666;
+}
+
+/* ========================================================
+    CSS KHUSUS SEGMEN MANAGE HOME (PASCA BERSIH-BERSIH INLINE)
+======================================================== */
+
+/* Padding internal penahan isi konten agar lengkungan card 24px tetap rapi */
+.manage-home-wrapper {
+    padding: 30px;
+}
+
+/* Judul & Deskripsi di dalam internal Card */
+.section-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #111111;
+}
+
+.section-card-desc {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+/* Form layout spacing */
+.manage-home-form {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card-spacer {
+    margin-bottom: 30px;
+}
+
+.form-grid-two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-label-styled {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #111111;
+}
+
+.form-input-text, .form-textarea-styled {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-input-text:focus, .form-textarea-styled:focus {
+    border-color: #1a1a1a;
+}
+
+/* Solusi Spacing Tombol Menempel */
+.form-group-file {
+    margin-bottom: 25px;
+}
+
+.form-input-file {
+    display: block;
+    padding: 5px 0;
+    font-size: 14px;
+    margin-bottom: 15px; /* Memberi ruang napas agar button tidak menempel */
+}
+
+/* Khusus pembatas segmen upload gallery */
+.gallery-form-border {
+    margin-bottom: 25px; 
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #eeeeee;
+}
+
+.gallery-upload-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.gallery-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.gallery-item-card {
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.gallery-image-placeholder {
+    height: 150px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888888;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* =========================
+    BUTTONS STYLING
+========================= */
+.btn-submit-primary {
+    background: #2e7d32;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-submit-primary:hover {
+    background: #1b5e20;
+}
+
+.btn-upload-secondary {
+    background: #2e7d32;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-upload-secondary:hover {
+    background: #1b5e20;
+}
+
+.btn-delete-gallery {
+    width: 100%;
+    background: #c62828;
+    color: #ffffff;
+    border: none;
+    padding: 8px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-delete-gallery:hover {
+    background: #b71c1c;
 }
