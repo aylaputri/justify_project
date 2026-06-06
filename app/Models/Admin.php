@@ -12,10 +12,11 @@ class Admin extends Model
 
     public $timestamps = false;
 
+    // KODE SUDAH DISESUAIKAN: Menambahkan 'permissions' dan 'status' agar diizinkan masuk ke database
     protected $fillable = [
         'username',
         'password',
         'name',
-        'role'
+        'role',
     ];
 }

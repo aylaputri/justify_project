@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
 
 Route::get('/admin/login', [AuthController::class, 'showLogin']);
@@ -24,7 +26,7 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin/profile', fn() => view('admin.profile'));
 
-    Route::get('/admin/customers', fn() => view('admin.customers'));
+   Route::get('/admin/customers', [CustomerController::class, 'index'])->name('customers.index');
 
     Route::get('/admin/staffs', [StaffController::class, 'index'])->name('staffs.index');
     
@@ -36,9 +38,14 @@ Route::middleware('admin')->group(function () {
     
     // 4. Menambahkan rute untuk memproses Hapus Akun Staf (Method DELETE)
     Route::delete('/admin/staffs/{id}', [StaffController::class, 'destroy'])->name('staffs.destroy');
+    
+    // 5. RUTE BARU UNTUK TAMBAH STAF
+    Route::get('/admin/staffs/create', [StaffController::class, 'create'])->name('staffs.create');
+    Route::post('/admin/staffs', [StaffController::class, 'store'])->name('staffs.store');
+    
     // =========================================================================
 
-    Route::get('/admin/orders', fn() => view('admin.orders'));
+    Route::get('/admin/orders', [OrderController::class, 'index']);
 
     Route::get('/admin/manage-home', fn() => view('admin.manageHome'));
 
