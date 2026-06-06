@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\File;
-
-=======
 use App\Http\Controllers\UserAuthController;
->>>>>>> d7ff88914d6fa96b09c863c3073e2d249f3aaaa2
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\OrderController;
@@ -15,343 +11,154 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
-use App\Http\Controllers\AddressController;
 
-<<<<<<< HEAD
-Route::get('/admin/login', [AuthController::class, 'showLogin']);
+// =====================
+// ROOT
+// =====================
+Route::get('/', function () {
+    if (session()->has('user_id')) {
+        return redirect('/home');
+    }
+    return redirect('/login');
+});
+
+// =====================
+// ADMIN AUTH (public)
+// =====================
+Route::get('/admin/login',  [AuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login']);
-Route::get('/admin/logout', [AuthController::class, 'logout']);
+Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-Route::middleware('admin')->group(function () {
+// =====================
+// ADMIN PROTECTED
+// =====================
+Route::middleware('admin')->prefix('admin')->group(function () {
 
-    // DASHBOARD
-    Route::get(
-        '/admin/dashboard',
-        [DashboardController::class, 'index']
-    );
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/profile',   fn() => view('admin.profile'))->name('admin.profile');
+    Route::get('/reports',   fn() => view('admin.reports'))->name('admin.reports');
+    Route::get('/manage-mixmatch', fn() => view('admin.manageMixmatch'))->name('admin.manage-mixmatch');
 
-    Route::get('/admin/profile', fn() => view('admin.profile'));
+    // Customers
+    Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers');
 
-   Route::get('/admin/customers', [CustomerController::class, 'index'])->name('customers.index');
+    // Staffs
+    Route::get('/staffs',          [StaffController::class, 'index'])->name('admin.staffs');
+    Route::get('/staffs/create',   [StaffController::class, 'create'])->name('admin.staffs.create');
+    Route::post('/staffs',         [StaffController::class, 'store'])->name('admin.staffs.store');
+    Route::get('/staffs/{id}/edit',[StaffController::class, 'edit'])->name('admin.staffs.edit');
+    Route::put('/staffs/{id}',     [StaffController::class, 'update'])->name('admin.staffs.update');
+    Route::delete('/staffs/{id}',  [StaffController::class, 'destroy'])->name('admin.staffs.destroy');
 
-    Route::get('/admin/staffs', [StaffController::class, 'index'])->name('staffs.index');
-    
-    // 2. Menambahkan rute untuk menampilkan Form Edit Staf (Menuju ke admin.edit)
-    Route::get('/admin/staffs/{id}/edit', [StaffController::class, 'edit'])->name('staffs.edit');
-    
-    // 3. Menambahkan rute untuk memproses Simpan Perubahan Data Staf (Method PUT)
-    Route::put('/admin/staffs/{id}', [StaffController::class, 'update'])->name('staffs.update');
-    
-    // 4. Menambahkan rute untuk memproses Hapus Akun Staf (Method DELETE)
-    Route::delete('/admin/staffs/{id}', [StaffController::class, 'destroy'])->name('staffs.destroy');
-    
-    // 5. RUTE BARU UNTUK TAMBAH STAF
-    Route::get('/admin/staffs/create', [StaffController::class, 'create'])->name('staffs.create');
-    Route::post('/admin/staffs', [StaffController::class, 'store'])->name('staffs.store');
-    
-    // =========================================================================
+    // Orders
+    Route::get('/orders',             [OrderController::class, 'index'])->name('admin.orders');
+    Route::put('/orders/update/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
 
-    Route::get('/admin/orders', [OrderController::class, 'index']);
+    // Catalog
+    Route::get('/manage-catalog',         [ManageCatalogController::class, 'index'])->name('admin.catalog');
+    Route::post('/catalog/store',         [ManageCatalogController::class, 'store'])->name('admin.catalog.store');
+    Route::put('/catalog/update/{id}',    [ManageCatalogController::class, 'update'])->name('admin.catalog.update');
+    Route::delete('/catalog/delete/{id}', [ManageCatalogController::class, 'destroy'])->name('admin.catalog.destroy');
+    Route::get('/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart'])->name('admin.size-chart');
 
-    // REVISI MANAGE HOME ADMIN: Ditambahkan logic memindai folder foto agar sinkron
-    Route::get('/admin/manage-home', function () {
-        $galleryPath = public_path('image/Foto');
+    // Manage Home
+    Route::get('/manage-home', function () {
+        $galleryPath  = public_path('image/Foto');
         $galleryFiles = [];
-
         if (File::exists($galleryPath)) {
-            $files = File::files($galleryPath);
-            foreach ($files as $file) {
-                $filename = $file->getFilename();
-                // Abaikan gambar utama hero agar tidak masuk ke list hapus galeri
-                if ($filename !== 'Gambar-kolase-cewe.jpg') {
-                    $galleryFiles[] = $filename;
+            foreach (File::files($galleryPath) as $file) {
+                if ($file->getFilename() !== 'Gambar-kolase-cewe.jpg') {
+                    $galleryFiles[] = $file->getFilename();
                 }
             }
         }
-
         return view('admin.manageHome', compact('galleryFiles'));
     })->name('admin.manage-home');
 
-    // RUTE BARU ADMIN: Untuk menghapus file foto secara fisik dari folder
-    Route::delete('/admin/manage-home/gallery/{fileName}', function ($fileName) {
+    Route::delete('/manage-home/gallery/{fileName}', function ($fileName) {
         $filePath = public_path('image/Foto/' . $fileName);
-
-        if (File::exists($filePath)) {
-            File::delete($filePath);
-        }
-
-        return redirect()->back()->with('success', 'Foto lookbook berhasil dihapus!');
+        if (File::exists($filePath)) File::delete($filePath);
+        return redirect()->back()->with('success', 'Foto berhasil dihapus!');
     })->name('admin.home.delete-gallery');
 
-    // SINKRONISASI PROSES UPLOAD GAMBAR
-    Route::post('/admin/manage-home/upload', function (\Illuminate\Http\Request $request) {
-        
-        // Kita langsung ambil file-nya, baik dikirim sebagai array (multiple) atau satuan
+    Route::post('/manage-home/upload', function (\Illuminate\Http\Request $request) {
         $files = $request->file('gallery_files');
-
         if ($files) {
-            // Memastikan formatnya menjadi array agar bisa di-looping safely
-            $fileArray = is_array($files) ? $files : [$files];
-
-            foreach ($fileArray as $file) {
-                // Ambil nama asli file gambar (misal: baju-keren.jpg)
-                $filename = $file->getClientOriginalName();
-                
-                // Pindahkan langsung ke folder target tujuan kamu
-                $file->move(public_path('image/Foto'), $filename);
+            foreach (is_array($files) ? $files : [$files] as $file) {
+                $file->move(public_path('image/Foto'), $file->getClientOriginalName());
             }
-
-            // Kembali ke halaman admin sambil bawa flash session sukses
-            return redirect()->back()->with('success', 'Gambar baru berhasil diunggah ke website!');
+            return redirect()->back()->with('success', 'Gambar berhasil diunggah!');
         }
-
-        // Kalau ternyata file-nya terlewat/tidak terbaca, lempar status error
-        return redirect()->back()->with('error', 'Gagal mengunggah, file tidak terbaca oleh server.');
+        return redirect()->back()->with('error', 'Gagal mengunggah file.');
     })->name('admin.home.upload-gallery');
 
-    // RUTE BARU ADMIN: Mengolah perubahan Headline Hero Banner
-    Route::post('/admin/manage-home/hero', function (\Illuminate\Http\Request $request) {
-        // Di sini kita menangkap teks kiriman form
-        $headline = $request->input('hero_headline');
-        $buttonLink = $request->input('hero_button_link');
-
-        // Kita juga siapkan jika admin mengunggah file gambar banner baru
+    Route::post('/manage-home/hero', function (\Illuminate\Http\Request $request) {
         if ($request->hasFile('hero_image')) {
-            $file = $request->file('hero_image');
-            
-            // Kita timpa file lama dengan nama Gambar-kolase-cewe.jpg agar langsung terupdate di user
-            $filename = 'Gambar-kolase-cewe.jpg';
-            $file->move(public_path('image/Foto'), $filename);
+            $request->file('hero_image')->move(public_path('image/Foto'), 'Gambar-kolase-cewe.jpg');
         }
-
-        // Karena belum pakai database, data teks kita simpan ke session saja biar tidak hilang saat reload halaman
         session([
-            'hero_headline' => $headline,
-            'hero_button_link' => $buttonLink
+            'hero_headline'    => $request->input('hero_headline'),
+            'hero_button_link' => $request->input('hero_button_link'),
         ]);
-
-        return redirect()->back()->with('success', 'Konten Hero Banner berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Hero Banner berhasil diperbarui!');
     })->name('admin.home.update-hero');
 
-    // RUTE BARU ADMIN: Mengolah perubahan teks Visi & Misi
-    Route::post('/admin/manage-home/visi-misi', function (\Illuminate\Http\Request $request) {
-        // Ambil kiriman teks dari textarea form admin
-        $visi = $request->input('visi_points');
-        $misi = $request->input('misi_points');
-
-        // Kita titipkan datanya ke dalam session agar tersimpan sementara tanpa database
+    Route::post('/manage-home/visi-misi', function (\Illuminate\Http\Request $request) {
         session([
-            'visi_points' => $visi,
-            'misi_points' => $misi
+            'visi_points' => $request->input('visi_points'),
+            'misi_points' => $request->input('misi_points'),
         ]);
-
-        return redirect()->back()->with('success', 'Data Visi & Misi berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Visi & Misi berhasil diperbarui!');
     })->name('admin.home.update-visimisi');
-
-    Route::get(
-        '/admin/manage-catalog',
-        [ManageCatalogController::class, 'index']
-    );
-
-    Route::post(
-        '/admin/catalog/store',
-        [ManageCatalogController::class, 'store']
-    );
-
-    Route::put(
-        '/admin/catalog/update/{id}',
-        [ManageCatalogController::class, 'update']
-    );
-
-    Route::delete(
-        '/admin/catalog/delete/{id}',
-        [ManageCatalogController::class, 'destroy']
-    );
-
-    Route::get('/admin/manage-mixmatch', fn() => view('admin.manageMixmatch'));
-
-    Route::get('/admin/reports', fn() => view('admin.reports'));
-
-    Route::get('/admin/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart']);
 });
 
-Route::get('/home', function () {
-    $galleryPath = public_path('image/Foto');
-    $galleryFiles = [];
+// =====================
+// USER AUTH (public)
+// =====================
+Route::get('/login',    [UserAuthController::class, 'showLogin'])->name('login');
+Route::post('/login',   [UserAuthController::class, 'login']);
+Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
+Route::post('/register',[UserAuthController::class, 'register']);
+Route::get('/logout',   [UserAuthController::class, 'logout'])->name('logout');
 
-    if (File::exists($galleryPath)) {
-        $files = File::files($galleryPath);
-        foreach ($files as $file) {
-            $filename = $file->getFilename();
-            // Tampilkan foto di galeri jika itu bukan gambar utama hero banner
-            if ($filename !== 'Gambar-kolase-cewe.jpg') {
-                $galleryFiles[] = $filename;
+// =====================
+// USER PROTECTED
+// =====================
+Route::middleware('user.auth')->group(function () {
+    Route::get('/home', function () {
+        $galleryPath  = public_path('image/Foto');
+        $galleryFiles = [];
+        if (File::exists($galleryPath)) {
+            foreach (File::files($galleryPath) as $file) {
+                if ($file->getFilename() !== 'Gambar-kolase-cewe.jpg') {
+                    $galleryFiles[] = $file->getFilename();
+                }
             }
         }
-    }
+        return view('page.home', compact('galleryFiles'));
+    })->name('home');
 
-    return view('page.home', compact('galleryFiles'));
-});
-=======
-/* Admin Routes */
-// Admin Authentication
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/logout', [AuthController::class, 'logout'])->name('admin.logout');
-});
+    Route::get('/katalog',    [KatalogController::class, 'index'])->name('katalog');
+    Route::get('/mixmatch',   fn() => view('page.mixmatch'))->name('mixmatch');
+    Route::get('/cart',       fn() => view('page.cart'))->name('cart');
+    Route::get('/profile',    fn() => view('page.profile'))->name('profile');
+    Route::get('/addAddress', fn() => view('page.addAddress'))->name('addAddress');
+    Route::get('/checkout',   fn() => view('page.checkout'))->name('checkout');
 
-// Admin Dashboard & Management (Protected)
-Route::middleware('admin')->prefix('admin')->as('admin.')->group(function () {
-    
-    // Main Dashboard & Pages
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', fn() => view('admin.profile'))->name('profile');
-    Route::get('/manage-home', fn() => view('admin.manageHome'))->name('manage-home');
-    Route::get('/manage-mixmatch', fn() => view('admin.manageMixmatch'))->name('manage-mixmatch');
-    Route::get('/reports', fn() => view('admin.reports'))->name('reports');
->>>>>>> d7ff88914d6fa96b09c863c3073e2d249f3aaaa2
-
-    // Customers Management
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-
-    // Staffs Management (CRUD)
-    Route::prefix('staffs')->as('staffs.')->group(function () {
-        Route::get('/', [StaffController::class, 'index'])->name('index');
-        Route::get('/create', [StaffController::class, 'create'])->name('create');
-        Route::post('/', [StaffController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [StaffController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [StaffController::class, 'update'])->name('update');
-        Route::delete('/{id}', [StaffController::class, 'destroy'])->name('destroy');
-    });
-
-    // Orders Management
-    Route::prefix('orders')->as('orders.')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('index');
-        Route::put('/update/{id}', [OrderController::class, 'update'])->name('update');
-    });
-
-    // Catalog Management 
-    // Mengakses URL: http://127.0.0.1:8000/admin/manage-catalog
-    Route::prefix('manage-catalog')->as('catalog.')->group(function () {
-        Route::get('/', [ManageCatalogController::class, 'index'])->name('index');
-        Route::post('/store', [ManageCatalogController::class, 'store'])->name('store'); // Ditambahkan kembali agar bisa create data
-        Route::put('/update/{id}', [ManageCatalogController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [ManageCatalogController::class, 'destroy'])->name('destroy');
-        Route::get('/size-chart/{id_category}', [ManageCatalogController::class, 'getSizeChart'])->name('size-chart');
-    });
+    Route::post('/checkout/payment', [PaymentController::class, 'payment'])->name('payment.process');
+    Route::get('/invoice/{id}',      [PaymentController::class, 'invoice'])->name('payment.invoice');
 });
 
-/* User Routes */
-Route::get('/', function () {
-
-    if (session()->has('user_id')) {
-
-        return redirect('/home');
-
-    }
-
-    return redirect('/login');
-
-});
-
-// =========================
-// USER AUTHENTICATION
-// =========================
-
-Route::get(
-    '/login',
-    [UserAuthController::class, 'showLogin']
-)->name('login');
-
-Route::post(
-    '/login',
-    [UserAuthController::class, 'login']
-);
-
-Route::get(
-    '/register',
-    [UserAuthController::class, 'showRegister']
-)->name('register');
-
-Route::post(
-    '/register',
-    [UserAuthController::class, 'register']
-);
-
-// =========================
-// PROTECTED USER PAGES
-// =========================
-
-Route::middleware('user')->group(function () {
-
-    // HOME
-    Route::get(
-        '/home',
-        fn() => view('page.home')
-    )->name('home');
-
-    // KATALOG
-    Route::get(
-        '/katalog',
-        [KatalogController::class, 'index']
-    )->name('katalog');
-
-    // MIXMATCH
-    Route::get(
-        '/mixmatch',
-        fn() => view('page.mixmatch')
-    )->name('mixmatch');
-
-    // CART
-    Route::get(
-        '/cart',
-        fn() => view('page.cart')
-    )->name('cart');
-
-    // PROFILE
-    Route::get(
-        '/profile',
-        fn() => view('page.profile')
-    )->name('profile');
-
-    // ADDRESS
-    Route::get(
-        '/addAddress',
-        fn() => view('page.addAddress')
-    )->name('addAddress');
-
-    // CHECKOUT
-    Route::get(
-        '/checkout',
-        fn() => view('page.checkout')
-    )->name('checkout');
-
-    // PAYMENT
-    Route::post(
-        '/checkout/payment',
-        [PaymentController::class, 'payment']
-    )->name('payment.process');
-
-    // INVOICE
-    Route::get(
-        '/invoice/{id}',
-        [PaymentController::class, 'invoice']
-    )->name('payment.invoice');
-
-    // LOGOUT
-    Route::get(
-        '/logout',
-        [UserAuthController::class, 'logout']
-    )->name('logout');
-});
-
-// Midtrans Notification (Webhook - Skip CSRF)
+// =====================
+// MIDTRANS WEBHOOK (skip CSRF)
+// =====================
 Route::post('/checkout/notification', [PaymentController::class, 'notification'])
     ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class)
     ->name('payment.notification');
 
-/* Debugging Routes */
+// =====================
+// DEBUG (hapus setelah selesai)
+// =====================
 Route::get('/debug-session', function () {
     return response()->json([
         'user_id'   => session('user_id'),
