@@ -39,14 +39,12 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard',       [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/profile',         fn() => view('admin.profile'))->name('admin.profile');
     Route::get('/reports',         fn() => view('admin.reports'))->name('admin.reports');
-    Route::prefix('mixmatch')->name('admin.mixmatch.')->group(function () {
-        Route::get('/', [AdminMixMatchController::class, 'index'])->name('index'); // Gantikan handle view kaku lama
-        Route::get('/create', [AdminMixMatchController::class, 'create'])->name('create'); // Buka Form Tambah
-        Route::post('/store', [AdminMixMatchController::class, 'store'])->name('store');   // Proses Simpan Data
-        Route::get('/{id}/edit', [AdminMixMatchController::class, 'edit'])->name('edit'); // Buka Form Edit
-        Route::put('/{id}/update', [AdminMixMatchController::class, 'update'])->name('update'); // Proses Update
-        Route::delete('/{id}/delete', [AdminMixMatchController::class, 'destroy'])->name('destroy'); // Proses Hapus
-    });
+    Route::get('/manage-mixmatch',             [AdminMixMatchController::class, 'index'])->name('admin.manageMixmatch.index');
+    Route::get('/manage-mixmatch/create',      [AdminMixMatchController::class, 'create'])->name('admin.manageMixmatch.create');
+    Route::post('/manage-mixmatch/store',      [AdminMixMatchController::class, 'store'])->name('admin.manageMixmatch.store');
+    Route::get('/manage-mixmatch/{id}/edit',   [AdminMixMatchController::class, 'edit'])->name('admin.manageMixmatch.edit');
+    Route::put('/manage-mixmatch/update/{id}', [AdminMixMatchController::class, 'update'])->name('admin.manageMixmatch.update');
+    Route::delete('/manage-mixmatch/delete/{id}', [AdminMixMatchController::class, 'destroy'])->name('admin.manageMixmatch.destroy');
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
