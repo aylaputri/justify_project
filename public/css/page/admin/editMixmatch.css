@@ -149,7 +149,7 @@ body {
 /* Tombol Submit Simpan */
 .btn-submit-mix {
     font-family: 'Poppins', sans-serif;
-    background-color: #3b82f6;
+    background-color: #2e7d32;
     color: #ffffff;
     padding: 14px 32px;
     font-size: 15px;
@@ -161,5 +161,5 @@ body {
 }
 
 .btn-submit-mix:hover {
-    background-color: #2563eb;
+    background-color: #1b5e20;
 }

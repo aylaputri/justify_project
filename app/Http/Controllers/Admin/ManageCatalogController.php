@@ -11,7 +11,7 @@ class ManageCatalogController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['category', 'variants.images'])->get();
+        $products   = Product::with(['category', 'variants.images'])->get();
         $categories = ProductCategories::all();
         return view('admin.manageCatalog', compact('products', 'categories'));
     }
@@ -35,6 +35,7 @@ class ManageCatalogController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
+            // Simpan ke storage/app/public/products, hasilnya "products/filename.jpg"
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
@@ -62,7 +63,7 @@ class ManageCatalogController extends Controller
 
                 if ($imagePath) {
                     $variant->images()->create([
-                        'image_url' => 'storage/' . $imagePath,
+                        'image_url' => $imagePath, // simpan tanpa prefix "storage/"
                         'is_main'   => 1,
                     ]);
                 }
@@ -82,7 +83,6 @@ class ManageCatalogController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-
         $product->update([
             'product_name' => $request->product_name,
             'id_category'  => $request->id_category,
@@ -99,16 +99,16 @@ class ManageCatalogController extends Controller
 
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('products', 'public');
+                $image     = $variant->images()->first();
 
-                $image = $variant->images()->first();
                 if ($image) {
                     $image->update([
-                        'image_url' => 'storage/' . $imagePath,
+                        'image_url' => $imagePath, // simpan tanpa prefix "storage/"
                         'is_main'   => 1,
                     ]);
                 } else {
                     $variant->images()->create([
-                        'image_url' => 'storage/' . $imagePath,
+                        'image_url' => $imagePath, // simpan tanpa prefix "storage/"
                         'is_main'   => 1,
                     ]);
                 }
@@ -122,7 +122,6 @@ class ManageCatalogController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-
         return redirect('/admin/manage-catalog')->with('success', 'Produk berhasil dihapus');
     }
 }

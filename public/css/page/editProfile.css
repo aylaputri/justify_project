@@ -1,0 +1,277 @@
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: #f5f5f5; 
+}
+
+/* CONTAINER UTAMA */
+.edit-body-wrap {
+    padding-top: 64px; /* Menyesuaikan tinggi fixed header */
+}
+
+/* REUSABLE HEADER STYLES */
+.header-editProfile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.back-btn {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.back-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+.header-editProfile h1 {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* BODY EDIT CONTENT */
+.edit-body { 
+    padding: 24px 16px 120px; 
+}
+
+/* AVATAR UPLOAD COMPONENT */
+.photo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.photo-wrap {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.photo-wrap img, 
+.photo-placeholder {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1a1a1a;
+}
+
+.photo-placeholder {
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.photo-edit-btn {
+    position: absolute;
+    bottom: 0; 
+    right: 0;
+    width: 28px; 
+    height: 28px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+.photo-edit-btn svg { 
+    width: 14px; 
+    height: 14px; 
+    stroke: #fff; 
+}
+
+.photo-label { 
+    font-size: 13px; 
+    color: #888; 
+}
+
+#photoInput { 
+    display: none; 
+}
+
+/* SECTION STRUCTURE CARD */
+.section-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+}
+
+/* INDIVIDUAL FIELD INPUT STYLES */
+.field { 
+    margin-bottom: 14px; 
+}
+
+.field:last-child { 
+    margin-bottom: 0; 
+}
+
+.field label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    background: #fff;
+    color: #1a1a1a;
+    transition: border-color 0.2s;
+}
+
+.field input:focus { 
+    border-color: #1a1a1a; 
+}
+
+.pw-hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 6px;
+}
+
+/* FIELD VISIBILITY PASSWORD TOGGLE */
+.input-wrap { 
+    position: relative; 
+}
+
+.input-wrap input { 
+    padding-right: 44px; 
+}
+
+.toggle-pw {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.toggle-pw svg { 
+    width: 18px; 
+    height: 18px; 
+    stroke: currentColor; 
+}
+
+/* FLASH BANNER ALERTS */
+.alert {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.alert.success { 
+    background: #d4edda; 
+    color: #155724; 
+}
+
+.alert.error-alert { 
+    background: #f8d7da; 
+    color: #721c24; 
+}
+
+/* BAR FOOTER BUTTON SIMPAN */
+.save-bar {
+    position: fixed;
+    bottom: 0; 
+    left: 0; 
+    right: 0;
+    padding: 16px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    z-index: 900;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 16px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* RESPONSIVE LAPTOP & DESKTOP SCREEN (min-width: 768px) */
+@media (min-width: 768px) {
+
+    .header-editProfile {
+        height: 90px;
+    }
+
+    .back-btn {
+        left: 35px;
+    }
+
+    .back-btn img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .header-editProfile h1 {
+        font-size: 24px;
+    }
+
+    .edit-body {
+        padding: 40px 16px 140px;
+    }
+
+    .save-bar {
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid #eee;
+        border-radius: 12px 12px 0 0;
+    }
+}
