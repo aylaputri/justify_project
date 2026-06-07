@@ -1,3 +1,6 @@
+/* ==========================================================================
+   GLOBAL STYLES & LAYOUT
+   ========================================================================== */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #fcfcfc; 
@@ -5,18 +8,25 @@ body {
     color: #333;
 }
 
-.mixmatch-container { 
-    max-width: 1200px; 
-    margin: 40px auto;
-    padding: 0 20px;
+/* Mengatasi halaman amblas ke bawah navbar fixed global */
+.with-navbar-fixed {
+    padding-top: 20px !important; 
 }
 
-/* --- GUIDE CARD: Dibuat lebih Clean & Floating --- */
+.mixmatch-container { 
+    max-width: 1200px; 
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* --- GUIDE CARD (PANDUAN) --- */
 .guide-card { 
     background: #ffffff; 
-    padding: 30px; 
+    padding: 25px; 
     border-radius: 24px; 
-    margin-bottom: 40px; 
+    margin-top: 20px; 
+    margin-bottom: 35px; 
     border: none;
     box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     text-align: center;
@@ -26,14 +36,18 @@ body {
     margin-top: 0;
     font-weight: 700;
     letter-spacing: -0.5px;
+    color: #111;
 }
 
 .guide-card p {
     color: #777;
     font-size: 0.95rem;
+    margin-bottom: 0;
 }
 
-/* --- GENDER SELECTION: Elegant Cards --- */
+/* ==========================================================================
+   STEP 1: GENDER SELECTION
+   ========================================================================== */
 .selection-wrapper { 
     display: flex; 
     justify-content: center; 
@@ -51,7 +65,6 @@ body {
     width: 220px; 
     height: auto;
     border-radius: 20px; 
-    border: none; 
     box-shadow: 0 15px 35px rgba(0,0,0,0.07); 
     background: #fff;
 }
@@ -74,7 +87,9 @@ body {
     letter-spacing: 3px;
 }
 
-/* --- WORKSPACE: Professional Lab Style --- */
+/* ==========================================================================
+   STEP 2: MAIN WORKSPACE LAYOUT
+   ========================================================================== */
 .workspace-layout { 
     display: flex; 
     justify-content: center;
@@ -83,21 +98,23 @@ body {
     margin-top: 20px;
 }
 
+/* Sisi Katalog Atasan & Bawahan */
 .side-panel { 
     width: 220px;
     background: rgba(255, 255, 255, 0.8); 
-    backdrop-filter: blur(10px); /* Efek kaca */
-    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(0,0,0,0.03);
     border-radius: 25px; 
     padding: 20px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-    transition: all 0.4s ease;
+    box-sizing: border-box;
 }
 
 .panel-header h4 {
     font-size: 0.75rem;
     letter-spacing: 1.5px;
     text-align: center;
+    margin-top: 0;
     margin-bottom: 20px;
     color: #999;
     font-weight: 700;
@@ -111,13 +128,11 @@ body {
     padding-right: 5px;
 }
 
-/* Custom Scrollbar */
 .item-list::-webkit-scrollbar { width: 4px; }
 .item-list::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
 
 .product-item { 
     background: #fff;
-    border: none;
     border-radius: 20px;
     margin-bottom: 20px;
     padding: 15px;
@@ -125,22 +140,19 @@ body {
     cursor: grab;
     width: 100%;
     box-sizing: border-box;
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 180px;   
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Memaksa gambar baju muat sempurna di dalam kotak putih */
 .product-item img {
     max-width: 100% !important;
     max-height: 100% !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain;
-    display: block;
-    margin: 0 auto;      
 }
 
 .product-item:hover { 
@@ -148,10 +160,13 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* --- MANNEQUIN AREA: The Masterpiece (FIXED) --- */
+/* ==========================================================================
+   CENTER: MANNEQUIN FRAME & CANVAS AREA
+   ========================================================================== */
 .mannequin-frame { 
     flex: 1;
-    max-width: 450px;
+    max-width: 440px;
+    min-width: 340px;
     background: #ffffff;
     border-radius: 30px;
     padding: 20px;
@@ -160,49 +175,35 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    box-sizing: border-box;
 }
 
-.drop-area { 
-    background: #fdfdfd;
-    height: 600px;
-    width: 100%;
-    border-radius: 25px;
-    border: 1px solid #f0f0f0;
-    position: relative; 
-    overflow: visible;
+/* Tombol Reset Melayang Sisi Kiri Atas Frame (Fix Image_763409.png) */
+.btn-reset-side {
+    position: absolute;
+    top: 35px;
+    left: 35px; 
+    z-index: 10;
+    background: #fff;
+    padding: 8px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+.btn-reset-side:hover {
+    transform: scale(1.1) rotate(-15deg);
+    background: #fff0f0;
 }
 
-/* Mengunci Maneken di Tengah */
-.layer-base {
-    height: 550px; 
-    width: auto;
-    position: absolute;
-    bottom: 25px;  
-    z-index: 1;
-}
-
-/* Mengunci Baju & Celana tepat di atas Maneken */
-.layer-item {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-}
-
-#layer-atasan {
-    height: 220px;   
-    top: 60px;      
-    z-index: 3;
-}
-
-#layer-bawahan {
-    height: 320px;   
-    bottom: 25px; 
-    z-index: 2;
-}
+/* Tombol Ganti Gender Sisi Kanan Atas Frame */
 .gender-switcher { 
     background: #fff;
     padding: 8px;
@@ -213,85 +214,140 @@ body {
     right: 35px;
     z-index: 10;
     cursor: pointer;
-    transition: 0.3s;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
 }
 
 .gender-switcher:hover {
-    transform: rotate(15deg) scale(1.1);
+    transform: scale(1.1) rotate(15deg); /* Membesar 10% dan miring ke kanan 15 derajat */
+    background: #ffffff; /* Berubah warna background soft ungu pas di-hover */
 }
 
 .gender-switcher img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-/* Info Box Pop-up Produk */
+/* Tempat Kerja Maneken */
+.drop-area { 
+    background: #fdfdfd;
+    height: 550px; 
+    width: 100%;
+    border-radius: 25px;
+    border: 1px solid #f0f0f0;
+    position: relative; 
+    overflow: visible; /* Penting agar pop-up info kiri kanan menyembul keluar */
+}
+
+/* FIX UTAMA IMAGE_763409.png: Memaksa Gambar Maneken Rapi di Dalam Kotak */
+.layer-base {
+    height: 100%; 
+    width: 100%;
+    position: absolute;
+    bottom: 0;  
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    object-fit: contain; /* Mengunci rasio tubuh gambar agar tidak penyok/meluber */
+}
+
+/* Pakaian yang Di-drag / Diklik */
+.layer-item {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+}
+
+/* Skala Pakaian Menyesuaikan Frame Maneken yang Baru */
+#layer-atasan { 
+    height: 170px; 
+    top: 90px; 
+    z-index: 3; 
+}
+
+#layer-bawahan { 
+    height: 250px; 
+    bottom: 45px; 
+    z-index: 2; 
+}
+
+/* ==========================================================================
+   ADVANCED REVISI: DETAIL POP-UP PRODUK (KIRI & KANAN MUTLAK)
+   ========================================================================== */
 .info-popup {
     position: absolute;
-    
-    /* Dorong keluar ke arah kiri luar area maneken */
-    left: -140px; 
-    top: 50%;
-    transform: translateY(-50%); /* Sempurna di tengah-tengah secara vertikal */
-    
-    width: 180px;
+    width: 145px;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    padding: 15px;
-    border-radius: 18px;
-    box-shadow: -10px 15px 35px rgba(0,0,0,0.08);
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     border: 1px solid rgba(0,0,0,0.05);
     z-index: 99;
     text-align: center;
     box-sizing: border-box;
 }
 
-/* Dekorasi isi pop-up */
+/* Atasan: Mengunci di Sisi Kiri Luar Canvas (Dihitung dari Sumbu Tengah Maneken) */
+.popup-atasan {
+    left: calc(50% - 235px); 
+    top: 20%; 
+}
+
+/* Bawahan: Mengunci di Sisi Kanan Luar Canvas (Dihitung dari Sumbu Tengah Maneken) */
+.popup-bawahan {
+    left: calc(50% + 90px);  
+    top: 52%; 
+}
+
 .info-popup strong {
-    font-size: 0.85rem;
-    color: #333;
+    font-size: 0.75rem;
+    color: #222;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    line-height: 1.3;
 }
 
 .info-popup hr {
     border: 0;
     border-top: 1px solid #eee;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .btn-link {
-    color: #7f56d9; /* Warna ungu aksen atau sesuaikan */
+    color: #7f56d9; 
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 700;
 }
+.btn-link:hover {
+    text-decoration: underline;
+}
 
+/* --- TOMBOL SIMPAN --- */
 .btn-save { 
-    background: #000; 
-    color: #fff;
+    background: #000000; 
+    color: #ffffff;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 0.8rem;
     margin-top: 20px;
     border-radius: 15px;
-    transition: 0.3s;
-    padding: 12px 30px;
+    transition: all 0.3s ease;
+    padding: 14px 30px;
     border: none;
     cursor: pointer;
     width: 100%;
     font-weight: 700;
 }
-
 .btn-save:hover {
-   .btn-save:hover {
-    background: #333;
+    background: #222222;
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);}
 }
-

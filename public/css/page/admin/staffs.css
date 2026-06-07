@@ -361,4 +361,5 @@ body {
 /* Pesan Eror Validasi Form dari Laravel */
 .error-msg {
     font-size: 12px;
-    color:
+    color: #e53e3e;
+}

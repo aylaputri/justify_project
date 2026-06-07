@@ -3,22 +3,21 @@
 @section('title', 'mixmatch')
 
 @push('style')
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" />
 <link rel="stylesheet" href="{{ asset('css/page/mixmatch.css') }}" >
-
 @endpush
 
 @section('content')
 
 @include('components.navbar')
 
-<main>
+<main class="with-navbar-fixed">
     <div class="mixmatch-container">
         <div class="guide-card">
             <h3>✨ Panduan Mix & Match</h3>
             <p id="instruction-text">Silahkan pilih Karakter Utama untuk memulai petualangan gayamu.</p>
         </div>
+        
         <div id="gender-step" class="selection-wrapper">
             <div class="gender-card" onclick="initApp('male')">
                 <img src="{{ asset('assets/image/imgMixmatch/pria/mancard.jpeg') }}" alt="Male Character">
@@ -30,45 +29,56 @@
             </div>
         </div>
     
-    <div id="workspace" class="workspace-layout" style="display: none;">    
-    <aside class="side-panel">
-        <div class="panel-header">
-            <h4>ATASAN</h4>
-        </div>
-        <div id="list-atasan" class="item-list"></div>
-    </aside>
+        <div id="workspace" class="workspace-layout" style="display: none;">    
+            <aside class="side-panel">
+                <div class="panel-header">
+                    <h4>ATASAN</h4>
+                </div>
+                <div id="list-atasan" class="item-list"></div>
+            </aside>
 
-    <section class="mannequin-frame">
-        <div class="gender-switcher" onclick="switchGender()" title="Switch Gender">
-            <img id="switch-icon" src="" alt="Alternative Character">
-        </div>
-        <div class="drop-area" id="drop-zone" 
-            ondragover="allowDrop(event)" 
-            ondragleave="clearHighlight()" 
-            ondrop="onDrop(event)">
-            <img id="base-model" class="layer-base" src="">
-            <img id="layer-bawahan" class="layer-item z-bawahan" src="" style="display:none;">
-            <img id="layer-atasan" class="layer-item z-atasan" src="" style="display:none;">
-            <div id="info-box" class="info-popup">
-                <strong id="p-name">Product Name</strong>
-                <hr>
-                <a href="#" class="btn-link">Lihat Katalog</a>
-            </div>
-        </div>
-        <button class="btn-save" onclick="saveCombination()">❤️ Simpan Kombinasi</button>
-    </section>
+            <section class="mannequin-frame">
+                <button id="btn-reset-mix" class="btn-reset-side" onclick="resetCombination()" title="Reset Kombinasi">🔄</button>
 
-    <aside class="side-panel">
-        <div class="panel-header">
-            <h4>BAWAHAN</h4>
-        </div>
-        <div id="list-bawahan" class="item-list"></div>
-    </aside>
-</div>        
+                <div class="gender-switcher" onclick="switchGender()" title="Switch Gender">
+                    <img id="switch-icon" src="" alt="Alternative Character">
+                </div>
+                
+                <div class="drop-area" id="drop-zone" 
+                    ondragover="allowDrop(event)" 
+                    ondragleave="clearHighlight()" 
+                    ondrop="onDrop(event)">
+                    
+                    <img id="base-model" class="layer-base" src="">
+                    <img id="layer-bawahan" class="layer-item z-bawahan" src="" style="display:none;">
+                    <img id="layer-atasan" class="layer-item z-atasan" src="" style="display:none;">
+                    
+                    <div id="info-box-atasan" class="info-popup popup-atasan" style="display: none;">
+                        <strong id="p-name-atasan">Nama Atasan</strong>
+                        <hr>
+                        <a href="#" id="p-link-atasan" class="btn-link">Lihat Katalog</a>
+                    </div>
+
+                    <div id="info-box-bawahan" class="info-popup popup-bawahan" style="display: none;">
+                        <strong id="p-name-bawahan">Nama Bawahan</strong>
+                        <hr>
+                        <a href="#" id="p-link-bawahan" class="btn-link">Lihat Katalog</a>
+                    </div>
+                </div>
+                
+                <button class="btn-save" onclick="saveCombination()">❤️ Simpan Kombinasi</button>
+            </section>
+
+            <aside class="side-panel">
+                <div class="panel-header">
+                    <h4>BAWAHAN</h4>
+                </div>
+                <div id="list-bawahan" class="item-list"></div>
+            </aside>
+        </div>        
     </div>
 </main>
    
-<!-- FOOTER -->
 @include('components.footer')
 
 @endsection
