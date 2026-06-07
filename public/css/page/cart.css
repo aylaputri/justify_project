@@ -10,39 +10,6 @@ main{
     margin-top:80px;
 }
 
-/* HEADER */
-.header-cart{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:64px;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:1000;
-}
-
-.back-btn{
-    position:absolute;
-    left:20px;
-    display:flex;
-    align-items:center;
-}
-
-.back-btn img{
-    width:24px;
-    height:24px;
-}
-
-.header-cart h1{
-    margin:0;
-    color:white;
-    font-size:16px;
-    font-weight:700;
-}
-
 /* PAGE */
 .cart-page{
     display:flex;
@@ -218,23 +185,6 @@ main{
         gap:30px;
     }
 
-    /* HEADER */
-    .header-cart{
-        height:90px;
-    }
-
-    .back-btn{
-        left:35px;
-    }
-
-    .back-btn img{
-        width:28px;
-        height:28px;
-    }
-
-    .header-cart h1{
-        font-size:24px;
-    }
     /* PAGE */
     .cart-page{
         flex-direction:row;

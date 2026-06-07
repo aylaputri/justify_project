@@ -28,105 +28,51 @@
             <div class="filter-container">
                 <div class="dropdown">
                     <select name="kategori" id="kategori">
-                        <option value="" disabled selected>
-                            Kategori
-                        </option>
-                        <option value="Dress" {{ request('kategori') == 'Dress' ? 'selected' : '' }}>
-                            Dress
-                        </option>
-                        <option value="Croptop" {{ request('kategori') == 'Croptop' ? 'selected' : '' }}>
-                            Crop top
-                        </option>
-                        <option value="OffShoulder" {{ request('kategori') == 'OffShoulder' ? 'selected' : '' }}>
-                            Off-Shoulder
-                        </option>
-                        <option value="Blouse" {{ request('kategori') == 'Blouse' ? 'selected' : '' }}>
-                            Blouse
-                        </option>
-                        <option value="Tanktop" {{ request('kategori') == 'Tanktop' ? 'selected' : '' }}>
-                            Tanktop
-                        </option>
-                        <option value="Corset" {{ request('kategori') == 'Corset' ? 'selected' : '' }}>
-                            Corset
-                        </option>
-                        <option value="T-Shirt" {{ request('kategori') == 'T-shirt' ? 'selected' : '' }}>
-                            T-Shirt
-                        </option>
-                        <option value="Shirt" {{ request('kategori') == 'Shirt' ? 'selected' : '' }}>
-                            Shirt
-                        </option>
-                        <option value="Jeans" {{ request('kategori') == 'Jeans' ? 'selected' : '' }}>
-                            Jeans
-                        </option>
-                        <option value="Skirt" {{ request('kategori') == 'Skirt' ? 'selected' : '' }}>
-                            Skirt
-                        </option>
-                        <option value="Skort" {{ request('kategori') == 'Skort' ? 'selected' : '' }}>
-                            Skort
-                        </option>
-                        <option value="Shorts" {{ request('kategori') == 'Shorts' ? 'selected' : '' }}>
-                            Shorts
-                        </option>
-                        <option value="Cargo" {{ request('kategori') == 'Cargo' ? 'selected' : '' }}>
-                            Cargo
-                        </option>
-                        <option value="Rippedjeans" {{ request('kategori') == 'Rippedjeans' ? 'selected' : '' }}>
-                            Ripped jeans
-                        </option>
+                        <option value="" disabled selected>Kategori</option>
+                        <option value="Dress" {{ request('kategori') == 'Dress' ? 'selected' : '' }}>Dress</option>
+                        <option value="Croptop" {{ request('kategori') == 'Croptop' ? 'selected' : '' }}>Crop top</option>
+                        <option value="OffShoulder" {{ request('kategori') == 'OffShoulder' ? 'selected' : '' }}>Off-Shoulder</option>
+                        <option value="Blouse" {{ request('kategori') == 'Blouse' ? 'selected' : '' }}>Blouse</option>
+                        <option value="Tanktop" {{ request('kategori') == 'Tanktop' ? 'selected' : '' }}>Tanktop</option>
+                        <option value="Corset" {{ request('kategori') == 'Corset' ? 'selected' : '' }}>Corset</option>
+                        <option value="T-Shirt" {{ request('kategori') == 'T-shirt' ? 'selected' : '' }}>T-Shirt</option>
+                        <option value="Shirt" {{ request('kategori') == 'Shirt' ? 'selected' : '' }}>Shirt</option>
+                        <option value="Jeans" {{ request('kategori') == 'Jeans' ? 'selected' : '' }}>Jeans</option>
+                        <option value="Skirt" {{ request('kategori') == 'Skirt' ? 'selected' : '' }}>Skirt</option>
+                        <option value="Skort" {{ request('kategori') == 'Skort' ? 'selected' : '' }}>Skort</option>
+                        <option value="Shorts" {{ request('kategori') == 'Shorts' ? 'selected' : '' }}>Shorts</option>
+                        <option value="Cargo" {{ request('kategori') == 'Cargo' ? 'selected' : '' }}>Cargo</option>
+                        <option value="Rippedjeans" {{ request('kategori') == 'Rippedjeans' ? 'selected' : '' }}>Ripped jeans</option>
                     </select>
                     <img src="{{ asset('assets/icon/kategori-filter.svg') }}">
                 </div>
 
                 <div class="dropdown">
                     <select name="sorting" id="sorting">
-                        <option value="" disabled selected>
-                            Sorting
-                        </option>
-                        <option value="hargaTertinggi" {{ request('sorting') == 'hargaTertinggi' ? 'selected' : '' }}>
-                            Harga Tertinggi
-                        </option>
-                        <option value="hargaTerendah" {{ request('sorting') == 'hargaTerendah' ? 'selected' : '' }}>
-                            Harga Terendah
-                        </option>
+                        <option value="" disabled selected>Sorting</option>
+                        <option value="hargaTertinggi" {{ request('sorting') == 'hargaTertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
+                        <option value="hargaTerendah" {{ request('sorting') == 'hargaTerendah' ? 'selected' : '' }}>Harga Terendah</option>
                     </select>
                     <img src="{{ asset('assets/icon/icon-sorting.svg') }}">
                 </div>
 
                 <div class="dropdown">
                     <select name="size" id="size">
-                        <option value="" disabled selected>
-                            Size
-                        </option>
-                        <option value="S" {{ request('size') == 'S' ? 'selected' : '' }}>
-                            S
-                        </option>
-                        <option value="M" {{ request('size') == 'M' ? 'selected' : '' }}>
-                            M
-                        </option>
-                        <option value="L" {{ request('size') == 'L' ? 'selected' : '' }}>
-                            L
-                        </option>
-                        <option value="XL" {{ request('size') == 'XL' ? 'selected' : '' }}>
-                            XL
-                        </option>
+                        <option value="" disabled selected>Size</option>
+                        <option value="S" {{ request('size') == 'S' ? 'selected' : '' }}>S</option>
+                        <option value="M" {{ request('size') == 'M' ? 'selected' : '' }}>M</option>
+                        <option value="L" {{ request('size') == 'L' ? 'selected' : '' }}>L</option>
+                        <option value="XL" {{ request('size') == 'XL' ? 'selected' : '' }}>XL</option>
                     </select>
                     <img src="{{ asset('assets/icon/ruler-filter.svg') }}">
                 </div>
 
                 <div class="dropdown">
                     <select name="colors" id="colors">
-                        <option value="" disabled selected>
-                            Colors
-                        </option>
-                        <option value="Hitam" {{ request('colors') == 'Hitam' ? 'selected' : '' }}>
-                            Hitam
-                        </option>
-                        <option value="Coklat" {{ request('colors') == 'Coklat' ? 'selected' : '' }}>
-                            Coklat
-                        </option>
-                        <option value="Pink" {{ request('colors') == 'Pink' ? 'selected' : '' }}>
-                            Pink
-                        </option>
+                        <option value="" disabled selected>Colors</option>
+                        <option value="Hitam" {{ request('colors') == 'Hitam' ? 'selected' : '' }}>Hitam</option>
+                        <option value="Coklat" {{ request('colors') == 'Coklat' ? 'selected' : '' }}>Coklat</option>
+                        <option value="Pink" {{ request('colors') == 'Pink' ? 'selected' : '' }}>Pink</option>
                     </select>
                     <img src="{{ asset('assets/icon/color-filter.svg') }}">
                 </div>
@@ -134,7 +80,6 @@
                 <a href="/katalog" class="reset-btn">
                     <img src="{{ asset('assets/icon/icon-reset.svg') }}" alt="reset">
                 </a>
-
             </div>
 
             <div class="search-wrapper-desktop">
@@ -160,17 +105,14 @@
                     data-image="{{ asset($image->image_url ?? 'assets/default.jpg') }}"
                     data-sizes="{{ $product->variants->pluck('size')->unique()->implode(',') }}"
                     data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}"
-                    data-sizecharts='@json($product->category->sizeCharts ?? [])'>
+                    data-sizecharts='@json($product->category->sizeCharts ?? [])'
+                    data-variants='@json($product->variantMap)'>
 
                     <img src="{{ asset($image->image_url ?? 'assets/default.jpg') }}" alt="product">
-
                     <h3>{{ $product->product_name }}</h3>
-
                     <div class="info">
                         <span>{{ $product->category->category_name }}</span>
-                        <span>
-                            Rp {{ number_format($variant->price ?? 0, 0, ',', '.') }}
-                        </span>
+                        <span>Rp {{ number_format($variant->price ?? 0, 0, ',', '.') }}</span>
                     </div>
                 </div>
             @endforeach
@@ -222,7 +164,6 @@
                                             <span>cm</span>
                                         </div>
                                     </div>
-
                                     <div class="smart-sizing-box">
                                         <label>Berat Badan</label>
                                         <div class="input-box">
@@ -230,7 +171,6 @@
                                             <span>kg</span>
                                         </div>
                                     </div>
-
                                     <div class="result-size">
                                         <span>=</span>
                                         <div class="result-box" id="recommendedSize">-</div>
@@ -255,9 +195,7 @@
                                             <th>Lebar / Waist (cm)</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="sizeChartBody">
-                                        
-                                    </tbody>
+                                    <tbody id="sizeChartBody"></tbody>
                                 </table>
                             </div>
                         </div>

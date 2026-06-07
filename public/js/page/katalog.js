@@ -1,421 +1,262 @@
-// Filter & Search
 const sortingSelect = document.getElementById("sorting");
-const kategori = document.getElementById("kategori");
-const size = document.getElementById("size");
-const colors = document.getElementById("colors");
+const kategori      = document.getElementById("kategori");
+const size          = document.getElementById("size");
+const colors        = document.getElementById("colors");
+const searchInputs  = document.querySelectorAll(".search-box input");
 
-const searchInputs = document.querySelectorAll(".search-box input");
+const cards      = document.querySelectorAll(".product-card");
+const details    = document.getElementById("overlay-details");
+const closeBtn   = document.getElementById("closeBtn");
 
-// Modal
-const cards = document.querySelectorAll(".product-card");
-
-const details = document.getElementById("overlay-details");
-const closeBtn = document.getElementById("closeBtn");
-
-const modalName = document.getElementById("modalName");
-const modalPrice = document.getElementById("modalPrice");
-const modalCategory = document.getElementById("modalCategory");
+const modalName        = document.getElementById("modalName");
+const modalPrice       = document.getElementById("modalPrice");
+const modalCategory    = document.getElementById("modalCategory");
 const modalDescription = document.getElementById("modalDescription");
-const modalImage = document.getElementById("modalImage");
+const modalImage       = document.getElementById("modalImage");
+const modalSizes       = document.getElementById("modalSizes");
+const modalColors      = document.getElementById("modalColors");
 
-const modalSizes = document.getElementById("modalSizes");
-const modalColors = document.getElementById("modalColors");
-
-const checkoutBtn = document.getElementById("checkoutBtn");
-const cartBtn = document.querySelector(".cart-btn");
-
-// Smart sizing
-const userHeight = document.getElementById("userHeight");
-const userWeight = document.getElementById("userWeight");
+const checkoutBtn    = document.getElementById("checkoutBtn");
+const cartBtn        = document.querySelector(".cart-btn");
+const userHeight     = document.getElementById("userHeight");
+const userWeight     = document.getElementById("userWeight");
 const recommendedSize = document.getElementById("recommendedSize");
 
-// Global variable
-let selectedSize = null;
-let selectedColor = null;
+const CSRF = document.querySelector('meta[name="csrf-token"]')
+    ? document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    : "";
+
+let selectedSize     = null;
+let selectedColor    = null;
 let currentSizeCharts = [];
+let currentVariants  = [];
 
-// Update filter URL
+function getSelectedVariantId() {
+    if (!selectedSize || !selectedColor) return null;
+    const match = currentVariants.find(
+        (v) => v.size === selectedSize && v.color === selectedColor
+    );
+    return match ? match.id : null;
+}
+
+// ─── FILTER ──────────────────────────────────────────────────────
 function updateFilter() {
-
     const url = new URL(window.location.href);
-
-    // Filter kategori
-    if (kategori.value) {
-        url.searchParams.set("kategori", kategori.value);
-    } else {
-        url.searchParams.delete("kategori");
-    }
-
-    // Filter size
-    if (size.value) {
-        url.searchParams.set("size", size.value);
-    } else {
-        url.searchParams.delete("size");
-    }
-
-    // Filter warna
-    if (colors.value) {
-        url.searchParams.set("colors", colors.value);
-    } else {
-        url.searchParams.delete("colors");
-    }
-
-    // Filter sorting
-    if (sortingSelect.value) {
-        url.searchParams.set("sorting", sortingSelect.value);
-    } else {
-        url.searchParams.delete("sorting");
-    }
-
-    // Redirect URL baru
+    if (kategori.value) url.searchParams.set("kategori", kategori.value);
+    else url.searchParams.delete("kategori");
+    if (size.value) url.searchParams.set("size", size.value);
+    else url.searchParams.delete("size");
+    if (colors.value) url.searchParams.set("colors", colors.value);
+    else url.searchParams.delete("colors");
+    if (sortingSelect.value) url.searchParams.set("sorting", sortingSelect.value);
+    else url.searchParams.delete("sorting");
     window.location.href = url;
 }
 
-// Event filter
 sortingSelect.addEventListener("change", updateFilter);
 kategori.addEventListener("change", updateFilter);
 size.addEventListener("change", updateFilter);
 colors.addEventListener("change", updateFilter);
 
-// Search product realtime
+// ─── SEARCH REALTIME ─────────────────────────────────────────────
 searchInputs.forEach((input) => {
-
     input.addEventListener("input", () => {
-
         const keyword = input.value.toLowerCase().trim();
-
-        // Sinkron semua input search
-        searchInputs.forEach((otherInput) => {
-            otherInput.value = input.value;
-        });
-
-        // Filter card product
+        searchInputs.forEach((other) => { other.value = input.value; });
         cards.forEach((card) => {
-
-            const productName =
-                (card.dataset.name || "").toLowerCase();
-
-            const category =
-                (card.dataset.category || "").toLowerCase();
-
-            const description =
-                (card.dataset.description || "").toLowerCase();
-
-            const isMatch =
-                productName.includes(keyword) ||
-                category.includes(keyword) ||
-                description.includes(keyword);
-
+            const name = (card.dataset.name || "").toLowerCase();
+            const cat  = (card.dataset.category || "").toLowerCase();
+            const desc = (card.dataset.description || "").toLowerCase();
             card.style.display =
-                isMatch ? "block" : "none";
+                name.includes(keyword) || cat.includes(keyword) || desc.includes(keyword)
+                    ? "block" : "none";
         });
     });
 });
 
-// Open modal product
+// ─── OPEN MODAL ──────────────────────────────────────────────────
 cards.forEach((card) => {
-
     card.addEventListener("click", () => {
-
-        selectedSize = null;
+        selectedSize  = null;
         selectedColor = null;
-
         recommendedSize.innerText = "-";
-
         if (userHeight) userHeight.value = "";
         if (userWeight) userWeight.value = "";
 
-        // Isi data modal
-        modalName.innerText = card.dataset.name;
-        modalPrice.innerText = "Rp " + card.dataset.price;
-        modalCategory.innerText = card.dataset.category;
+        modalName.innerText        = card.dataset.name;
+        modalPrice.innerText       = "Rp " + card.dataset.price;
+        modalCategory.innerText    = card.dataset.category;
         modalDescription.innerText = card.dataset.description;
-        modalImage.src = card.dataset.image;
+        modalImage.src             = card.dataset.image;
 
-        // Ambil size chart
-        const sizeCharts =
-            JSON.parse(card.dataset.sizecharts || "[]");
+        currentVariants   = JSON.parse(card.dataset.variants || "[]");
+        currentSizeCharts = JSON.parse(card.dataset.sizecharts || "[]");
 
-        currentSizeCharts = sizeCharts;
-
-        const sizeChartBody =
-            document.getElementById("sizeChartBody");
-
+        // Size chart
+        const sizeChartBody = document.getElementById("sizeChartBody");
         sizeChartBody.innerHTML = "";
-
-        // Render size chart
-        sizeCharts.forEach((chart) => {
-
+        currentSizeCharts.forEach((chart) => {
             sizeChartBody.innerHTML += `
                 <tr>
                     <td>${chart.size}</td>
                     <td>${chart.length_cm}</td>
                     <td>${chart.width_cm}</td>
-                </tr>
-            `;
+                </tr>`;
         });
 
-        // Render size
+        // Sizes
         modalSizes.innerHTML = "";
-
-        const sizes =
-            card.dataset.sizes
-            ? card.dataset.sizes.split(",")
-            : [];
-
-        sizes.forEach((sizeItem) => {
-
+        const uniqueSizes = [...new Set(currentVariants.map((v) => v.size))];
+        uniqueSizes.forEach((sizeItem) => {
             const span = document.createElement("span");
-
             span.innerText = sizeItem;
-
-            // Pilih size
             span.addEventListener("click", (e) => {
-
                 e.stopPropagation();
-
-                document
-                    .querySelectorAll("#modalSizes span")
-                    .forEach((s) => {
-                        s.classList.remove("active");
-                    });
-
+                document.querySelectorAll("#modalSizes span").forEach((s) => s.classList.remove("active"));
                 span.classList.add("active");
-
                 selectedSize = sizeItem;
             });
-
             modalSizes.appendChild(span);
         });
 
-        // Render warna
+        // Colors
         modalColors.innerHTML = "";
-
-        const colorList =
-            card.dataset.colors
-            ? card.dataset.colors.split(",")
-            : [];
-
-        colorList.forEach((colorItem) => {
-
+        const uniqueColors = [...new Set(currentVariants.map((v) => v.color))];
+        uniqueColors.forEach((colorItem) => {
             const span = document.createElement("span");
-
             span.innerText = colorItem;
-
-            // Pilih warna
             span.addEventListener("click", (e) => {
-
                 e.stopPropagation();
-
-                document
-                    .querySelectorAll("#modalColors span")
-                    .forEach((c) => {
-                        c.classList.remove("active");
-                    });
-
+                document.querySelectorAll("#modalColors span").forEach((c) => c.classList.remove("active"));
                 span.classList.add("active");
-
                 selectedColor = colorItem;
             });
-
             modalColors.appendChild(span);
         });
 
-        // Tampilkan modal
         details.classList.add("active");
     });
 });
 
-// Tutup modal dari tombol close
-closeBtn.addEventListener("click", () => {
-    details.classList.remove("active");
-});
-
-// Tutup modal jika klik backdrop
+// ─── TUTUP MODAL ─────────────────────────────────────────────────
+closeBtn.addEventListener("click", () => details.classList.remove("active"));
 details.addEventListener("click", (e) => {
-
-    if (e.target === details) {
-        details.classList.remove("active");
-    }
+    if (e.target === details) details.classList.remove("active");
 });
-
-// Cegah modal tertutup saat isi modal diklik
 const modalBox = document.querySelector(".modal");
+if (modalBox) modalBox.addEventListener("click", (e) => e.stopPropagation());
 
-if (modalBox) {
-
-    modalBox.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
-}
-
-// Hitung smart sizing
+// ─── SMART SIZING ─────────────────────────────────────────────────
 function calculateSmartSize() {
-
     const height = parseInt(userHeight.value);
     const weight = parseInt(userWeight.value);
-
-    // Jika input kosong
-    if (!height || !weight) {
-
-        recommendedSize.innerText = "-";
-
-        return;
-    }
-
-    let recommended = null;
-
-    // Logic size recommendation
-    if (height <= 165 && weight <= 55) {
-
-        recommended = "S";
-
-    } else if (
-        height <= 170 &&
-        weight <= 65
-    ) {
-
-        recommended = "M";
-
-    } else if (
-        height <= 175 &&
-        weight <= 75
-    ) {
-
-        recommended = "L";
-
-    } else {
-
-        recommended = "XL";
-    }
-
-    // Tampilkan hasil rekomendasi
+    if (!height || !weight) { recommendedSize.innerText = "-"; return; }
+    let recommended;
+    if (height <= 165 && weight <= 55)      recommended = "S";
+    else if (height <= 170 && weight <= 65) recommended = "M";
+    else if (height <= 175 && weight <= 75) recommended = "L";
+    else                                    recommended = "XL";
     recommendedSize.innerText = recommended;
-
-    // Auto select size
-    document
-        .querySelectorAll("#modalSizes span")
-        .forEach((s) => {
-
-            s.classList.remove("active");
-
-            if (s.innerText === recommended) {
-
-                s.classList.add("active");
-
-                selectedSize = recommended;
-            }
-        });
+    document.querySelectorAll("#modalSizes span").forEach((s) => {
+        s.classList.remove("active");
+        if (s.innerText === recommended) { s.classList.add("active"); selectedSize = recommended; }
+    });
 }
-
-// Jalankan smart sizing realtime
 userHeight.addEventListener("input", calculateSmartSize);
 userWeight.addEventListener("input", calculateSmartSize);
 
-// Checkout product
-checkoutBtn.addEventListener("click", (e) => {
-
+// ─── TAMBAH KE CART ───────────────────────────────────────────────
+cartBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    // Validasi size dan warna
     if (!selectedSize || !selectedColor) {
-
         alert("Pilih size dan warna terlebih dahulu!");
-
         return;
     }
 
-    const product = {
+    const variantId = getSelectedVariantId();
+    if (!variantId) {
+        alert("Kombinasi size dan warna ini tidak tersedia.");
+        return;
+    }
 
-        name: modalName.innerText,
+    try {
+        const res  = await fetch("/cart/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": CSRF },
+            body: JSON.stringify({ id_variant: variantId, quantity: 1 }),
+        });
+        const data = await res.json();
 
-        price: parseInt(
-            modalPrice.innerText
-                .replace("Rp", "")
-                .replace(/\./g, "")
-                .trim()
-        ),
-
-        image: modalImage.src,
-
-        size: selectedSize,
-
-        color: selectedColor,
-
-        qty: 1,
-    };
-
-    // Simpan checkout
-    localStorage.setItem(
-        "checkout",
-        JSON.stringify([product])
-    );
-
-    window.location.href = "/checkout";
+        if (data.success) {
+            alert("Produk berhasil ditambahkan ke keranjang!");
+            details.classList.remove("active");
+            const cartCount = document.querySelector(".cart-count");
+            if (cartCount) cartCount.textContent = data.cart_count;
+        } else {
+            alert(data.message || "Gagal menambahkan ke keranjang.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Terjadi kesalahan. Coba lagi.");
+    }
 });
 
-// Tambah product ke cart
-cartBtn.addEventListener("click", (e) => {
-
+// ─── CHECKOUT LANGSUNG DARI KATALOG ──────────────────────────────
+checkoutBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    // Validasi size dan warna
     if (!selectedSize || !selectedColor) {
-
         alert("Pilih size dan warna terlebih dahulu!");
-
         return;
     }
 
-    const product = {
-
-        name: modalName.innerText,
-
-        price: parseInt(
-            modalPrice.innerText
-                .replace("Rp", "")
-                .replace(/\./g, "")
-                .trim()
-        ),
-
-        image: modalImage.src,
-
-        size: selectedSize,
-
-        color: selectedColor,
-
-        qty: 1,
-    };
-
-    let cart =
-        JSON.parse(
-            localStorage.getItem("cart")
-        ) || [];
-
-    // Cek apakah product sudah ada
-    const existingProduct =
-        cart.find((item) =>
-
-            item.name === product.name &&
-            item.size === product.size &&
-            item.color === product.color
-        );
-
-    // Tambah qty jika product sudah ada
-    if (existingProduct) {
-
-        existingProduct.qty++;
-
-    } else {
-
-        cart.push(product);
+    const variantId = getSelectedVariantId();
+    if (!variantId) {
+        alert("Kombinasi size dan warna ini tidak tersedia.");
+        return;
     }
 
-    // Simpan cart
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
+    try {
+        // 1. Tambah ke cart dulu
+        const addRes  = await fetch("/cart/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": CSRF },
+            body: JSON.stringify({ id_variant: variantId, quantity: 1 }),
+        });
+        const addData = await addRes.json();
 
-    alert("Produk berhasil ditambahkan!");
+        if (!addData.success) {
+            alert(addData.message || "Gagal menambahkan ke keranjang.");
+            return;
+        }
+
+        // 2. Ambil id_cart untuk variant ini
+        const cartRes  = await fetch("/cart/get-id?id_variant=" + variantId, {
+            headers: { "X-CSRF-TOKEN": CSRF },
+        });
+        const cartData = await cartRes.json();
+
+        if (!cartData.id_cart) {
+            window.location.href = "/cart";
+            return;
+        }
+
+        // 3. Set ke session sebagai item checkout
+        const selectRes  = await fetch("/cart/select", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": CSRF },
+            body: JSON.stringify({ cart_ids: [cartData.id_cart] }),
+        });
+        const selectData = await selectRes.json();
+
+        if (selectData.success) {
+            window.location.href = "/checkout";
+        } else {
+            window.location.href = "/cart";
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Terjadi kesalahan. Coba lagi.");
+    }
 });

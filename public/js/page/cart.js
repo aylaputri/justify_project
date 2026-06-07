@@ -1,231 +1,111 @@
-const cartItemsContainer = document.getElementById("cartItems");
-
-const selectedItemsEl = document.getElementById("selectedItems");
-const subtotalEl = document.getElementById("subtotal");
-const totalAmountEl = document.getElementById("totalAmount");
-
-const checkoutBtn = document.querySelector(".checkout-btn");
-
+const CSRF    = window.CART_CSRF || '';
 const DELIVERY = 15000;
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// FORMAT RUPIAH
-function formatRupiah(number){
-
-    return "Rp " + number.toLocaleString("id-ID");
-
+function formatRupiah(n) {
+    return 'Rp ' + n.toLocaleString('id-ID');
 }
 
-// RENDER CART
-function renderCart(){
+function getCards() {
+    return document.querySelectorAll('.cart-card');
+}
 
-    cartItemsContainer.innerHTML = "";
+// ─── UPDATE TOTAL ────────────────────────────────────────
+function updateTotal() {
+    let selectedItems = 0, subtotal = 0;
+    getCards().forEach(card => {
+        const cb = card.querySelector('.cart-check');
+        if (cb && cb.checked) {
+            const qty   = parseInt(card.querySelector('.qty').textContent);
+            const price = parseInt(card.dataset.price);
+            selectedItems += qty;
+            subtotal      += price * qty;
+        }
+    });
+    document.getElementById('selectedItems').textContent = selectedItems;
+    document.getElementById('subtotal').textContent      = formatRupiah(subtotal);
+    document.getElementById('totalAmount').textContent   = subtotal > 0 ? formatRupiah(subtotal + DELIVERY) : 'Rp 0';
+}
 
-    if(cart.length === 0){
+// ─── UPDATE QTY KE SERVER ────────────────────────────────
+async function updateQty(card, newQty) {
+    const idCart = card.dataset.id;
+    await fetch('/cart/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+        body: JSON.stringify({ id_cart: idCart, quantity: newQty }),
+    });
+    card.querySelector('.qty').textContent = newQty;
+    updateTotal();
+}
 
-        cartItemsContainer.innerHTML = `
-            <p>Keranjang masih kosong</p>
-        `;
+// ─── REMOVE DARI SERVER ──────────────────────────────────
+async function removeItem(card) {
+    const idCart = card.dataset.id;
+    await fetch('/cart/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+        body: JSON.stringify({ id_cart: idCart }),
+    });
+    card.remove();
+    updateTotal();
+    if (document.querySelectorAll('.cart-card').length === 0) {
+        const section = document.getElementById('cartItems');
+        section.innerHTML = '<p id="emptyCart">Keranjang masih kosong</p>';
+    }
+}
 
-        updateCart();
+// ─── INIT EVENTS ─────────────────────────────────────────
+function initEvents() {
+    getCards().forEach(card => {
+        const cb       = card.querySelector('.cart-check');
+        const plusBtn  = card.querySelector('.plus-btn');
+        const minusBtn = card.querySelector('.minus-btn');
+        const delBtn   = card.querySelector('.delete-btn');
+        const stock    = parseInt(card.dataset.stock || 99);
 
+        cb.addEventListener('change', updateTotal);
+
+        plusBtn.addEventListener('click', () => {
+            const cur = parseInt(card.querySelector('.qty').textContent);
+            if (cur < stock) updateQty(card, cur + 1);
+            else alert('Stok habis');
+        });
+
+        minusBtn.addEventListener('click', () => {
+            const cur = parseInt(card.querySelector('.qty').textContent);
+            if (cur > 1) updateQty(card, cur - 1);
+        });
+
+        delBtn.addEventListener('click', () => removeItem(card));
+    });
+}
+
+// ─── CHECKOUT ────────────────────────────────────────────
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+    const checkedIds = [];
+    getCards().forEach(card => {
+        const cb = card.querySelector('.cart-check');
+        if (cb && cb.checked) checkedIds.push(card.dataset.id);
+    });
+
+    if (checkedIds.length === 0) {
+        alert('Pilih produk terlebih dahulu!');
         return;
     }
 
-    cart.forEach((item, index) => {
-
-        cartItemsContainer.innerHTML += `
-        
-        <div class="cart-card" data-index="${index}">
-
-            <input type="checkbox" class="cart-check">
-
-            <div class="cart-image">
-                <img src="${item.image}">
-            </div>
-
-            <div class="cart-info">
-
-                <h3>${item.name}</h3>
-
-                <p>${formatRupiah(item.price)}</p>
-
-                <small>
-                    Size: ${item.size} |
-                    Color: ${item.color}
-                </small>
-
-                <div class="cart-action">
-
-                    <div class="qty-box">
-
-                        <button class="minus-btn">-</button>
-
-                        <span class="qty">${item.qty}</span>
-
-                        <button class="plus-btn">+</button>
-
-                    </div>
-
-                    <button class="delete-btn">
-                        <img src="/assets/icon/trash.svg">
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
-    });
-
-    initEvents();
-}
-
-// UPDATE TOTAL
-function updateCart(){
-
-    const cards = document.querySelectorAll(".cart-card");
-
-    let selectedItems = 0;
-    let subtotal = 0;
-
-    cards.forEach(card => {
-
-        const checkbox = card.querySelector(".cart-check");
-
-        if(checkbox.checked){
-
-            const index = card.dataset.index;
-
-            const item = cart[index];
-
-            selectedItems += item.qty;
-
-            subtotal += item.price * item.qty;
-        }
-
-    });
-
-    selectedItemsEl.innerText = selectedItems;
-
-    subtotalEl.innerText = formatRupiah(subtotal);
-
-    if(subtotal > 0){
-
-        totalAmountEl.innerText =
-            formatRupiah(subtotal + DELIVERY);
-
-    } else {
-
-        totalAmountEl.innerText = "Rp 0";
-
-    }
-}
-
-// EVENTS
-function initEvents(){
-
-    const cards = document.querySelectorAll(".cart-card");
-
-    cards.forEach(card => {
-
-        const index = card.dataset.index;
-
-        const checkbox = card.querySelector(".cart-check");
-
-        const plusBtn = card.querySelector(".plus-btn");
-
-        const minusBtn = card.querySelector(".minus-btn");
-
-        const deleteBtn = card.querySelector(".delete-btn");
-
-        // CHECKBOX
-        checkbox.addEventListener("change", updateCart);
-
-        // PLUS
-        plusBtn.addEventListener("click", () => {
-
-            cart[index].qty++;
-
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
-
-            renderCart();
-        });
-
-        // MINUS
-        minusBtn.addEventListener("click", () => {
-
-            if(cart[index].qty > 1){
-
-                cart[index].qty--;
-
-                localStorage.setItem(
-                    "cart",
-                    JSON.stringify(cart)
-                );
-
-                renderCart();
-            }
-        });
-
-        // DELETE
-        deleteBtn.addEventListener("click", () => {
-
-            cart.splice(index, 1);
-
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
-
-            renderCart();
-        });
-
-    });
-
-    updateCart();
-}
-
-// CHECKOUT
-checkoutBtn.addEventListener("click", () => {
-
-    const checkedItems = [];
-
-    const cards = document.querySelectorAll(".cart-card");
-
-    cards.forEach(card => {
-
-        const checkbox = card.querySelector(".cart-check");
-
-        if(checkbox.checked){
-
-            const index = card.dataset.index;
-
-            checkedItems.push(cart[index]);
-        }
-    });
-
-    // KALO GA ADA YG DIPILIH
-    if(checkedItems.length === 0){
-
-        alert("Pilih produk terlebih dahulu!");
-
-        return;
-    }
-
-    // SIMPAN KE CHECKOUT
-    localStorage.setItem(
-        "checkout",
-        JSON.stringify(checkedItems)
-    );
-
-    // PINDAH HALAMAN
-    window.location.href = "/checkout";
+    // Simpan id cart yang dipilih ke session via server
+    fetch('/cart/select', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+        body: JSON.stringify({ cart_ids: checkedIds }),
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) window.location.href = '/checkout';
+        else alert('Gagal lanjut checkout');
+    })
+    .catch(() => alert('Terjadi kesalahan'));
 });
 
-renderCart();
+initEvents();
+updateTotal();

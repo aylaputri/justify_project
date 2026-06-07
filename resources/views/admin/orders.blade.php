@@ -155,5 +155,5 @@
     const UPDATE_URL = "{{ url('/admin/orders/update') }}";
     const CSRF_TOKEN = "{{ csrf_token() }}";
 </script>
-<script src="{{ asset('js/page/admin/orders.js') }}"></script>
+<script src="{{ asset('js/page/admin/order.js') }}"></script>
 @endpush

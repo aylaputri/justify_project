@@ -1,51 +1,66 @@
-const inputs  = document.querySelectorAll('input');
-const saveBtn = document.querySelector('.save-btn');
-const cancelBtn = document.querySelector('.cancel-btn');
+const cfg     = window.AddAddressConfig;
+const form    = document.getElementById('addAddressForm');
+const saveBtn = document.getElementById('saveBtn');
 
-// Cek semua input terisi → enable tombol Save
-function checkInputs() {
-    let filled = true;
-    inputs.forEach(input => {
-        if (input.value.trim() === '') filled = false;
-    });
-    saveBtn.disabled = !filled;
-    saveBtn.style.background = filled ? '#1a1a1a' : '#b1b1b1';
+// Enable save button kalau semua required field terisi
+const requiredInputs = form.querySelectorAll('input[required]');
+function checkForm() {
+    const allFilled = [...requiredInputs].every(i => i.value.trim() !== '');
+    saveBtn.disabled = !allFilled;
 }
+requiredInputs.forEach(i => i.addEventListener('input', checkForm));
 
-inputs.forEach(input => input.addEventListener('input', checkInputs));
+// Submit
+saveBtn.addEventListener('click', async () => {
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Menyimpan...';
 
-// SAVE → kirim ke DB via POST, lalu redirect ke /address
-saveBtn.addEventListener('click', () => {
-    const data = {
-        name:     inputs[0].value.trim(),
-        phone:    inputs[1].value.trim(),
-        email:    inputs[2].value.trim(),
-        title:    inputs[3].value.trim(),
-        address:  inputs[4].value.trim(),
-        city:     inputs[5].value.trim(),
-        province: inputs[6].value.trim(),
-        postal:   inputs[7].value.trim(),
+    const body = {
+        recipient_name:   form.querySelector('[name="recipient_name"]').value.trim(),
+        phone:            form.querySelector('[name="phone"]').value.trim(),
+        email:            form.querySelector('[name="email"]').value.trim(),
+        address_title:    form.querySelector('[name="address_title"]').value.trim(),
+        complete_address: form.querySelector('[name="complete_address"]').value.trim(),
+        city:             form.querySelector('[name="city"]').value.trim(),
+        province:         form.querySelector('[name="province"]').value.trim(),
+        postal_code:      form.querySelector('[name="postal_code"]').value.trim(),
     };
 
-    fetch('/addAddress', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute('content'),
-        },
-        body: JSON.stringify(data),
-    })
-    .then(r => r.json())
-    .then(() => {
-        // Setelah simpan ke DB, balik ke halaman pilih address
-        window.location.href = '/address';
-    })
-    .catch(() => alert('Gagal menyimpan alamat, coba lagi.'));
-});
+    try {
+        const res  = await fetch(cfg.storeUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': cfg.csrfToken,
+            },
+            body: JSON.stringify(body),
+        });
+        const data = await res.json();
 
-// CANCEL → balik ke address
-cancelBtn.addEventListener('click', () => {
-    window.location.href = '/address';
+        if (data.success) {
+            // Kalau dari checkout, langsung set alamat ini lalu balik ke checkout
+            if (cfg.fromCheckout && data.id_address) {
+                await fetch('/checkout/select-address', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': cfg.csrfToken,
+                    },
+                    body: JSON.stringify({ id_address: data.id_address }),
+                });
+                window.location.href = '/checkout';
+            } else {
+                window.location.href = '/address';
+            }
+        } else {
+            alert(data.message || 'Gagal menyimpan alamat.');
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save';
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan. Coba lagi.');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save';
+    }
 });

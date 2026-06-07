@@ -1,189 +1,127 @@
-const checkoutItems   = document.getElementById("checkoutItems");
-const subtotalProduct = document.getElementById("subtotalProduct");
-const totalProduct    = document.getElementById("totalProduct");
-const finalTotal      = document.getElementById("finalTotal");
-const shippingCost    = document.getElementById("shippingCost");
-const shippingTotal   = document.getElementById("shippingTotal");
-const addressBox      = document.getElementById("addressBox");
-const payButton       = document.getElementById("pay-button");
+const CSRF        = window.CHECKOUT_CSRF || '';
+const SHIPPING    = 15000;
 
-let cart    = JSON.parse(localStorage.getItem("checkout")) || [];
-let address = JSON.parse(localStorage.getItem("address"));
+function formatRupiah(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
 
-const SHIPPING_FEE = 15000;
-
-function formatRupiah(number) {
-    return "Rp " + number.toLocaleString("id-ID");
+// ─── QTY CONTROLS ────────────────────────────────────────
+function recalc() {
+    let subtotal = 0;
+    document.querySelectorAll('.order-card').forEach(card => {
+        const id      = card.dataset.id;
+        const qty     = parseInt(document.getElementById('qty-' + id)?.textContent || 0);
+        const priceEl = document.getElementById('price-' + id);
+        const unit    = parseInt(priceEl?.dataset.unit || 0);
+        const line    = unit * qty;
+        if (priceEl) priceEl.textContent = formatRupiah(line);
+        subtotal += line;
+    });
+    const grand = subtotal + SHIPPING;
+    document.getElementById('subtotalProduct').textContent = formatRupiah(subtotal);
+    document.getElementById('totalProduct').textContent    = formatRupiah(grand);
+    document.getElementById('finalTotal').textContent      = formatRupiah(grand);
 }
 
-// RENDER ADDRESS
-function renderAddress() {
-    if (address) {
-        addressBox.innerHTML = `
-            <div>
-                <strong>${address.name || ''}</strong>
-                <p>
-                    ${address.phone || ''}<br>
-                    ${address.address}<br>
-                    ${address.city}, ${address.province}<br>
-                    ${address.postal}
-                </p>
-            </div>
-            <img src="/assets/icon/arrow-right.svg" alt="Arrow">
-        `;
-    } else {
-        addressBox.innerHTML = `
-            <p>Add Address</p>
-            <img src="/assets/icon/arrow-right.svg" alt="Arrow">
-        `;
-    }
-}
-
-// Klik address box → ke halaman daftar address (dari DB)
-addressBox.addEventListener("click", () => {
-    window.location.href = "/address";
+document.querySelectorAll('.plus-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const id    = btn.dataset.id;
+        const stock = parseInt(btn.dataset.stock || 99);
+        const cur   = parseInt(document.getElementById('qty-' + id).textContent);
+        if (cur >= stock) { alert('Stok habis'); return; }
+        const newQty = cur + 1;
+        await fetch('/cart/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+            body: JSON.stringify({ id_cart: id, quantity: newQty }),
+        });
+        document.getElementById('qty-' + id).textContent = newQty;
+        btn.dataset.qty = newQty;
+        recalc();
+    });
 });
 
-// RENDER ITEMS + TOTALS
-function renderCheckout() {
-    checkoutItems.innerHTML = "";
+document.querySelectorAll('.minus-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const id  = btn.dataset.id;
+        const cur = parseInt(document.getElementById('qty-' + id).textContent);
+        if (cur <= 1) return;
+        const newQty = cur - 1;
+        await fetch('/cart/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+            body: JSON.stringify({ id_cart: id, quantity: newQty }),
+        });
+        document.getElementById('qty-' + id).textContent = newQty;
+        recalc();
+    });
+});
 
-    if (cart.length === 0) {
-        checkoutItems.innerHTML = "<p>Tidak ada produk checkout</p>";
-        updateTotals(0);
+document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const id   = btn.dataset.id;
+        const card = btn.closest('.order-card');
+        await fetch('/cart/remove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+            body: JSON.stringify({ id_cart: id }),
+        });
+        card.remove();
+        recalc();
+    });
+});
+
+// ─── PAY NOW ─────────────────────────────────────────────
+const payBtn = document.getElementById('pay-button');
+payBtn.addEventListener('click', () => {
+    if (!window.HAS_ADDRESS) {
+        alert('Silahkan pilih alamat terlebih dahulu!');
+        window.location.href = '/address?from=checkout';
         return;
     }
 
-    let subtotal = 0;
-    cart.forEach((item, index) => {
-        subtotal += item.price * item.qty;
-        checkoutItems.innerHTML += `
-            <div class="order-card">
-                <div class="order-image">
-                    <img src="${item.image}" alt="${item.name}">
-                </div>
-                <div class="order-info">
-                    <h3>${item.name}</h3>
-                    <p>Size: ${item.size}<br>Color: ${item.color}</p>
-                    <div class="order-action">
-                        <div class="qty-box">
-                            <button class="minus-btn" data-index="${index}">-</button>
-                            <span>${item.qty}</span>
-                            <button class="plus-btn" data-index="${index}">+</button>
-                        </div>
-                        <button class="delete-btn" data-index="${index}">
-                            <img src="/assets/icon/trash.svg" alt="Delete">
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-
-    updateTotals(subtotal);
-    initEvents();
-}
-
-function updateTotals(subtotal) {
-    const grand = subtotal + SHIPPING_FEE;
-    subtotalProduct.innerText = formatRupiah(subtotal);
-    shippingCost.innerText    = formatRupiah(SHIPPING_FEE);
-    shippingTotal.innerText   = formatRupiah(SHIPPING_FEE);
-    totalProduct.innerText    = formatRupiah(grand);
-    finalTotal.innerText      = formatRupiah(grand);
-}
-
-function initEvents() {
-    document.querySelectorAll(".plus-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            cart[btn.dataset.index].qty++;
-            saveAndRender();
-        });
-    });
-
-    document.querySelectorAll(".minus-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (cart[btn.dataset.index].qty > 1) {
-                cart[btn.dataset.index].qty--;
-                saveAndRender();
-            }
-        });
-    });
-
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            cart.splice(btn.dataset.index, 1);
-            saveAndRender();
-        });
-    });
-}
-
-function saveAndRender() {
-    localStorage.setItem("checkout", JSON.stringify(cart));
-    renderCheckout();
-}
-
-// PAY NOW
-payButton.addEventListener("click", () => {
-    if (!address) {
-        alert("Silahkan pilih alamat terlebih dahulu!");
-        return;
-    }
-    if (cart.length === 0) {
-        alert("Checkout kosong!");
+    const cartIds = [...document.querySelectorAll('.order-card')].map(c => c.dataset.id);
+    if (cartIds.length === 0) {
+        alert('Tidak ada produk untuk di-checkout!');
         return;
     }
 
-    payButton.disabled  = true;
-    payButton.innerText = "Processing...";
+    payBtn.disabled  = true;
+    payBtn.innerText = 'Processing...';
 
-    fetch("/checkout/payment", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content"),
-        },
-        body: JSON.stringify({ cart, address }),
+    // Kirim hanya id_address dan cart_ids — semua data diambil dari DB di server
+    fetch('/checkout/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+        body: JSON.stringify({
+            id_address: window.ADDRESS_ID,
+            cart_ids:   cartIds,
+        }),
     })
     .then(res => {
-        if (!res.ok) {
-            return res.json().then(err => { throw new Error(err.error || 'Server error'); });
-        }
+        if (!res.ok) return res.json().then(e => { throw new Error(e.error || 'Server error'); });
         return res.json();
     })
     .then(data => {
         snap.pay(data.snap_token, {
-            onSuccess: function () {
-                localStorage.removeItem("checkout");
-                localStorage.removeItem("cart");
-                localStorage.removeItem("address");
-                window.location.href = `/invoice/${data.order_id}`;
+            onSuccess: () => {
+                window.location.href = '/invoice/' + data.order_id;
             },
-            onPending: function () {
-                localStorage.removeItem("checkout");
-                localStorage.removeItem("address");
-                window.location.href = `/invoice/${data.order_id}`;
+            onPending: () => {
+                window.location.href = '/invoice/' + data.order_id;
             },
-            onError: function () {
-                alert("Pembayaran gagal, silahkan coba lagi.");
-                payButton.disabled  = false;
-                payButton.innerText = "Pay Now";
+            onError: () => {
+                alert('Pembayaran gagal, silahkan coba lagi.');
+                payBtn.disabled  = false;
+                payBtn.innerText = 'Pay Now';
             },
-            onClose: function () {
-                payButton.disabled  = false;
-                payButton.innerText = "Pay Now";
+            onClose: () => {
+                payBtn.disabled  = false;
+                payBtn.innerText = 'Pay Now';
             },
         });
     })
     .catch(err => {
-        console.error("Payment error:", err);
-        alert("Error: " + err.message);
-        payButton.disabled  = false;
-        payButton.innerText = "Pay Now";
+        alert('Error: ' + err.message);
+        payBtn.disabled  = false;
+        payBtn.innerText = 'Pay Now';
     });
 });
-
-renderAddress();
-renderCheckout();
