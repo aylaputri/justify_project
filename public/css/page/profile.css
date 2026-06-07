@@ -1,0 +1,251 @@
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: #f5f5f5; 
+}
+
+/* MAIN CONTAINERS */
+main {
+    margin-top: 90px;
+    padding: 0 18px 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* USER INFO PROFILE CARD */
+.profile-header-card {
+    background: #1a1a1a;
+    padding: 30px 20px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.avatar-placeholder {
+    width: 80px; 
+    height: 80px;
+    border-radius: 50px;
+    background: #444;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 32px; 
+    color: #fff;
+    border: 3px solid #fff;
+}
+
+.profile-name { 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #fff; 
+}
+
+.profile-email { 
+    font-size: 13px; 
+    color: #aaa; 
+}
+
+/* BODY CONTENT & NAVIGATION CARDS */
+.profile-body { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+.menu-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.menu-item {
+    display: flex; 
+    align-items: center;
+    padding: 16px 20px; 
+    gap: 14px;
+    text-decoration: none; 
+    color: #1a1a1a;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px; 
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.menu-item:last-child { 
+    border-bottom: none; 
+}
+
+.menu-item:hover { 
+    background: #f9f9f9; 
+}
+
+.menu-icon {
+    width: 36px; 
+    height: 36px;
+    border-radius: 10px;
+    background: #f0f0f0;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.menu-icon svg { 
+    width: 18px; 
+    height: 18px; 
+}
+
+.menu-arrow { 
+    margin-left: auto; 
+    color: #ccc; 
+    font-size: 16px;
+}
+
+/* ORDERS STYLING */
+.orders-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.orders-card-header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.orders-card-header h3 { 
+    font-size: 15px; 
+    font-weight: 600; 
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+}
+
+.orders-grid {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px; 
+    text-align: center;
+}
+
+.order-status-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 6px; 
+    text-decoration: none;
+    color: inherit;
+}
+
+.order-status-icon {
+    width: 48px; 
+    height: 48px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+}
+
+.order-status-icon svg { 
+    width: 22px; 
+    height: 22px; 
+}
+
+.order-badge {
+    position: absolute; 
+    top: -4px; 
+    right: -4px;
+    background: #1a1a1a; 
+    color: #fff;
+    font-size: 10px; 
+    font-weight: 700;
+    width: 18px; 
+    height: 18px;
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.order-status-label { 
+    font-size: 11px; 
+    color: #555; 
+    font-weight: 500; 
+}
+
+/* BUTTON OUT */
+.logout-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 10px;
+    background: #fff; 
+    color: #e53e3e;
+    border: none; 
+    width: 100%;
+    padding: 16px; 
+    border-radius: 16px;
+    font-size: 15px; 
+    font-weight: 600;
+    cursor: pointer; 
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    text-decoration: none;
+}
+
+.logout-btn:hover { 
+    background: #fff5f5; 
+}
+
+/* RESPONSIVE DESKTOP MEDIA QUERY (min-width: 768px) */
+@media (min-width: 768px) {
+    main {
+        margin-top: 120px;
+        padding: 0 50px 120px;
+        gap: 30px;
+        max-width: 800px; /* Menghindari tampilan terlalu melar kesamping di desktop */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* SCALE UP INTERNALS FOR DESKTOP */
+    .avatar-placeholder {
+        width: 100px;
+        height: 100px;
+        font-size: 42px;
+    }
+    
+    .profile-name {
+        font-size: 22px;
+    }
+
+    .menu-item {
+        font-size: 16px;
+        padding: 20px 24px;
+    }
+
+    .orders-card-header h3 {
+        font-size: 18px;
+    }
+
+    .order-status-label {
+        font-size: 13px;
+    }
+}

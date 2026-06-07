@@ -1,16 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
     public function index()
     {
-        $addresses = Address::where('id_user', session('user_id'))->get();
+        $userId    = session('user_id');
+        $addresses = Address::where('id_user', $userId)->latest()->get();
         return view('page.address', compact('addresses'));
     }
 
@@ -21,65 +20,49 @@ class AddressController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            Address::create([
-                'id_user'          => session('user_id'),
-                'address_title'    => $request->title,
-                'complete_address' => $request->address,
-                'city'             => $request->city,
-                'province'         => $request->province,
-                'postal_code'      => $request->postal,
-            ]);
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
-        }
+        $userId  = session('user_id');
+        $address = Address::create([
+            'id_user'          => $userId,
+            'address_title'    => $request->address_title,
+            'complete_address' => $request->complete_address,
+            'city'             => $request->city,
+            'province'         => $request->province,
+            'postal_code'      => $request->postal_code,
+        ]);
+
+        return response()->json(['success' => true, 'id_address' => $address->id_address]);
     }
 
     public function update(Request $request, $id)
     {
-        try {
-            $address = Address::where('id_address', $id)
-                              ->where('id_user', session('user_id'))
-                              ->first();
+        $userId  = session('user_id');
+        $address = Address::where('id_address', $id)->where('id_user', $userId)->first();
 
-            if (!$address) {
-                return response()->json(['success' => false, 'message' => 'Alamat tidak ditemukan'], 404);
-            }
-
-            $address->update([
-                'address_title'    => $request->title,
-                'complete_address' => $request->address,
-                'city'             => $request->city,
-                'province'         => $request->province,
-                'postal_code'      => $request->postal,
-            ]);
-
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        if (!$address) {
+            return response()->json(['success' => false, 'message' => 'Alamat tidak ditemukan'], 404);
         }
+
+        $address->update([
+            'address_title'    => $request->address_title,
+            'complete_address' => $request->complete_address,
+            'city'             => $request->city,
+            'province'         => $request->province,
+            'postal_code'      => $request->postal_code,
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        try {
-            $address = Address::where('id_address', $id)
-                              ->where('id_user', session('user_id'))
-                              ->first();
+        $userId  = session('user_id');
+        $address = Address::where('id_address', $id)->where('id_user', $userId)->first();
 
-            if (!$address) {
-                return response()->json(['success' => false, 'message' => 'Alamat tidak ditemukan'], 404);
-            }
-
-            // Lepas referensi dari orders supaya tidak kena foreign key constraint
-            Order::where('id_address', $id)->update(['id_address' => null]);
-
-            $address->delete();
-
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        if (!$address) {
+            return response()->json(['success' => false, 'message' => 'Alamat tidak ditemukan'], 404);
         }
+
+        $address->delete();
+        return response()->json(['success' => true]);
     }
 }

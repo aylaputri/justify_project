@@ -1,58 +1,54 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
 use Midtrans\Snap;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
-use App\Models\ProductVariant;
+use App\Models\Cart;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
-        $cart   = $request->cart;
-        $addr   = $request->address;
-        $userId = session('user_id');
+        $userId    = session('user_id');
+        $addressId = $request->id_address;
+        $cartIds   = $request->cart_ids ?? [];
 
         if (!$userId) {
             return response()->json(['error' => 'Silahkan login terlebih dahulu'], 401);
         }
 
-        // Gunakan address yang sudah ada jika id_address dikirim,
-        // supaya tidak terus-menerus membuat address duplikat di DB
-        if (!empty($addr['id_address'])) {
-            $savedAddress = Address::where('id_address', $addr['id_address'])
-                                   ->where('id_user', $userId)
-                                   ->first();
+        // Ambil alamat dari DB
+        $address = Address::where('id_address', $addressId)
+                          ->where('id_user', $userId)
+                          ->first();
+        if (!$address) {
+            return response()->json(['error' => 'Alamat tidak ditemukan'], 400);
         }
 
-        // Kalau tidak ada id_address atau address-nya tidak ditemukan, baru buat baru
-        if (empty($savedAddress)) {
-            $savedAddress = Address::create([
-                'id_user'          => $userId,
-                'address_title'    => $addr['title']   ?? 'Rumah',
-                'complete_address' => $addr['address'],
-                'city'             => $addr['city'],
-                'province'         => $addr['province'],
-                'postal_code'      => $addr['postal'],
-            ]);
+        // Ambil cart items dari DB
+        $cartItems = Cart::with(['variant.product'])
+                         ->whereIn('id_cart', $cartIds)
+                         ->where('id_user', $userId)
+                         ->get();
+
+        if ($cartItems->isEmpty()) {
+            return response()->json(['error' => 'Tidak ada item untuk di-checkout'], 400);
         }
 
         // Hitung total
-        $subtotal     = collect($cart)->sum(fn($item) => $item['price'] * $item['qty']);
+        $subtotal = $cartItems->sum(fn($c) => $c->variant->price * $c->quantity);
         $shippingCost = 15000;
         $grandTotal   = $subtotal + $shippingCost;
 
-        // Simpan order ke DB
+        // Simpan order
         $order = Order::create([
             'id_user'             => $userId,
-            'id_address'          => $savedAddress->id_address,
-            'shipping_address'    => "{$addr['address']}, {$addr['city']}, {$addr['province']} {$addr['postal']}",
+            'id_address'          => $address->id_address,
+            'shipping_address'    => "{$address->complete_address}, {$address->city}, {$address->province} {$address->postal_code}",
             'total_product_price' => $subtotal,
             'shipping_cost'       => $shippingCost,
             'grand_total'         => $grandTotal,
@@ -63,38 +59,32 @@ class PaymentController extends Controller
         ]);
 
         // Simpan order items
-        foreach ($cart as $item) {
-            $variant = ProductVariant::whereHas('product', function ($q) use ($item) {
-                $q->where('product_name', $item['name']);
-            })
-            ->where('size', $item['size'])
-            ->where('color', $item['color'])
-            ->first();
-
-            if ($variant) {
-                OrderItem::create([
-                    'id_order'          => $order->id_order,
-                    'id_variant'        => $variant->id_variant,
-                    'price_at_purchase' => $item['price'],
-                    'quantity'          => $item['qty'],
-                ]);
-            }
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'id_order'          => $order->id_order,
+                'id_variant'        => $item->variant->id_variant,
+                'price_at_purchase' => $item->variant->price,
+                'quantity'          => $item->quantity,
+            ]);
         }
 
-        // Config Midtrans
+        // Hapus cart items yang sudah di-checkout
+        Cart::whereIn('id_cart', $cartIds)->where('id_user', $userId)->delete();
+
+        // Build Midtrans params
         Config::$serverKey    = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
         Config::$isSanitized  = true;
         Config::$is3ds        = true;
 
-        //  Build item details
         $itemDetails = [];
-        foreach ($cart as $item) {
+        foreach ($cartItems as $item) {
+            $productName = $item->variant->product->product_name ?? 'Produk';
             $itemDetails[] = [
-                'id'       => $item['name'] . '-' . $item['size'] . '-' . $item['color'],
-                'price'    => (int) $item['price'],
-                'quantity' => (int) $item['qty'],
-                'name'     => substr($item['name'] . ' (' . $item['size'] . '/' . $item['color'] . ')', 0, 50),
+                'id'       => $item->variant->id_variant,
+                'price'    => (int) $item->variant->price,
+                'quantity' => (int) $item->quantity,
+                'name'     => substr($productName . ' (' . $item->variant->size . '/' . $item->variant->color . ')', 0, 50),
             ];
         }
         $itemDetails[] = [
@@ -104,22 +94,24 @@ class PaymentController extends Controller
             'name'     => 'Ongkos Kirim',
         ];
 
-        // Generate Snap Token — pakai "SW-{id_order}", tanpa kolom baru
+        $user = \App\Models\User::find($userId);
         $params = [
             'transaction_details' => [
                 'order_id'     => 'SW-' . $order->id_order,
                 'gross_amount' => (int) $grandTotal,
             ],
-            'item_details' => $itemDetails,
+            'item_details'     => $itemDetails,
             'customer_details' => [
-                'first_name' => $addr['name']  ?? 'Customer',
-                'phone'      => $addr['phone'] ?? '',
+                'first_name' => $user?->full_name ?? 'Customer',
+                'email'      => $user?->email ?? session('user_email', ''),
+                'phone'      => $user?->phone_number ?? '',
                 'shipping_address' => [
-                    'first_name'   => $addr['name']    ?? 'Customer',
-                    'phone'        => $addr['phone']   ?? '',
-                    'address'      => $addr['address'] ?? '',
-                    'city'         => $addr['city']    ?? '',
-                    'postal_code'  => $addr['postal']  ?? '',
+                    'first_name'   => $user?->full_name ?? 'Customer',
+                    'email'        => $user?->email ?? session('user_email', ''),
+                    'phone'        => $user?->phone_number ?? '',
+                    'address'      => $address->complete_address,
+                    'city'         => $address->city,
+                    'postal_code'  => $address->postal_code,
                     'country_code' => 'IDN',
                 ],
             ],
@@ -133,10 +125,6 @@ class PaymentController extends Controller
         ]);
     }
 
-    /**
-     * Callback notifikasi dari Midtrans
-     * Route: POST /checkout/notification (skip CSRF)
-     */
     public function notification(Request $request)
     {
         Config::$serverKey    = config('midtrans.server_key');
@@ -145,14 +133,10 @@ class PaymentController extends Controller
         $notif       = new \Midtrans\Notification();
         $txStatus    = $notif->transaction_status;
         $fraudStatus = $notif->fraud_status;
+        $idOrder     = str_replace('SW-', '', $notif->order_id);
+        $order       = Order::find($idOrder);
 
-        // Ambil id_order dari "SW-{id_order}"
-        $idOrder = str_replace('SW-', '', $notif->order_id);
-        $order   = Order::find($idOrder);
-
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
+        if (!$order) return response()->json(['message' => 'Order not found'], 404);
 
         if ($txStatus == 'capture') {
             $order->status = ($fraudStatus == 'challenge') ? 'Pending' : 'Diproses';
@@ -165,20 +149,13 @@ class PaymentController extends Controller
         }
 
         $order->save();
-
         return response()->json(['message' => 'OK']);
     }
 
-    /**
-     * Halaman invoice
-     * Route: GET /invoice/{id}
-     */
     public function invoice($id)
     {
         $order = Order::with(['user', 'items.variant.product', 'items.variant.images', 'address'])
-            ->where('id_order', $id)
-            ->firstOrFail();
-
+            ->where('id_order', $id)->firstOrFail();
         return view('page.invoice', compact('order'));
     }
 }
