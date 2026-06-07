@@ -226,6 +226,7 @@ checkoutBtn.addEventListener("click", async (e) => {
         });
         const addData = await addRes.json();
 
+<<<<<<< HEAD
         if (!addData.success) {
             alert(addData.message || "Gagal menambahkan ke keranjang.");
             return;
@@ -258,5 +259,87 @@ checkoutBtn.addEventListener("click", async (e) => {
     } catch (err) {
         console.error(err);
         alert("Terjadi kesalahan. Coba lagi.");
+=======
+    alert("Produk berhasil ditambahkan!");
+});
+
+// OTOMATIS BUKA MODAL & SIMPAN PROGRESS SEBELUM PULANG
+// ============================================================================
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productIdFromUrl = urlParams.get('id');
+    const asalHalaman = urlParams.get('from');
+
+    // --- 1. LOGIKA OTOMATIS BUKA MODAL DETAIL PRODUK ---
+    if (productIdFromUrl) {
+        const productCards = document.querySelectorAll('.product-card');
+        
+        const targetCard = Array.from(productCards).find(card => {
+            const cardImageUrl = card.getAttribute('data-image');
+            if (cardImageUrl) {
+                const imageMapping = {
+                    23: 'atscowo1', 24: 'atscowo2', 25: 'atscowo3', 27: 'atscowo4',
+                    28: 'bwhcowo1', 29: 'bwhcowo2', 30: 'bwhcowo3', 31: 'bwhcowo4',
+                    1: 'atscewe1', 2: 'atscewe2', 3: 'atscewe3', 4: 'atscewe4', 5: 'atscewe5',
+                    7: 'bwhcewe1', 10: 'bwhcewe2', 14: 'bwhcewe3', 15: 'bwhcewe4', 16: 'bwhcewe5'
+                };
+                const keywordGambar = imageMapping[productIdFromUrl];
+                if (keywordGambar && cardImageUrl.toLowerCase().includes(keywordGambar.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        if (targetCard) {
+            setTimeout(() => {
+                targetCard.click();
+            }, 100);
+        }
+    }
+
+    // --- 2. KUNCI BARU: LOGIKA TOMBOL CLOSE (X) + SAVE PROGRESS DI KATALOG ---
+    const tombolCloseKatalog = document.getElementById('closeBtn');
+    const modalOverlay = document.getElementById('overlay-details');
+
+    if (tombolCloseKatalog) {
+        tombolCloseKatalog.addEventListener('click', function(e) {
+            if (asalHalaman === 'mixmatch') {
+                e.preventDefault(); 
+
+                // A. AMBIL DATA PROGRESS YANG SUDAH ADA DI BROWSER DULU
+                let currentProgress = { gender: 'male', atasanId: null, bawahanId: null };
+                const existingProgress = localStorage.getItem('aktif_mixmatch');
+                if (existingProgress) {
+                    currentProgress = JSON.parse(existingProgress);
+                }
+
+                // B. DETEKSI APAKAH PRODUK YANG SEDANG DILIHAT INI ATASAN ATAU BAWAHAN
+                // Kita tebak tipenya berdasarkan ID produk yang ada di URL saat ini
+                const idSekarang = parseInt(productIdFromUrl);
+                
+                // Daftarkan ID mana saja yang termasuk kelompok atasan
+                const listIdAtasan = [23, 24, 25, 27, 1, 2, 3, 4, 5]; 
+
+                if (listIdAtasan.includes(idSekarang)) {
+                    // Kalau yang dibuka di katalog adalah atasan, update info atasanId
+                    currentProgress.atasanId = idSekarang;
+                } else {
+                    // Kalau bukan atasan, berarti celana/bawahan, update info bawahanId
+                    currentProgress.bawahanId = idSekarang;
+                }
+
+                // C. SIMPAN MEMORI TERBARU KE LOCALSTORAGE
+                localStorage.setItem('aktif_mixmatch', JSON.stringify(currentProgress));
+                
+                // D. BARU TENDANG USER BALIK KE MIXMATCH
+                window.location.href = '/mixmatch'; 
+            } else {
+                if (modalOverlay) {
+                    modalOverlay.style.display = 'none';
+                }
+            }
+        });
+>>>>>>> 39bfc4217f96ccdb641ce6828d7589f63577cf9e
     }
 });
