@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-
+use Laravel\Socialite\Facades\Socialite;
 class UserAuthController extends Controller
 {
     public function showLogin()
@@ -26,6 +26,13 @@ class UserAuthController extends Controller
     public function showRegister()
     {
         return view('page.register');
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver(
+            'google'
+        )->redirect();
     }
 
     public function register(Request $request)
@@ -85,6 +92,55 @@ class UserAuthController extends Controller
         ]);
 
         // Redirect ke home setelah login berhasil
+        return redirect('/home');
+    }
+
+    public function handleGoogleCallback()
+    {
+        $googleUser =
+            Socialite::driver(
+                'google'
+            )->user();
+
+        $user = User::where(
+            'email',
+            $googleUser->email
+        )->first();
+
+        if (!$user) {
+
+            $user = User::create([
+
+                'full_name' =>
+                $googleUser->name,
+
+                'email' =>
+                $googleUser->email,
+
+                'id_google' =>
+                $googleUser->id,
+
+                'profile_picture' =>
+                $googleUser->avatar,
+
+                'is_active' => true
+
+            ]);
+        }
+
+        session([
+
+            'user_id' =>
+            $user->id_user,
+
+            'user_name' =>
+            $user->full_name,
+
+            'user_email' =>
+            $user->email
+
+        ]);
+
         return redirect('/home');
     }
 

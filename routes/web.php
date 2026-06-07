@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManageCatalogController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\StaffController;
+use Laravel\Socialite\Facades\Socialite;
 
 // =====================
 // ROOT
@@ -121,6 +122,21 @@ Route::post('/login',   [UserAuthController::class, 'login']);
 Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
 Route::post('/register',[UserAuthController::class, 'register']);
 Route::get('/logout',   [UserAuthController::class, 'logout'])->name('logout');
+Route::get(
+    '/auth/google',
+    [
+        UserAuthController::class,
+        'redirectToGoogle'
+    ]
+);
+
+Route::get(
+    '/auth/google/callback',
+    [
+        UserAuthController::class,
+        'handleGoogleCallback'
+    ]
+);
 
 // =====================
 // USER PROTECTED

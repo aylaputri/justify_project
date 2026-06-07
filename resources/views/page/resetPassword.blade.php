@@ -120,7 +120,9 @@
                     <!-- BUTTON -->
                     <button
                         type="submit"
-                        class="submit-button">
+                        class="submit-button"
+                        id="submitButton"
+                        disabled>
 
                         Save Password
 
@@ -155,3 +157,9 @@
 </main>
 
 @endsection
+
+@push('scripts')
+
+<script src="{{ asset('js/page/auth.js') }}"></script>
+
+@endpush

@@ -60,7 +60,7 @@
                             value="{{ old('full_name') }}"
                             placeholder="Enter your full name"
                             class="input-field">
-                            
+
                         @error('full_name')
                         <p class="field-error">
                             {{ $message }}
@@ -68,7 +68,7 @@
                         @enderror
                     </div>
 
-                    
+
 
                     <!-- EMAIL -->
                     <div class="input-group">
@@ -125,9 +125,9 @@
                         </div>
 
                         @error('password')
-                            <p class="field-error">
-                                {{ $message }}
-                            </p>
+                        <p class="field-error">
+                            {{ $message }}
+                        </p>
                         @enderror
 
                     </div>
@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- GOOGLE -->
-                <a href="#" class="google-button">
+                <a href="/auth/google" class="google-button">
                     <img src="{{ asset('assets/icon/google.svg') }}" alt="Google">
                     Continue with Google
                 </a>

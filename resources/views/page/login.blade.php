@@ -142,7 +142,7 @@
                 </div>
 
                 <!-- GOOGLE -->
-                <a href="#" class="google-button">
+                <a href="/auth/google" class="google-button">
                     <img src="{{ asset('assets/icon/google.svg') }}" alt="Google">
                     Continue with Google
                 </a>
