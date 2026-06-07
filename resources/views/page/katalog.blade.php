@@ -94,7 +94,13 @@
             @foreach($products as $product)
                 @php
                     $variant = $product->variants->first();
-                    $image = $variant?->images->first();
+                    $image = null;
+                    foreach ($product->variants as $v) {
+                        if ($v->images->isNotEmpty()) {
+                            $image = $v->images->first();
+                            break;
+                        }
+                    }
                 @endphp
 
                 <div class="card product-card"
@@ -102,13 +108,13 @@
                     data-description="{{ $product->description }}"
                     data-price="{{ number_format($variant->price ?? 0, 0, ',', '.') }}"
                     data-category="{{ $product->category->category_name }}"
-                    data-image="{{ asset($image->image_url ?? 'assets/default.jpg') }}"
+                    data-image="{{ asset($image->image_url ?? 'assets/image/Logo-Hitam-Savior-World.png') }}"
                     data-sizes="{{ $product->variants->pluck('size')->unique()->implode(',') }}"
                     data-colors="{{ $product->variants->pluck('color')->unique()->implode(',') }}"
                     data-sizecharts='@json($product->category->sizeCharts ?? [])'
                     data-variants='@json($product->variantMap)'>
 
-                    <img src="{{ asset($image->image_url ?? 'assets/default.jpg') }}" alt="product">
+                    <img src="{{ asset($image->image_url ?? 'assets/image/Logo-Hitam-Savior-World.png') }}" alt="product">
                     <h3>{{ $product->product_name }}</h3>
                     <div class="info">
                         <span>{{ $product->category->category_name }}</span>
