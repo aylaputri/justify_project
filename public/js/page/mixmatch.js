@@ -1,34 +1,47 @@
 const mockProducts = {
     male: {
         atasan: [
-            { id: 23, name: "Casual Black Shirt", img: "/assets/image/imgMixmatch/pria/atscowo1.png", url: "/catalog?id=23" },
-            { id: 24, name: "Smart Casual Shirt & Sweater", img: "/assets/image/imgMixmatch/pria/atscowo2.png", url: "/catalog?id=24" },
-            { id: 25, name: "Layered Black Open Shirt", img: "/assets/image/imgMixmatch/pria/atscowo3.png", url: "/catalog?id=25" },
-            { id: 27, name: "Flannel Plaid Oversized Shirt", img: "/assets/image/imgMixmatch/pria/atscowo4.png", url: "/catalog?id=27" }
+            { id: 23, name: "Classic Slim-Fit Black Shirt", img: "/assets/image/imgMixmatch/pria/atscowo1.png", url: "/katalog?id=23" },
+            { id: 24, name: "Smart Casual Shirt & Sweater", img: "/assets/image/imgMixmatch/pria/atscowo2.png", url: "/katalog?id=24" },
+            { id: 25, name: "Layered Black Open Shirt", img: "/assets/image/imgMixmatch/pria/atscowo3.png", url: "/katalog?id=25" },
+            { id: 26, name: "Olive Green Cuban Shirt", img: "/assets/image/imgMixmatch/pria/atscowo4.png", url: "/katalog?id=26" },
+            { id: 27, name: "Flannel Plaid Oversized Shirt", img: "/assets/image/imgMixmatch/pria/atscowo5.png", url: "/katalog?id=27" }
         ],
         bawahan: [
-            { id: 28, name: "Monogram Tailored Shorts", img: "/assets/image/imgMixmatch/pria/bwhcowo1.png", url: "/catalog?id=28" },
-            { id: 29, name: "Army Green Multi-Pocket Cargo", img: "/assets/image/imgMixmatch/pria/bwhcowo2.png", url: "/catalog?id=29" },
-            { id: 30, name: "Ripped Black Denim Shorts", img: "/assets/image/imgMixmatch/pria/bwhcowo3.png", url: "/catalog?id=30" },
-            { id: 31, name: "Classic 3-Stripes Trackpants", img: "/assets/image/imgMixmatch/pria/bwhcowo4.png", url: "/catalog?id=31" }
+            { id: 28, name: "Monogram Tailored Shorts", img: "/assets/image/imgMixmatch/pria/bwhcowo1.png", url: "/katalog?id=28" },
+            { id: 29, name: "Army Green Multi-Pocket Cargo", img: "/assets/image/imgMixmatch/pria/bwhcowo2.png", url: "/katalog?id=29" },
+            { id: 30, name: "Ripped Black Denim Shorts", img: "/assets/image/imgMixmatch/pria/bwhcowo3.png", url: "/katalog?id=30" },
+            { id: 31, name: "Classic 3-Stripes Trackpants", img: "/assets/image/imgMixmatch/pria/bwhcowo4.png", url: "/katalog?id=31" }
         ],
         base: "/assets/image/imgMixmatch/pria/mancard.jpeg", 
         switchIcon: "/assets/image/imgMixmatch/wanita/womancard.jpeg"
     },
     female: {
         atasan: [
-            { id: 1, name: "Ribbed Ribbon Crop Top", img: "/assets/image/imgMixmatch/wanita/atscewe1.png", url: "/catalog?id=1" },
-            { id: 2, name: "3D Floral Bustier Dress", img: "/assets/image/imgMixmatch/wanita/atscewe2.png", url: "/catalog?id=2" },
-            { id: 3, name: "Off-Shoulder Knit Top", img: "/assets/image/imgMixmatch/wanita/atscewe3.png", url: "/catalog?id=3" },
-            { id: 4, name: "Ruched Milkmaid Top", img: "/assets/image/imgMixmatch/wanita/atscewe4.png", url: "/catalog?id=4" },
-            { id: 5, name: "Kamisol Slim Button", img: "/assets/image/imgMixmatch/wanita/atscewe5.png", url: "/catalog?id=5" }
+            { id: 1, name: "Ribbed Ribbon Crop Top", img: "/assets/image/imgMixmatch/wanita/atscewe1.png", url: "/katalog?id=1" },
+            { id: 2, name: "3D Floral Bustier Dress", img: "/assets/image/imgMixmatch/wanita/atscewe2.png", url: "/katalog?id=2" },
+            { id: 3, name: "Off-Shoulder Knit Top", img: "/assets/image/imgMixmatch/wanita/atscewe3.png", url: "/katalog?id=3" },
+            { id: 4, name: "Ruched Milkmaid Top", img: "/assets/image/imgMixmatch/wanita/atscewe4.png", url: "/katalog?id=4" },
+            { id: 5, name: "Asymmetrical Floral Cami", img: "/assets/image/imgMixmatch/wanita/atscewe5.png", url: "/katalog?id=5" },
+            { id: 6, name: "Lilac Floral Corset Top", img: "/assets/image/imgMixmatch/wanita/atscewe6.png", url: "/katalog?id=6" },
+            { id: 8, name: "Plaid Halter Corset Top", img: "/assets/image/imgMixmatch/wanita/atscewe8.png", url: "/katalog?id=8" },
+            { id: 9, name: "Lace Trim Ruffle Blouse", img: "/assets/image/imgMixmatch/wanita/atscewe9.png", url: "/katalog?id=9" },
+            { id: 10, name: "Plaid Gingham Camisole", img: "/assets/image/imgMixmatch/wanita/atscewe10.png", url: "/katalog?id=10" },
+            { id: 11, name: "Yellow Floral Lace-Up Top", img: "/assets/image/imgMixmatch/wanita/atscewe11.png", url: "/katalog?id=11" },
+            { id: 12, name: "Polkadot Ribbon Tie Top", img: "/assets/image/imgMixmatch/wanita/atscewe12.png", url: "/katalog?id=12" },
+            { id: 13, name: "Gingham Plaid Bustier", img: "/assets/image/imgMixmatch/wanita/atscewe13.png", url: "/katalog?id=13" }
         ],
         bawahan: [
-            { id: 7, name: "Daisy Pattern A-Line Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe1.png", url: "/catalog?id=7" },
-            { id: 10, name: "Plaid Gingham Camisole", img: "/assets/image/imgMixmatch/wanita/bwhcewe2.png", url: "/catalog?id=10" },
-            { id: 14, name: "Vintage Floral Maxi Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe3.png", url: "/catalog?id=14" },
-            { id: 15, name: "Floral Mini Skort with Ties", img: "/assets/image/imgMixmatch/wanita/bwhcewe4.png", url: "/catalog?id=15" },
-            { id: 16, name: "Highwaist Wide Trouser", img: "/assets/image/imgMixmatch/wanita/bwhcewe5.png", url: "/catalog?id=16" }
+            { id: 7, name: "Daisy Pattern A-Line Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe7.png", url: "/katalog?id=7" },
+            { id: 14, name: "Vintage Floral Maxi Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe2.png", url: "/katalog?id=14" },
+            { id: 15, name: "Floral Mini Skort with Ties", img: "/assets/image/imgMixmatch/wanita/bwhcewe3.png", url: "/katalog?id=15" },
+            { id: 16, name: "Denim Pleated Mini Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe4.png", url: "/katalog?id=16" },
+            { id: 17, name: "Red Gingham Pleated Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe5.png", url: "/katalog?id=17" },
+            { id: 18, name: "Two-Tone Plaid Mini Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe6.png", url: "/katalog?id=18" },
+            { id: 19, name: "Y2K Pleated Low-Rise Skirt", img: "/assets/image/imgMixmatch/wanita/bwhcewe7.png", url: "/katalog?id=19" },
+            { id: 20, name: "High-Waist Wide Jeans", img: "/assets/image/imgMixmatch/wanita/bwhcewe8.png", url: "/katalog?id=20" },
+            { id: 21, name: "Dark Blue Denim Shorts", img: "/assets/image/imgMixmatch/wanita/bwhcewe9.png", url: "/katalog?id=21" },
+            { id: 22, name: "Acid Wash Denim Bermuda", img: "/assets/image/imgMixmatch/wanita/bwhcewe10.png", url: "/katalog?id=22" }
         ],
         base: "/assets/image/imgMixmatch/wanita/womancard.jpeg",
         switchIcon: "/assets/image/imgMixmatch/pria/mancard.jpeg"
@@ -56,7 +69,6 @@ function initApp(gender) {
     renderWorkspace();
 }
 
-// REVISI VALIDASI RESET: Muncul alert proteksi jika canvas kosong saat tombol reset diklik
 function resetCombination() {
     if (!selectedAtasanData && !selectedBawahanData) {
         alert("Bung, setidaknya kamu harus memilih satu baju atau bawahan dulu baru bisa direset!");
@@ -70,6 +82,9 @@ function resetCombination() {
     selectedBawahanData = null;
     scaleAtasan = 1;
     scaleBawahan = 1;
+
+    // Bersihkan memori autosave saat klik reset manual
+    localStorage.removeItem('aktif_mixmatch');
 
     const layerAtasan = document.getElementById('layer-atasan');
     const layerBawahan = document.getElementById('layer-bawahan');
@@ -98,6 +113,9 @@ function switchGender() {
     document.getElementById('layer-bawahan').style.display = 'none';
     document.getElementById('info-box-atasan').style.display = 'none';
     document.getElementById('info-box-bawahan').style.display = 'none';
+    
+    // Simpan perubahan gender ke memori
+    autoSaveMixMatchProgress();
     renderWorkspace();
 }
 
@@ -153,19 +171,40 @@ function selectItem(item, category) {
         makeElementInteractive(imgEl, 'bawahan');
         showProductPopup(item, 'bawahan');
     }
+    // TRIGGER UTAMA: Catat progress secara otomatis setiap kali item dipilih!
+    autoSaveMixMatchProgress();
 }
 
-// Menampilkan popup detail secara bersamaan tanpa saling menimpa
 function showProductPopup(item, category) {
+    autoSaveMixMatchProgress();
     if (category === 'atasan') {
         const popupAtasan = document.getElementById('info-box-atasan');
         document.getElementById('p-name-atasan').innerText = item.name;
-        document.getElementById('p-link-atasan').href = item.url;
+        
+        const linkAtasan = document.getElementById('p-link-atasan');
+        const targetUrl = `/katalog?id=${item.id}&from=mixmatch`;
+        linkAtasan.href = targetUrl;
+        linkAtasan.onclick = function(e) { 
+            e.stopPropagation(); 
+            window.location.href = targetUrl; 
+        };
+        
         popupAtasan.style.display = 'block';
     } else {
         const popupBawahan = document.getElementById('info-box-bawahan');
         document.getElementById('p-name-bawahan').innerText = item.name;
-        document.getElementById('p-link-bawahan').href = item.url;
+        
+        const linkBawahan = document.getElementById('p-link-bawahan'); 
+        const targetUrl = `/katalog?id=${item.id}&from=mixmatch`;
+        
+        if (linkBawahan) {
+            linkBawahan.href = targetUrl;
+            linkBawahan.onclick = function(e) { 
+                e.stopPropagation(); 
+                window.location.href = targetUrl; 
+            };
+        }
+        
         popupBawahan.style.display = 'block';
     }
 }
@@ -255,6 +294,51 @@ function saveCombination() {
     alert("🎉 Kombinasi Berhasil Disimpan!");
 }
 
+function autoSaveMixMatchProgress() {
+    const progress = {
+        gender: currentGender,
+        atasanId: selectedAtasanData ? selectedAtasanData.id : null,
+        bawahanId: selectedBawahanData ? selectedBawahanData.id : null
+    };
+    localStorage.setItem('aktif_mixmatch', JSON.stringify(progress));
+}
+
 function allowDrop(e) { e.preventDefault(); }
 function clearHighlight() {}
 function onDrop(e) { e.preventDefault(); }
+
+// ============================================================================
+// SYSTEM UTAMA PEMULIH DATA OTOMATIS (MENCEGAH RESET SAAT KEMBALI DARI KATALOG)
+// ============================================================================
+document.addEventListener("DOMContentLoaded", function() {
+    const savedProgressRaw = localStorage.getItem('aktif_mixmatch');
+    
+    if (savedProgressRaw) {
+        const savedProgress = JSON.parse(savedProgressRaw);
+        
+        // 1. Pulihkan Gender Terakhir & Buka Workspace-nya langsung
+        if (savedProgress.gender) {
+            initApp(savedProgress.gender);
+        }
+        
+        // 2. Pulihkan Baju Atasan Terakhir secara Otomatis
+        if (savedProgress.atasanId) {
+            const listAtasan = mockProducts[savedProgress.gender].atasan;
+            const bajuTerakhir = listAtasan.find(item => item.id == savedProgress.atasanId);
+            if (bajuTerakhir) {
+                // Manfaatkan fungsi selectItem bawaanmu agar gambar otomatis terjahit di maneken
+                selectItem(bajuTerakhir, 'atasan');
+            }
+        }
+        
+        // 3. Pulihkan Baju Bawahan Terakhir secara Otomatis
+        if (savedProgress.bawahanId) {
+            const listBawahan = mockProducts[savedProgress.gender].bawahan;
+            const celanaTerakhir = listBawahan.find(item => item.id == savedProgress.bawahanId);
+            if (celanaTerakhir) {
+                // Manfaatkan fungsi selectItem bawaanmu agar gambar otomatis terjahit di maneken
+                selectItem(celanaTerakhir, 'bawahan');
+            }
+        }
+    }
+});
